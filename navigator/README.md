@@ -46,4 +46,22 @@ Worker behavior: accepts GET /repos?org=ORG and returns JSON list of repos for O
 - Deploy the Node proxy to Vercel/Render and set GITHUB_TOKEN and PROXY_API_KEY as environment variables.
 - Consider adding server-side authentication and rotating keys using your hosting provider's secrets management.
 
-If you want, I can deploy the Cloudflare Worker and Vercel proxy for you (requires account access or credentials).
+如果需要，我可以为你部署 Cloudflare Worker 和 Vercel 代理（需要账号凭证）。或者，你也可以按照下面步骤手动部署。下面是自动部署（使用 GitHub Actions）与手动部署的说明：
+
+自动部署（推荐）
+- Cloudflare Worker：在仓库 Secrets 中添加 CF_API_TOKEN、CF_ACCOUNT_ID。然后在 Actions → Workflows 中运行“Deploy Cloudflare Worker”。工作流将使用 navigator/cloudflare-worker/wrangler.toml 执行 wrangler publish。
+- Vercel Node 代理：在仓库 Secrets 中添加 VERCEL_TOKEN、VERCEL_ORG_ID、VERCEL_PROJECT_ID，然后运行“Deploy Node Proxy to Vercel”工作流。
+
+手动部署（Cloudflare Worker）
+1. 安装 wrangler：npm i -g wrangler
+2. 在 navigator/cloudflare-worker/wrangler.toml 中设置 account_id
+3. 在本地运行：wrangler secret put GITHUB_TOKEN（输入你的 PAT）
+4. 部署：wrangler publish --env production
+
+手动部署（Vercel）
+1. 登录 Vercel，创建项目并选择导入 GitHub 仓库的 navigator/proxy 目录
+2. 在项目设置中添加环境变量：GITHUB_TOKEN、PROXY_API_KEY
+3. 部署并获取部署 URL（例如：https://navigator-proxy.vercel.app）
+
+安全建议
+- 始终把 Token/Key 放入平台 Secret/Environment，不要直接写入代码或仓库。
