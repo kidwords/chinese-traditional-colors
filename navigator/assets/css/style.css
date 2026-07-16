@@ -14,6 +14,29 @@ body::after{animation:float-bg 12s ease-in-out infinite}
 
 .container{max-width:1000px;margin:36px auto;padding:24px}
 
+/* 大屏自适应增强 */
+@media (min-width:1400px){
+  .container{max-width:1400px;padding:32px}
+  #repos{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+  .card{padding:18px}
+  .card h3{font-size:1.125rem}
+  .meta{font-size:0.95rem}
+}
+@media (min-width:1800px){
+  .container{max-width:1800px;padding:40px}
+  #repos{grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px}
+  .card{padding:20px}
+  .card h3{font-size:1.2rem}
+  .lead{font-size:1.05rem}
+}
+
+/* 小屏优化 */
+@media (max-width:480px){
+  .container{margin:18px auto;padding:12px}
+  .controls{flex-direction:column;align-items:stretch}
+  .controls input, .controls select, .controls button{width:100%}
+}
+
 .container{max-width:1000px;margin:36px auto;padding:24px}
 h1{font-weight:600;margin-bottom:6px}
 .lead{color:var(--muted);margin-bottom:14px}
