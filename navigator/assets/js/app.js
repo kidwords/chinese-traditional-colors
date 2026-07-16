@@ -87,15 +87,31 @@
     }catch(err){ renderEmpty('获取失败: '+err.message); }
   }
 
-  // add refresh button
+  // add refresh button and wire search input
   const hdr = document.querySelector('.container');
-  const ctrl = el('div',null);
-  const refresh = el('button','btn','刷新');
-  refresh.onclick = ()=>{ saveCache([]); loadAndRender(true); };
-  ctrl.appendChild(refresh);
-  hdr.insertBefore(ctrl, hdr.querySelector('#repos'));
+
+  const searchEl = document.getElementById('search');
+  const refreshBtn = document.getElementById('refresh');
+  if(refreshBtn) refreshBtn.onclick = ()=>{ saveCache([]); loadAndRender(true); };
+
+  function applyFilter(q){
+    q = (q||'').trim().toLowerCase();
+    const cards = container.children;
+    for(const c of cards){
+      const name = (c.dataset.name||'').toLowerCase();
+      const desc = (c.dataset.desc||'') .toLowerCase();
+      const ok = q === '' || name.includes(q) || desc.includes(q);
+      c.style.display = ok ? '' : 'none';
+    }
+  }
+
+  searchEl && searchEl.addEventListener('input', (e)=> applyFilter(e.target.value));
+  searchEl && searchEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') { if(!e.target.value) applyFilter(''); }});
 
   // initial load
   await loadAndRender();
+
+  // apply empty filter to ensure data-attrs are used
+  applyFilter('');
 
 })();
