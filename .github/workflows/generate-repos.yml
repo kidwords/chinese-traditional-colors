@@ -6,6 +6,11 @@ on:
     - cron: '0 2 * * *' # daily at 02:00 UTC
   push:
     branches: [ main ]
+    # 仅在仓库相关的文件发生变化时由 push 触发（避免不必要的重建）
+    paths:
+      - 'navigator/**'
+      - '.github/workflows/**'
+      - 'README.md'
 
 permissions:
   contents: write
