@@ -72,11 +72,11 @@ jobs:
             }catch(err){ core.setFailed(err.message); }
 
       - name: Optionally generate private repos artifact
-              if: ${{ env.INCLUDE_PRIVATE == 'true' }}
+        if: ${{ env.INCLUDE_PRIVATE == 'true' }}
         run: |
           node -e "(async ()=>{const https = require('https');const fs=require('fs');const token=process.env.REPO_LIST_PAT;const ORG=process.env.ORG||'kidwords';let page=1;let out=[];while(true){const url='https://api.github.com/orgs/'+ORG+'/repos?per_page=100&page='+page;const res=await new Promise((res2,rej)=>{const req=https.request(url,{headers:{'User-Agent':'actions','Authorization':'token '+token}},r=>{let b='';r.on('data',c=>b+=c);r.on('end',()=>res2({statusCode:r.statusCode,body:b}));});req.on('error',rej);req.end();});if(res.statusCode===404){break;}try{const a=JSON.parse(res.body);if(!Array.isArray(a)) break;out=out.concat(a);if(a.length<100) break;page++;}catch(e){break;}}fs.writeFileSync('repos-private.json',JSON.stringify(out,null,2));console.log('wrote repos-private.json');})()"
       - name: Upload private repos artifact
-              if: ${{ env.INCLUDE_PRIVATE == 'true' }}
+        if: ${{ env.INCLUDE_PRIVATE == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: repos-private-json
