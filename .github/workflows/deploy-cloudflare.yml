@@ -25,4 +25,4 @@ jobs:
         run: |
           cd navigator/cloudflare-worker
           # 使用最新 wrangler（v4+）并通过环境变量传入 account id
-          npx wrangler deploy --env production --release
+          npx wrangler deploy --env production
