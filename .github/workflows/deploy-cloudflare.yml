@@ -20,8 +20,9 @@ jobs:
 
       - name: Publish Worker
         env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
           cd navigator/cloudflare-worker
-          # ensure wrangler.toml has account_id set via secret or update before running
+          # 使用环境变量传入 account_id（wrangler.toml 可引用或使用 env 配置）
           npx wrangler publish --env production
