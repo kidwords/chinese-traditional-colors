@@ -39,6 +39,9 @@
 
   function makeCard(repo){
     const card = el('article','card');
+    // set dataset for filtering
+    card.dataset.name = repo.name || '';
+    card.dataset.desc = repo.description || '';
     card.appendChild(el('h3',null, repo.full_name));
     card.appendChild(el('div','meta', repo.description || '—'));
     const stats = el('div','stats', `⭐ ${repo.stargazers_count} · 🍴 ${repo.forks_count} · issues ${repo.open_issues_count}`);
@@ -64,12 +67,54 @@
     return card;
   }
 
+  // pagination + sorting state
+  let allRepos = [];
+  let filteredRepos = [];
+  let currentPage = 1;
+  let perPage = 12;
+  let currentSort = 'pushed';
+
+  function compareRepos(a,b, sort){
+    if(sort === 'stars') return (b.stargazers_count||0) - (a.stargazers_count||0);
+    if(sort === 'name') return (a.name||'').localeCompare(b.name||'');
+    // default pushed
+    return new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0);
+  }
+
+  function renderPage(page=1){
+    currentPage = page;
+    container.innerHTML = '';
+    const start = (page-1)*perPage; const end = start + perPage;
+    const pageItems = filteredRepos.slice(start,end);
+    if(pageItems.length === 0){ renderEmpty('没有符合条件的仓库'); return; }
+    pageItems.forEach(r => container.appendChild(makeCard(r)));
+    // pager
+    const pager = document.getElementById('pager');
+    pager.innerHTML = '';
+    const totalPages = Math.max(1, Math.ceil(filteredRepos.length / perPage));
+    const prev = document.createElement('button'); prev.textContent = '‹ 上一页';
+    prev.disabled = page <= 1; prev.onclick = ()=> renderPage(page-1);
+    pager.appendChild(prev);
+    // show up to 7 page buttons centered on current
+    const maxButtons = 7; let startPage = Math.max(1, page - Math.floor(maxButtons/2));
+    let endPage = Math.min(totalPages, startPage + maxButtons -1);
+    if(endPage - startPage < maxButtons -1) startPage = Math.max(1, endPage - maxButtons +1);
+    for(let p = startPage; p<=endPage; p++){
+      const b = document.createElement('button'); b.textContent = p; if(p===page) b.className='active'; b.onclick = ()=> renderPage(p); pager.appendChild(b);
+    }
+    const next = document.createElement('button'); next.textContent = '下一页 ›'; next.disabled = page >= totalPages; next.onclick = ()=> renderPage(page+1); pager.appendChild(next);
+  }
+
   async function loadAndRender(force=false){
     container.innerHTML = '';
     const cached = loadCache();
     if(cached && !force){
-      cached.forEach(r => container.appendChild(makeCard(r)));
-      const info = el('div','footer', `（从缓存读取 ${cached.length} 个仓库）`);
+      allRepos = cached;
+      filteredRepos = allRepos.filter(r=>!r.fork);
+      filteredRepos.sort((a,b)=> compareRepos(a,b,currentSort));
+      saveCache(filteredRepos);
+      renderPage(1);
+      const info = el('div','footer', `（从缓存读取 ${filteredRepos.length} 个仓库）`);
       container.appendChild(info);
       return;
     }
@@ -77,13 +122,16 @@
     const loading = el('div',null,'加载仓库列表...'); container.appendChild(loading);
     try{
       const repos = await fetchAllRepos();
+      allRepos = repos;
       container.innerHTML = '';
       if(!repos || repos.length === 0){ renderEmpty('未找到仓库'); return; }
       // Optionally filter: remove forks
-      const filtered = repos.filter(r=>!r.fork);
-      filtered.forEach(r => container.appendChild(makeCard(r)));
-      saveCache(filtered);
-      container.appendChild(el('div','footer', `共 ${filtered.length} 个仓库（forks 已过滤）。`));
+      filteredRepos = repos.filter(r=>!r.fork);
+      filteredRepos.sort((a,b)=> compareRepos(a,b,currentSort));
+      saveCache(filteredRepos);
+      renderPage(1);
+      const footer = el('div','footer', `共 ${filteredRepos.length} 个仓库（forks 已过滤）。`);
+      document.getElementById('pager').after(footer);
     }catch(err){ renderEmpty('获取失败: '+err.message); }
   }
 
@@ -92,21 +140,30 @@
 
   const searchEl = document.getElementById('search');
   const refreshBtn = document.getElementById('refresh');
+  const sortEl = document.getElementById('sort');
+  const perPageEl = document.getElementById('perPage');
   if(refreshBtn) refreshBtn.onclick = ()=>{ saveCache([]); loadAndRender(true); };
 
   function applyFilter(q){
     q = (q||'').trim().toLowerCase();
-    const cards = container.children;
-    for(const c of cards){
-      const name = (c.dataset.name||'').toLowerCase();
-      const desc = (c.dataset.desc||'') .toLowerCase();
-      const ok = q === '' || name.includes(q) || desc.includes(q);
-      c.style.display = ok ? '' : 'none';
-    }
+    // when filtering, operate on filteredRepos then re-render page
+    if(!filteredRepos) return;
+    const prevPage = currentPage;
+    const visible = allRepos.filter(r=>{
+      const name = (r.name||'').toLowerCase();
+      const desc = (r.description||'').toLowerCase();
+      return q === '' || name.includes(q) || desc.includes(q);
+    });
+    filteredRepos = visible.sort((a,b)=> compareRepos(a,b,currentSort));
+    currentPage = 1;
+    renderPage(1);
   }
 
   searchEl && searchEl.addEventListener('input', (e)=> applyFilter(e.target.value));
   searchEl && searchEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') { if(!e.target.value) applyFilter(''); }});
+
+  sortEl && sortEl.addEventListener('change', (e)=>{ currentSort = e.target.value; filteredRepos.sort((a,b)=> compareRepos(a,b,currentSort)); renderPage(1); });
+  perPageEl && perPageEl.addEventListener('change', (e)=>{ perPage = parseInt(e.target.value,10) || 12; renderPage(1); });
 
   // initial load
   await loadAndRender();
