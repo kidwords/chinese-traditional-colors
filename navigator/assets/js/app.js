@@ -46,6 +46,21 @@
     card.appendChild(el('div','meta', repo.description || '—'));
     const stats = el('div','stats', `⭐ ${repo.stargazers_count} · 🍴 ${repo.forks_count} · issues ${repo.open_issues_count}`);
     card.appendChild(stats);
+
+    // badges (shields.io) container
+    const badges = el('div','badges');
+    // stars badge
+    const starsImg = document.createElement('img');
+    starsImg.src = `https://img.shields.io/github/stars/${repo.owner.login}/${repo.name}.svg?style=flat-square&label=Stars`;
+    starsImg.alt = 'stars';
+    badges.appendChild(starsImg);
+    // forks badge
+    const forksImg = document.createElement('img');
+    forksImg.src = `https://img.shields.io/github/forks/${repo.owner.login}/${repo.name}.svg?style=flat-square&label=Forks`;
+    forksImg.alt = 'forks';
+    badges.appendChild(forksImg);
+    card.appendChild(badges);
+
     const pushed = repo.pushed_at ? new Date(repo.pushed_at).toLocaleString() : '—';
     card.appendChild(el('div',null, `最近推送: ${pushed}`));
 
@@ -64,6 +79,27 @@
     btnRow.appendChild(pagesBtn);
 
     card.appendChild(btnRow);
+
+    // asynchronously try to fetch workflows to show actions badge
+    (async ()=>{
+      try{
+        const wres = await fetch(`https://api.github.com/repos/${repo.owner.login}/${repo.name}/actions/workflows`);
+        if(wres.ok){
+          const wj = await wres.json();
+          if(wj.workflows && wj.workflows.length>0){
+            const wf = wj.workflows[0];
+            // workflow path like .github/workflows/ci.yml -> encode
+            const wfPath = encodeURIComponent(wf.path || wf.name || wf.id);
+            const actionsImg = document.createElement('img');
+            actionsImg.src = `https://github.com/${repo.owner.login}/${repo.name}/actions/workflows/${wfPath}/badge.svg`;
+            actionsImg.alt = 'actions status';
+            actionsImg.title = wf.name || wf.path || 'workflow';
+            badges.appendChild(actionsImg);
+          }
+        }
+      }catch(e){ /* ignore */ }
+    })();
+
     return card;
   }
 
