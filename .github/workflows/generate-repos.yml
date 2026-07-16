@@ -1,0 +1,78 @@
+name: Generate repo list
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *' # daily at 02:00 UTC
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  issues: read
+  actions: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    env:
+      ORG: kidwords
+      INCLUDE_PRIVATE: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate and commit public repo list
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const ORG = process.env.ORG || 'kidwords';
+            // try org first
+            let repos = [];
+            try {
+              repos = await github.paginate(github.rest.repos.listForOrg, { org: ORG, per_page: 100 });
+            } catch (e) {
+              // fallback to user
+              repos = await github.paginate(github.rest.repos.listForUser, { username: ORG, per_page: 100 });
+            }
+            // map to safe public fields
+            const publicOnly = repos.filter(r=> !r.private).map(r=>({
+              name: r.name,
+              full_name: r.full_name,
+              html_url: r.html_url,
+              description: r.description,
+              stargazers_count: r.stargazers_count,
+              forks_count: r.forks_count,
+              open_issues_count: r.open_issues_count,
+              has_pages: r.has_pages,
+              pushed_at: r.pushed_at,
+              topics: r.topics || [],
+              owner: { login: r.owner.login }
+            }));
+
+            const content = Buffer.from(JSON.stringify(publicOnly, null, 2)).toString('base64');
+            const path = 'navigator/data/repos.json';
+
+            // create or update file
+            try{
+              // check if file exists
+              let existing = null;
+              try { existing = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path }) } catch(e){}
+              if(existing && existing.data && existing.data.sha){
+                await github.rest.repos.createOrUpdateFileContents({ owner: context.repo.owner, repo: context.repo.repo, path, message: 'chore: update public repo list', content, sha: existing.data.sha, branch: 'main' });
+              } else {
+                await github.rest.repos.createOrUpdateFileContents({ owner: context.repo.owner, repo: context.repo.repo, path, message: 'chore: add public repo list', content, branch: 'main' });
+              }
+              core.info(`Wrote ${publicOnly.length} repos to ${path}`);
+            }catch(err){ core.setFailed(err.message); }
+
+      - name: Optionally generate private repos artifact
+        if: ${{ secrets.REPO_LIST_PAT != '' && env.INCLUDE_PRIVATE == 'true' }}
+        run: |
+          node -e "(async ()=>{const https = require('https');const fs=require('fs');const token=process.env.REPO_LIST_PAT;const ORG=process.env.ORG||'kidwords';let page=1;let out=[];while(true){const url='https://api.github.com/orgs/'+ORG+'/repos?per_page=100&page='+page;const res=await new Promise((res2,rej)=>{const req=https.request(url,{headers:{'User-Agent':'actions','Authorization':'token '+token}},r=>{let b='';r.on('data',c=>b+=c);r.on('end',()=>res2({statusCode:r.statusCode,body:b}));});req.on('error',rej);req.end();});if(res.statusCode===404){break;}try{const a=JSON.parse(res.body);if(!Array.isArray(a)) break;out=out.concat(a);if(a.length<100) break;page++;}catch(e){break;}}fs.writeFileSync('repos-private.json',JSON.stringify(out,null,2));console.log('wrote repos-private.json');})()"
+      - name: Upload private repos artifact
+        if: ${{ secrets.REPO_LIST_PAT != '' && env.INCLUDE_PRIVATE == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: repos-private-json
+          path: repos-private.json
