@@ -13,12 +13,24 @@
 
     <div class="controls">
       <input id="search" type="search" placeholder="搜索仓库 name / description (回车清空)" aria-label="搜索仓库">
+      <select id="sort">
+        <option value="pushed">按最近推送 (默认)</option>
+        <option value="stars">按星标</option>
+        <option value="name">按名称</option>
+      </select>
+      <select id="perPage">
+        <option value="6">每页 6</option>
+        <option value="12" selected>每页 12</option>
+        <option value="24">每页 24</option>
+      </select>
       <button id="refresh" class="btn">刷新</button>
     </div>
 
     <section id="repos">
       <!-- Repo cards inserted by JS -->
     </section>
+
+    <nav id="pager" class="pager" aria-label="分页控件"></nav>
 
     <footer>
       <p>静态导航示例 · 部署于 GitHub Pages</p>
