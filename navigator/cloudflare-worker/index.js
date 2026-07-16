@@ -52,6 +52,7 @@ async function fetchRepos(org){
     open_issues_count: r.open_issues_count,
     has_pages: r.has_pages,
     pushed_at: r.pushed_at,
+    private: r.private || false,
     topics: r.topics || [],
     owner: { login: r.owner.login }
   }));

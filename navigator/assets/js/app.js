@@ -19,7 +19,10 @@
       if(base){
         const sep = base.includes('?') ? '&' : '?';
         const url = `${base}${sep}org=${ORG}`;
-        const r = await fetch(url, {cache: 'no-cache'});
+        const headers = {};
+        const apiKey = localStorage.getItem('navigator:proxyApiKey') || '';
+        if(apiKey){ headers['x-api-key'] = apiKey; }
+        const r = await fetch(url, {cache: 'no-cache', headers});
         if(!r.ok) throw new Error('Proxy error '+r.status);
         const arr = await r.json();
         return arr;
@@ -217,17 +220,21 @@
   const proxyModeEl = document.getElementById('proxyMode');
   const proxyUrlEl = document.getElementById('proxyUrl');
   const saveProxyBtn = document.getElementById('saveProxy');
+  const proxyApiKeyEl = document.getElementById('proxyApiKey');
 
   // restore proxy settings
   const storedMode = localStorage.getItem('navigator:proxyMode') || 'auto';
   const storedUrl = localStorage.getItem('navigator:proxyUrl') || '';
+  const storedKey = localStorage.getItem('navigator:proxyApiKey') || '';
   if(proxyModeEl) proxyModeEl.value = storedMode;
   if(proxyUrlEl) proxyUrlEl.value = storedUrl;
+  if(proxyApiKeyEl) proxyApiKeyEl.value = storedKey;
 
   if(saveProxyBtn) saveProxyBtn.onclick = ()=>{
-    const m = proxyModeEl.value; const u = proxyUrlEl.value.trim();
+    const m = proxyModeEl.value; const u = proxyUrlEl.value.trim(); const k = proxyApiKeyEl.value.trim();
     localStorage.setItem('navigator:proxyMode', m);
     localStorage.setItem('navigator:proxyUrl', u);
+    localStorage.setItem('navigator:proxyApiKey', k);
     alert('数据源配置已保存，正在刷新');
     saveCache([]); loadAndRender(true);
   };
