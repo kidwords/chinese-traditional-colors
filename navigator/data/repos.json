@@ -1,0 +1,152 @@
+[
+  {
+    "name": "1Panel",
+    "full_name": "kidwords/1Panel",
+    "html_url": "https://github.com/kidwords/1Panel",
+    "description": "🔥 1Panel provides an intuitive web interface and MCP Server to manage websites, files, containers, databases, and LLMs on a Linux server.",
+    "stargazers_count": 1,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2025-08-25T10:57:00Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "AstrBot",
+    "full_name": "kidwords/AstrBot",
+    "html_url": "https://github.com/kidwords/AstrBot",
+    "description": "Agentic IM Chatbot infrastructure that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alternative. ✨",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2026-03-05T03:24:22Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "chinese-traditional-colors",
+    "full_name": "kidwords/chinese-traditional-colors",
+    "html_url": "https://github.com/kidwords/chinese-traditional-colors",
+    "description": null,
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": true,
+    "pushed_at": "2026-07-16T10:30:24Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "claude-code-sourcemap",
+    "full_name": "kidwords/claude-code-sourcemap",
+    "html_url": "https://github.com/kidwords/claude-code-sourcemap",
+    "description": null,
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2026-03-31T08:30:55Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "DeepEP",
+    "full_name": "kidwords/DeepEP",
+    "html_url": "https://github.com/kidwords/DeepEP",
+    "description": "DeepEP: an efficient expert-parallel communication library",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2025-02-25T09:19:28Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "DeepGEMM",
+    "full_name": "kidwords/DeepGEMM",
+    "html_url": "https://github.com/kidwords/DeepGEMM",
+    "description": "DeepGEMM: clean and efficient FP8 GEMM kernels with fine-grained scaling",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2025-02-25T14:53:08Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "FlashMLA",
+    "full_name": "kidwords/FlashMLA",
+    "html_url": "https://github.com/kidwords/FlashMLA",
+    "description": null,
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2025-02-25T16:06:05Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "public-apis",
+    "full_name": "kidwords/public-apis",
+    "html_url": "https://github.com/kidwords/public-apis",
+    "description": "A collective list of free APIs",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2025-11-04T18:29:01Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "supermemory",
+    "full_name": "kidwords/supermemory",
+    "html_url": "https://github.com/kidwords/supermemory",
+    "description": "Memory engine and app that is extremely fast, scalable. The Memory API for the AI era.",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2026-03-22T16:06:26Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "x-algorithm",
+    "full_name": "kidwords/x-algorithm",
+    "html_url": "https://github.com/kidwords/x-algorithm",
+    "description": "Algorithm powering the For You feed on X",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": false,
+    "pushed_at": "2026-05-15T21:55:27Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  }
+]
