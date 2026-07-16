@@ -26,6 +26,18 @@
       <button id="refresh" class="btn">刷新</button>
     </div>
 
+    <div class="controls" style="margin-top:8px;">
+      <label for="proxyMode" style="color:var(--muted);margin-right:8px">数据源</label>
+      <select id="proxyMode">
+        <option value="auto">自动（优先使用 navigator/data/repos.json）</option>
+        <option value="worker">Cloudflare Worker</option>
+        <option value="custom">自定义代理 URL</option>
+        <option value="api">直接调 GitHub API</option>
+      </select>
+      <input id="proxyUrl" type="url" placeholder="自定义代理 URL（例如：https://worker.example.com/）" style="flex:1;margin-left:8px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted)" />
+      <button id="saveProxy" class="btn" style="margin-left:8px">保存</button>
+    </div>
+
     <section id="repos">
       <!-- Repo cards inserted by JS -->
     </section>
