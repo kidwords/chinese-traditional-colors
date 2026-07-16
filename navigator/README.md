@@ -38,11 +38,12 @@ Worker behavior: accepts GET /repos?org=ORG and returns JSON list of repos for O
 - The app exposes GET /repos?org=ORG and returns JSON.
 
 5. Using the proxy from the frontend
-- Change the fetchAllRepos() function in navigator/assets/js/app.js to call your proxy URL (e.g. https://my-worker.example.com/repos?org=kidwords) or deploy the proxy and set CORS accordingly.
+- The navigator includes a data source selector (UI) that lets you choose: automatic (prefer static JSON), Cloudflare Worker, custom proxy URL, or direct GitHub API.
+- When using a proxy that requires authentication, enter the API key in the "代理 API Key" field and save — the frontend will send it in the x-api-key header.
 
 6. Next steps
-- Customize sorting/filtering UI
-- Add authentication for proxy
-- Add more badges or workflow details
+- Deploy the Cloudflare Worker (see navigator/cloudflare-worker/README.md) and set GITHUB_TOKEN as a Worker secret.
+- Deploy the Node proxy to Vercel/Render and set GITHUB_TOKEN and PROXY_API_KEY as environment variables.
+- Consider adding server-side authentication and rotating keys using your hosting provider's secrets management.
 
-If you want, I can deploy the Cloudflare Worker and set up a minimal proxy for you — provide the target account details or deploy instructions.
+If you want, I can deploy the Cloudflare Worker and Vercel proxy for you (requires account access or credentials).
