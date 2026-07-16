@@ -1,0 +1,12 @@
+name = "kidwords-navigator-worker"
+main = "index.js"
+compatibility_date = "2026-07-16"
+# account_id = "<your-account-id>" # set when deploying
+
+[build]
+command = ""
+
+[env.production]
+# set account_id and route here when ready
+# account_id = ""
+# route = "navigator.example.com/*"
