@@ -536,9 +536,11 @@ body {
 .imm-btn:hover { background: rgba(255,255,255,0.22); }
 .imm-tab-active { background: rgba(255,255,255,0.18); border-bottom: 2px solid rgba(255,255,255,0.6); }
 /* 配色板内部 */
-.pal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 8px; }
-.pal-card { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 6px 6px 4px; border: 1px solid rgba(255,255,255,0.08); }
-.pal-card-name { font-size: 0.6rem; color: rgba(255,255,255,0.45); margin-bottom: 4px; font-weight: 600; }
+#palAllColors.pal-grid-mode { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; align-content: start; }
+.pal-season-label { font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.5); margin: 6px 0 2px; grid-column: 1 / -1; }
+#palAllColors::-webkit-scrollbar { display: none; }
+.pal-card { background: rgba(255,255,255,0.06); border-radius: 6px; padding: 5px 5px 4px; border: 1px solid rgba(255,255,255,0.08); }
+.pal-card-name { font-size: 0.55rem; color: rgba(255,255,255,0.85); margin-bottom: 3px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5); }
 .pal-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
 .pal-c {
   aspect-ratio: 1 / 1; border-radius: 2px; cursor: pointer;
@@ -557,10 +559,10 @@ body {
   line-height: 1; border: 1.5px solid rgba(255,255,255,0.8);
 }
 @media (max-width: 768px) {
-  .pal-grid { grid-template-columns: repeat(2, 1fr); }
+  #palAllColors.pal-grid-mode { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 480px) {
-  .pal-grid { grid-template-columns: repeat(2, 1fr); }
+  #palAllColors.pal-grid-mode { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* Progress */
@@ -751,16 +753,20 @@ body {
       <div class="imm-strip" id="immStrip"></div>
     </div>
     <!-- 配色板标签页 -->
-    <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;">
-      <div id="palToolbar" style="position:sticky;top:60px;z-index:10;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);border-radius:8px;padding:6px 10px;">
+    <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;flex-direction:column;height:calc(100vh - 60px);overflow:hidden;width:50vw;max-width:720px;min-width:360px;">
+      <div id="palToolbar" style="flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:8px 0 6px;">
         <span style="font-size:0.65rem;color:rgba(255,255,255,0.5);">已选 <span id="palCount">0</span> 色</span>
         <div style="display:flex;gap:5px;">
-          <button class="imm-btn" style="font-size:0.65rem;padding:4px 12px;" onclick="resetPalette()">重置</button>
-          <button class="imm-btn" id="palFoldBtn" style="font-size:0.65rem;padding:4px 12px;" onclick="togglePalFold()">收纳</button>
+          <button class="imm-btn" style="font-size:0.72rem;padding:5px 16px;" onclick="resetPalette()">重置</button>
+          <button class="imm-btn" id="palFoldBtn" style="font-size:0.72rem;padding:5px 16px;" onclick="togglePalFold()">收纳</button>
         </div>
       </div>
-      <div id="palSelectedColors" style="position:sticky;top:100px;z-index:9;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;margin-bottom:8px;min-height:28px;padding:4px 0;"></div>
-      <div id="palAllColors"></div>
+      <div id="palSelectedColors" style="flex-shrink:0;display:flex;flex-direction:row;flex-wrap:wrap;gap:4px;margin-bottom:8px;min-height:28px;padding:4px 0;width:100%;"></div>
+      <div id="palAllColors" style="flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;"></div>
+      <!-- 收纳态：只留一个展开箭头 -->
+      <div id="palFoldToggle" style="display:none;position:absolute;top:50%;left:4px;transform:translateY(-50%);">
+        <button class="imm-btn" style="font-size:1.1rem;padding:6px 8px;border-radius:8px 0 0 8px;" onclick="togglePalFold()" title="展开配色板">▸</button>
+      </div>
     </div>
     <div class="imm-center" id="immCenter"></div>
     <div class="imm-right" id="immRight">
@@ -1887,20 +1893,23 @@ function saveHomeBg() { saveBackgroundAsImage(); }
 function togglePalFold() {
   palFoldState = 1 - palFoldState;
   var btn = document.getElementById('palFoldBtn');
-  btn.textContent = palFoldState ? '展开' : '收纳';
+  btn.textContent = palFoldState ? '' : '收纳';
   var allC = document.getElementById('palAllColors');
   var selC = document.getElementById('palSelectedColors');
   var toolbar = document.getElementById('palToolbar');
+  var foldToggle = document.getElementById('palFoldToggle');
   if (palFoldState) {
+    // 收纳：隐藏一切，只留左侧展开箭头
     allC.style.display = 'none';
     selC.style.display = 'none';
-    toolbar.querySelector('span').style.display = 'none';
-    toolbar.querySelectorAll('.imm-btn')[0].style.display = 'none';
+    toolbar.style.display = 'none';
+    foldToggle.style.display = 'block';
   } else {
+    // 展开：恢复一切
     allC.style.display = '';
     selC.style.display = '';
-    toolbar.querySelector('span').style.display = '';
-    toolbar.querySelectorAll('.imm-btn')[0].style.display = '';
+    toolbar.style.display = '';
+    foldToggle.style.display = 'none';
   }
 }
 
@@ -1940,13 +1949,14 @@ function switchImmTab(tab) {
 function renderPalAllColors() {
   var el = document.getElementById('palAllColors');
   var html = '';
+  var seasonLabels = {0: '春 Spring', 6: '夏 Summer', 12: '秋 Autumn', 18: '冬 Winter'};
   for (var i = 0; i < solarNames.length; i++) {
+    if (seasonLabels[i]) {
+      html += '<div class="pal-season-label" style="grid-column:1/-1;">' + seasonLabels[i] + '</div>';
+    }
     var name = solarNames[i];
     var colors = SOLAR_16_COLORS[name];
     if (!colors) continue;
-    html += '<div class="pal-grid">';
-    // 每行2个卡片，所以每2个节气一组
-    // 当前节气卡片
     html += '<div class="pal-card"><div class="pal-card-name">' + name + '</div><div class="pal-card-grid">';
     for (var j = 0; j < colors.length; j++) {
       var c = colors[j];
@@ -1957,27 +1967,9 @@ function renderPalAllColors() {
       html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
     }
     html += '</div></div>';
-    // 下一个节气（如果存在）
-    i++;
-    if (i < solarNames.length) {
-      var name2 = solarNames[i];
-      var colors2 = SOLAR_16_COLORS[name2];
-      if (colors2) {
-        html += '<div class="pal-card"><div class="pal-card-name">' + name2 + '</div><div class="pal-card-grid">';
-        for (var j = 0; j < colors2.length; j++) {
-          var c = colors2[j];
-          var isSel = false;
-          for (var k = 0; k < selectedPaletteColors.length; k++) {
-            if (selectedPaletteColors[k].hex === c.hex) { isSel = true; break; }
-          }
-          html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
-        }
-        html += '</div></div>';
-      }
-    }
-    html += '</div>';
   }
   el.innerHTML = html;
+  el.className = 'pal-grid-mode';
 }
 
 function togglePalColor(hex, name) {
@@ -2041,14 +2033,12 @@ function resetPalette() {
   if (foldBtn) foldBtn.textContent = '收纳';
   var allC = document.getElementById('palAllColors');
   var selC = document.getElementById('palSelectedColors');
-  if (allC) allC.style.display = '';
-  if (selC) selC.style.display = '';
   var toolbar = document.getElementById('palToolbar');
-  if (toolbar) {
-    toolbar.querySelector('span').style.display = '';
-    var resetBtn = toolbar.querySelectorAll('.imm-btn')[0];
-    if (resetBtn) resetBtn.style.display = '';
-  }
+  var foldToggle = document.getElementById('palFoldToggle');
+  if (allC) allC.style.display = '';
+  if (selC) selC.style.display = 'flex';
+  if (toolbar) toolbar.style.display = '';
+  if (foldToggle) foldToggle.style.display = 'none';
   var layer = document.getElementById('palBgLayer');
   if (layer) { layer.style.display = 'block'; layer.style.background = paletteBgBeforeEnter; }
   renderPalSelected();
