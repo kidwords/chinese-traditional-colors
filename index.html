@@ -83,19 +83,33 @@ body {
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(8px);
   border-radius: 12px;
-  padding: 10px;
+  padding: 8px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.03);
   transition: transform 0.25s, box-shadow 0.25s;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .solar-group:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-.solar-label { font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 6px; text-align: center; }
-.solar-dots { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; }
+.solar-label { font-size: 0.7rem; font-weight: 600; color: #666; margin-bottom: 4px; text-align: center; line-height: 1.2; }
+.solar-dots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  width: 100%;
+  padding: 0 4px;
+}
 .solar-dot {
-  width: 22px; height: 22px; border-radius: 5px; cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   border: 1px solid rgba(0,0,0,0.06);
 }
-.solar-dot:hover { transform: scale(1.3); box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 2; position: relative; }
+.solar-dot:hover { transform: scale(1.2); box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 2; position: relative; }
 
 .home-footer { text-align: center; padding: 2rem 0; color: #bbb; font-size: 0.78rem; }
 .solar-term-hero { text-align: center; padding: 0.6rem 0 0.3rem; font-size: 1rem; color: #555; letter-spacing: 0.5px; margin-top: 0.3rem; }
@@ -110,42 +124,48 @@ body {
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
   cursor: pointer;
   transition: transform 0.25s, box-shadow 0.25s;
 }
-.solar-gallery-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.solar-gallery-card:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
 .solar-card-top {
-  height: 72px;
+  height: 56px;
   position: relative;
   display: flex;
-  align-items: flex-end;
-  padding: 8px 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
 }
 .solar-card-name {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
   z-index: 1;
+  letter-spacing: 0.5px;
 }
 .solar-card-colors {
   display: flex;
-  height: 28px;
+  height: 32px;
 }
 .solar-card-color { flex: 1; cursor: pointer; transition: transform 0.2s; }
-.solar-card-color:hover { transform: scale(1.05); z-index: 1; }
+.solar-card-color:hover { transform: scale(1.08); z-index: 1; }
 .solar-card-mode {
   position: absolute;
-  top: 6px; right: 6px;
-  background: rgba(255,255,255,0.25);
-  border: none; border-radius: 6px;
+  top: 5px; right: 5px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 6px;
   padding: 2px 8px; font-size: 0.65rem;
   color: #fff; cursor: pointer; font-family: inherit;
   font-weight: 500; transition: all 0.2s;
   z-index: 2;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.solar-card-mode:hover { background: rgba(255,255,255,0.4); }
+.solar-card-mode:hover { background: rgba(255,255,255,0.35); }
 
 /* ============================== */
 /* VIEW 2: GALLERY (重构)          */
@@ -196,104 +216,11 @@ body {
 .mode-toggle:hover { background: #333; }
 
 /* Gallery grid */
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-@media (min-width: 1440px) { .gallery-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (max-width: 1100px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+@media (min-width: 1440px) { .gallery-grid { grid-template-columns: repeat(6, 1fr); } }
+@media (max-width: 1100px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
 @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; } }
-
-/* Square card */
-.gallery-card {
-  aspect-ratio: 4 / 3;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  transition: all 0.3s;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.gallery-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
-
-/* Card top: gradient + prompt */
-.card-gradient {
-  flex: 3;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-.card-prompt-overlay {
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 16px;
-  position: relative;
-}
-.card-prompt-text {
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: #fff;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  padding-right: 48px;
-}
-.card-scene-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 4px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-.card-mode-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-size: 0.7rem;
-  color: #fff;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.2s;
-  z-index: 2;
-}
-.card-mode-btn:hover { background: rgba(255,255,255,0.35); }
-.card-copy-btn {
-  position: absolute;
-  top: 52px;
-  right: 12px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-size: 0.7rem;
-  color: #fff;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.2s;
-  z-index: 2;
-}
-.card-copy-btn:hover { background: rgba(255,255,255,0.35); }
-
-/* Card bottom: color squares */
-.card-colors {
-  flex: 2;
-  display: flex;
-}
-.card-color-sq {
-  flex: 1;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-.card-color-sq:hover { transform: scale(1.05); z-index: 1; }
 
 /* ============================== */
 /* VIEW 3: IMMERSIVE               */
@@ -417,6 +344,49 @@ body {
   opacity: 1;
 }
 .imm-arrow-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Auto-play 轮播 - 背景切换过渡层 */
+.imm-bg-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background-size: cover;
+  pointer-events: none;
+  display: none;
+  transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.5s ease;
+}
+.imm-auto-label {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.imm-auto-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  letter-spacing: 2px;
+  transition: opacity 0.3s;
+}
+.imm-auto-meta {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}
+.auto-playing .imm-nav { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+.auto-playing .imm-left { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+.auto-playing .imm-right { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+.auto-playing .imm-center { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
 
 /* Solar strip - 24节气切换 */
 .imm-solar-strip {
@@ -564,6 +534,34 @@ body {
   transition: all 0.25s;
 }
 .imm-btn:hover { background: rgba(255,255,255,0.22); }
+.imm-tab-active { background: rgba(255,255,255,0.18); border-bottom: 2px solid rgba(255,255,255,0.6); }
+/* 配色板内部 */
+.pal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 8px; }
+.pal-card { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 6px 6px 4px; border: 1px solid rgba(255,255,255,0.08); }
+.pal-card-name { font-size: 0.6rem; color: rgba(255,255,255,0.45); margin-bottom: 4px; font-weight: 600; }
+.pal-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.pal-c {
+  aspect-ratio: 1 / 1; border-radius: 2px; cursor: pointer;
+  border: 1px solid transparent; transition: transform 0.15s, border-color 0.15s;
+}
+.pal-c:hover { transform: scale(1.2); z-index: 2; position: relative; }
+.pal-c.sel { border-color: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.3); }
+.pal-sel-chip {
+  width: 28px; height: 28px; border-radius: 5px; position: relative; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.6);
+}
+.pal-sel-chip .pal-x {
+  position: absolute; top: -5px; right: -5px; width: 14px; height: 14px;
+  background: rgba(0,0,0,0.7); color: #fff; border-radius: 50%; font-size: 9px;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  line-height: 1; border: 1.5px solid rgba(255,255,255,0.8);
+}
+@media (max-width: 768px) {
+  .pal-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .pal-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* Progress */
 .imm-progress { display: flex; gap: 6px; justify-content: center; margin-top: 1.2rem; }
@@ -595,12 +593,82 @@ body {
   .imm-center { min-height: 40vh; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 640px) {
-  .gallery-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  /* === 首页节气色块 === */
+  .solar-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .solar-group { padding: 6px; aspect-ratio: 1 / 1; }
+  .solar-label { font-size: 0.65rem; margin-bottom: 3px; }
+  .solar-dots { gap: 3px; }
+  .solar-dot { border-radius: 2px; }
+
+  /* === 全部浏览卡片 === */
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .solar-gallery-card { border-radius: 12px; }
+  .solar-card-top { height: 60px; padding: 6px 8px; }
+  .solar-card-name { font-size: 0.7rem; }
+  .solar-card-colors { height: 32px; }
+  .solar-card-mode { font-size: 0.6rem; padding: 2px 6px; }
+
+  /* === 逐步览色：底部色卡横滑条 === */
+  .imm-layout { flex-direction: column; }
+  .imm-left {
+    width: 100% !important;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    flex-direction: column;
+    padding: 10px 12px 12px;
+    max-height: 42vh;
+    overflow-y: auto;
+    z-index: 100;
+    background: rgba(20,20,25,0.92);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    order: 3;
+  }
+  #immPalette { padding-top: 10px !important; }
+  .imm-left > div[style*="font-size:0.7rem"] { font-size: 0.6rem !important; margin-bottom: 4px !important; }
+  .imm-scene-strip { gap: 6px !important; margin-bottom: 8px !important; padding-bottom: 6px !important; }
+  .imm-solar-strip { gap: 5px !important; margin-bottom: 8px !important; padding-bottom: 6px !important; }
+  .imm-solar-dot { width: 24px !important; height: 24px !important; }
+  .imm-scene-dot { width: 32px !important; height: 32px !important; }
+  .imm-strip { flex-direction: row !important; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .imm-swatch { width: 72px !important; height: 52px !important; flex-shrink: 0; border-radius: 10px; }
+  .imm-swatch-label { font-size: 0.6rem !important; }
+  .imm-swatch-hex { font-size: 0.58rem !important; }
+  .imm-blend-bar { min-width: 72px !important; }
+
+  .imm-center { min-height: 45vh; order: 1; }
+  .imm-right {
+    width: 100% !important;
+    padding: 1rem 1.2rem calc(42vh + 1rem) !important;
+    order: 2;
+  }
+  .imm-panel { padding: 1rem !important; border-radius: 14px; }
+  .imm-panel h2 { font-size: 1.1rem; }
+  .imm-desc { font-size: 0.78rem; }
+  .imm-prompt-text { font-size: 0.7rem; max-height: 100px; overflow-y: auto; }
+  .imm-btn { font-size: 0.7rem; padding: 5px 10px; }
+  .imm-nav { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+
+  /* === 顶部导航 === */
+  .gallery-header { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+  .gallery-header h2 { font-size: 1.1rem; }
+  .back-btn, .gallery-index-btn { font-size: 0.7rem; padding: 5px 10px; }
+
+  /* === 首页 === */
   .cover h1 { font-size: 2rem; }
-  .solar-grid { grid-template-columns: repeat(3, 1fr); }
-  .imm-panel { padding: 1.5rem; }
-  .imm-left { display: none; }
+  .home-inner { padding: 1rem; }
+  .entry-row { flex-direction: column; gap: 8px; }
+  .entry-btn { width: 100%; }
+  .intro-box p { font-size: 0.82rem; line-height: 1.5; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .solar-grid { grid-template-columns: repeat(2, 1fr); }
+  .imm-swatch { width: 64px !important; height: 48px !important; }
+  .cover h1 { font-size: 1.7rem; }
 }
 
 </style>
@@ -619,12 +687,12 @@ body {
       <p id="homeDesc2">本工具基于这 384 色，设计了 16 种应用场景与 24 种节气配色方案，每种均提供浅色/深色双模式、AI 提示词、以及推荐字体搭配。点击任意色块即可切换背景，感受色彩铺满视野的震撼。</p>
     </div>
     <div class="entry-row">
-      <button class="entry-btn" onclick="startTour(0)"><span class="icon">&#9654;</span> 逐步览色</button>
-      <button class="entry-btn" onclick="showGallery()"><span class="icon">&#9638;</span> 全部浏览</button>
-      <button class="entry-btn entry-btn-disabled" disabled title="功能开发中，敬请期待"><span class="icon">&#10024;</span> 四季幻景（未上线）</button>
+      <button class="entry-btn" onclick="startTour(0)">逐步览色</button>
+      <button class="entry-btn" onclick="showGallery()">全部浏览</button>
+      <button class="entry-btn" onclick="saveHomeBg()">保存背景</button>
     </div>
     <div id="solarHomeContainer"></div>
-    <div class="home-footer">基于《中国传统色：故宫里的色彩美学》郭浩 / 李健明 著</div>
+    <div class="home-footer" id="homeFooter">基于《中国传统色：故宫里的色彩美学》郭浩 / 李健明 著</div>
   </div>
 </div>
 <div id="gallery" class="view">
@@ -657,12 +725,23 @@ body {
       <span class="imm-nav-title" id="immNavTitle">主题名</span>
     </div>
     <div class="imm-nav-right">
+      <button class="imm-btn imm-tab imm-tab-active" id="tabScheme" onclick="switchImmTab('scheme')">方案浏览</button>
+      <button class="imm-btn imm-tab" id="tabPalette" onclick="switchImmTab('palette')">配色板</button>
+      <span style="width:1px;height:20px;background:rgba(255,255,255,0.15);"></span>
       <button class="imm-btn" id="modeBtn" onclick="toggleMode()">切换深色</button>
+      <button class="imm-btn" id="autoPlayBtn" onclick="toggleAutoPlay()">自动轮播</button>
       <button class="imm-btn" onclick="saveBackgroundAsImage()">保存背景</button>
-      <button class="imm-btn" onclick="copyCurrentCSS()">复制 CSS</button>
     </div>
   </nav>
   <div class="imm-layout">
+    <!-- 自动轮播时的居中配色名 -->
+    <div class="imm-auto-label" id="immAutoLabel" style="display:none;">
+      <div class="imm-auto-name" id="immAutoName"></div>
+      <div class="imm-auto-meta" id="immAutoMeta"></div>
+    </div>
+    <!-- 背景切换过渡层 -->
+    <div class="imm-bg-transition" id="immBgTransition"></div>
+    <div id="palBgLayer" style="position:fixed;inset:0;z-index:0;pointer-events:none;display:none;"></div>
     <div class="imm-left" id="immLeft">
       <div style="font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">场景配色</div>
       <div class="imm-scene-strip" id="immSceneStrip" style="margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;"></div>
@@ -671,8 +750,20 @@ body {
       <div class="imm-blend-bar" id="immBlendBar"></div>
       <div class="imm-strip" id="immStrip"></div>
     </div>
+    <!-- 配色板标签页 -->
+    <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;">
+      <div id="palToolbar" style="position:sticky;top:60px;z-index:10;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);border-radius:8px;padding:6px 10px;">
+        <span style="font-size:0.65rem;color:rgba(255,255,255,0.5);">已选 <span id="palCount">0</span> 色</span>
+        <div style="display:flex;gap:5px;">
+          <button class="imm-btn" style="font-size:0.65rem;padding:4px 12px;" onclick="resetPalette()">重置</button>
+          <button class="imm-btn" id="palFoldBtn" style="font-size:0.65rem;padding:4px 12px;" onclick="togglePalFold()">收纳</button>
+        </div>
+      </div>
+      <div id="palSelectedColors" style="position:sticky;top:100px;z-index:9;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;margin-bottom:8px;min-height:28px;padding:4px 0;"></div>
+      <div id="palAllColors"></div>
+    </div>
     <div class="imm-center" id="immCenter"></div>
-    <div class="imm-right">
+    <div class="imm-right" id="immRight">
       <div class="imm-panel" id="immPanel">
         <div style="display:flex;align-items:center;gap:12px;">
           <h2 id="immName">场景名</h2>
@@ -694,21 +785,444 @@ body {
     </div>
   </div>
 </div>
-<div id="preview" class="view">
-  <div class="preview-nav">
-    <div class="preview-nav-bg"></div>
-    <div class="preview-title" id="previewTitle">预览</div>
-    <button class="imm-btn" style="position:relative;z-index:1;" onclick="closePreview()">&#8592; 返回</button>
-  </div>
-  <div class="preview-center">
-    <div class="preview-hex" id="previewHex">#000000</div>
-    <div class="preview-label" id="previewLabel">点击色块预览</div>
-  </div>
-</div>
-
 <div class="copy-feedback" id="copyFeedback">已复制</div>
 <script>
 var SCENES = {"宫廷尊贵":{"desc":"故宫红墙 + 鎏金 + 霁蓝琉璃 · 适合品牌主色、高端包装、正式场景","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"明黄","hex":"#FFD700","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"胭脂虫","hex":"#AB1D22","label":"辅助色"},{"role":"ink","name":"霁蓝","hex":"#3C4654","label":"文字"}],"prompt":"使用中国传统宫廷配色（浅色模式）：背景缟羽 #EFEFEF（素白），主色银朱 #D12920（宫墙红），辅助色胭脂虫 #AB1D22（深红），点缀色明黄 #FFD700（帝王金），文字/边框用霁蓝 #3C4654（深蓝黑）。整体风格庄重华丽、有东方古典气质，适用于品牌标识、高端包装或正式场合。浅色背景，文字深色，对比度≥4.5:1。","prompt_title":"浅色·正宫红金"},"dark":{"colors":[{"role":"bg","name":"玄天","hex":"#6B5458","label":"背景"},{"role":"surface","name":"缙云","hex":"#EE7959","label":"表面"},{"role":"accent","name":"珊瑚赫","hex":"#C12C1F","label":"主色"},{"role":"accent2","name":"库金","hex":"#E18A3B","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国传统宫廷配色（深色模式）：背景玄天 #6B5458（暗紫灰），主色珊瑚赫 #C12C1F（深红），辅助色库金 #E18A3B（暗金），点缀色缙云 #EE7959（橙红），文字用月魄 #B2B6B6（浅灰）。整体风格沉稳华贵、暗色调东方古典，适用于高端品牌深色主题、夜间模式界面。深色背景，文字浅色，对比度≥4.5:1。","prompt_title":"深色·暗夜宫墙"}},"水墨写意":{"desc":"黑白灰 + 宣纸底 + 印章红 · 适合极简设计、文艺品牌、个人作品集","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"霜地","hex":"#C7C6B6","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"月魄","hex":"#B2B6B6","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国水墨风配色（浅色模式）：背景缟羽 #EFEFEF（宣纸白），主文字玄天 #6B5458（浓墨灰），次要文字/线条月魄 #B2B6B6（淡墨灰），装饰线霜地 #C7C6B6，唯一强调色银朱 #D12920（印章红，仅用于Logo或关键点缀）。整体极简留白、东方禅意，适用于文艺品牌、个人作品集、书籍装帧。","prompt_title":"浅色·宣纸墨韵"},"dark":{"colors":[{"role":"bg","name":"驖骊","hex":"#46433B","label":"背景"},{"role":"surface","name":"雷雨垂","hex":"#7A7B78","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"石涅","hex":"#686A67","label":"辅助色"},{"role":"ink","name":"缟羽","hex":"#EFEFEF","label":"文字"}],"prompt":"使用中国水墨风配色（深色模式）：背景驖骊 #46433B（墨黑），主文字缟羽 #EFEFEF（宣纸白），次要文字石涅 #686A67（灰墨），装饰线雷雨垂 #7A7B78，强调色银朱 #D12920（印章红）。整体深色极简、有水墨夜书意境，适用于深色模式界面、夜间阅读、文艺作品集。","prompt_title":"深色·浓墨夜书"}},"玉石温润":{"desc":"和田玉 + 青瓷 + 月白 · 适合美妆、茶道、女性品牌、雅致场景","season":"春","font":"思源宋体","light":{"colors":[{"role":"bg","name":"凝脂","hex":"#F5F2E9","label":"背景"},{"role":"surface","name":"欧碧","hex":"#C0D695","label":"表面"},{"role":"accent","name":"碧山","hex":"#779649","label":"主色"},{"role":"accent2","name":"春辰","hex":"#A9BE7B","label":"辅助色"},{"role":"ink","name":"缣缃","hex":"#D5C8A0","label":"文字"}],"prompt":"使用中国玉石温润配色（浅色模式）：背景凝脂 #F5F2E9（温润白），主色碧山 #779649（翡翠绿），辅助色春辰 #A9BE7B（嫩青），浅色欧碧 #C0D695，点缀色缣缃 #D5C8A0（暖米）。整体温柔雅致、低饱和、有玉石温润质感，适合美妆、茶道、女性品牌。","prompt_title":"浅色·翡翠青瓷"},"dark":{"colors":[{"role":"bg","name":"青青","hex":"#4F6F46","label":"背景"},{"role":"surface","name":"金埒","hex":"#BE9457","label":"表面"},{"role":"accent","name":"翠虬","hex":"#446A37","label":"主色"},{"role":"accent2","name":"结绿","hex":"#555F4D","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国玉石温润配色（深色模式）：背景青青 #4F6F46（深绿），主色翠虬 #446A37（墨绿），辅助色结绿 #555F4D（暗绿），文字用月魄 #B2B6B6（浅灰），点缀色金埒 #BE9457（暗金）。整体深色温润、有暗夜青瓷质感，适合美妆深色主题、高端茶道品牌。","prompt_title":"深色·暗夜青瓷"}},"山水青绿":{"desc":"石青 + 石绿 + 远山黛 · 适合文旅、教育、文化类项目","season":"春","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"天缥","hex":"#D5EBE1","label":"背景"},{"role":"surface","name":"碧落","hex":"#AED0EE","label":"表面"},{"role":"accent","name":"翠微","hex":"#4C8045","label":"主色"},{"role":"accent2","name":"苍筤","hex":"#99BCAC","label":"辅助色"},{"role":"ink","name":"缥碧","hex":"#80A492","label":"文字"}],"prompt":"使用中国青绿山水配色（浅色模式）：背景天缥 #D5EBE1（天青绿），主色翠微 #4C8045（山绿），辅助色苍筤 #99BCAC（竹青），亮色碧落 #AED0EE（天蓝），点缀色缥碧 #80A492（碧玉）。灵感源自《千里江山图》，适合文旅项目、文化教育品牌、国风插画。","prompt_title":"浅色·千里江山"},"dark":{"colors":[{"role":"bg","name":"骐驎","hex":"#12264F","label":"背景"},{"role":"surface","name":"翠虬","hex":"#446A37","label":"表面"},{"role":"accent","name":"青緺","hex":"#284852","label":"主色"},{"role":"accent2","name":"螺子黛","hex":"#13393E","label":"辅助色"},{"role":"ink","name":"吉金","hex":"#896D47","label":"文字"}],"prompt":"使用中国青绿山水配色（深色模式）：背景骐驎 #12264F（深蓝黑），主色青緺 #284852（暗青），辅助色螺子黛 #13393E（墨绿黑），点缀色翠虬 #446A37（山绿），亮色吉金 #896D47（青铜金）。整体深色有夜山黛影的意境，适合文旅深色主题、文化类夜间模式。","prompt_title":"深色·夜山黛影"}},"花月浪漫":{"desc":"桃红 + 缃色 + 丁香 · 适合美妆、婚庆、女性产品、节日设计","season":"春","font":"站酷文艺体","light":{"colors":[{"role":"bg","name":"凝脂","hex":"#F5F2E9","label":"背景"},{"role":"surface","name":"丁香","hex":"#CE93BF","label":"表面"},{"role":"accent","name":"长春","hex":"#DC6B82","label":"主色"},{"role":"accent2","name":"桃夭","hex":"#F6BEC8","label":"辅助色"},{"role":"ink","name":"嫩鹅黄","hex":"#F2C867","label":"文字"}],"prompt":"使用中国花月浪漫配色（浅色模式）：背景凝脂 #F5F2E9（柔白），主色长春 #DC6B82（玫红），辅助色桃夭 #F6BEC8（桃花粉），点缀色丁香 #CE93BF（淡紫），暖色嫩鹅黄 #F2C867。灵感源自「桃之夭夭」，风格柔美温暖，适合美妆品牌、婚庆设计、女性产品。","prompt_title":"浅色·桃夭缃叶"},"dark":{"colors":[{"role":"bg","name":"凝夜紫","hex":"#422256","label":"背景"},{"role":"surface","name":"朱樱","hex":"#8F1D22","label":"表面"},{"role":"accent","name":"红踯躅","hex":"#B83570","label":"主色"},{"role":"accent2","name":"魏紫","hex":"#903754","label":"辅助色"},{"role":"ink","name":"金埒","hex":"#BE9457","label":"文字"}],"prompt":"使用中国花月浪漫配色（深色模式）：背景凝夜紫 #422256（暗紫），主色红踯躅 #B83570（艳玫红），辅助色魏紫 #903754（深紫红），点缀色朱樱 #8F1D22（深红），亮色金埒 #BE9457（暗金）。整体深色浪漫、有夜棠花影的意境，适合婚庆深色主题、高端女性品牌。","prompt_title":"深色·夜棠花影"}},"大地沉稳":{"desc":"赭石 + 茶褐 + 驼色 · 适合男装、家居、咖啡品牌、文艺空间","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缣缃","hex":"#D5C8A0","label":"背景"},{"role":"surface","name":"蒸栗","hex":"#A58A5F","label":"表面"},{"role":"accent","name":"檀褐","hex":"#945635","label":"主色"},{"role":"accent2","name":"露褐","hex":"#BD8253","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国大地沉稳配色（浅色模式）：背景缣缃 #D5C8A0（暖米），主色檀褐 #945635（红棕），辅助色露褐 #BD8253（浅棕），点缀色蒸栗 #A58A5F（栗色），文字玄天 #6B5458（暗灰）。风格踏实自然、有手工质感，适合男装品牌、家居设计、咖啡品牌。","prompt_title":"浅色·五色土"},"dark":{"colors":[{"role":"bg","name":"目童子","hex":"#5B3222","label":"背景"},{"role":"surface","name":"金埒","hex":"#BE9457","label":"表面"},{"role":"accent","name":"緅絺","hex":"#804C2E","label":"主色"},{"role":"accent2","name":"龙战","hex":"#5F4321","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国大地沉稳配色（深色模式）：背景目童子 #5B3222（深褐），主色緅絺 #804C2E（棕褐），辅助色龙战 #5F4321（暗棕），点缀色金埒 #BE9457（暗金），文字月魄 #B2B6B6（浅灰）。整体深色沉稳、有沉香夜木质感，适合男装深色主题、家居品牌夜间模式。","prompt_title":"深色·沉香夜木"}},"晨昏天光":{"desc":"暮山紫 + 东方既白 + 晚霞 · 适合社交APP、摄影、情感类内容","season":"夏","font":"思源宋体","light":{"colors":[{"role":"bg","name":"凝脂","hex":"#F5F2E9","label":"背景"},{"role":"surface","name":"东方既白","hex":"#8BA3C7","label":"表面"},{"role":"accent","name":"延维","hex":"#4A4B9D","label":"主色"},{"role":"accent2","name":"暮山紫","hex":"#A4ABD6","label":"辅助色"},{"role":"ink","name":"珊瑚赫","hex":"#C12C1F","label":"文字"}],"prompt":"使用中国晨昏天光配色（浅色模式）：背景凝脂 #F5F2E9（暖白），主色延维 #4A4B9D（暮紫），辅助色暮山紫 #A4ABD6（淡紫），亮色东方既白 #8BA3C7（破晓蓝），点缀色珊瑚赫 #C12C1F（晚霞红）。灵感源自「烟光凝而暮山紫」，风格浪漫梦幻，适合社交APP、摄影展示。","prompt_title":"浅色·暮山紫霞"},"dark":{"colors":[{"role":"bg","name":"凝夜紫","hex":"#422256","label":"背景"},{"role":"surface","name":"龙膏烛","hex":"#DE82A7","label":"表面"},{"role":"accent","name":"优昙瑞","hex":"#615EA8","label":"主色"},{"role":"accent2","name":"延维","hex":"#4A4B9D","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国晨昏天光配色（深色模式）：背景凝夜紫 #422256（暗紫黑），主色优昙瑞 #615EA8（暮紫蓝），辅助色延维 #4A4B9D（深紫），点缀色龙膏烛 #DE82A7（粉紫），文字月魄 #B2B6B6（浅灰）。整体深色梦幻、有夜紫星河意境，适合社交APP深色模式、摄影夜间主题。","prompt_title":"深色·夜紫星河"}},"现代国潮":{"desc":"传统色 + 高对比撞色 · 适合国潮品牌、潮流电商、年轻化设计","season":"冬","font":"站酷高端黑","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"黄丹","hex":"#EA5514","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"霁蓝","hex":"#3C4654","label":"辅助色"},{"role":"ink","name":"黄白游","hex":"#FFF799","label":"文字"}],"prompt":"使用现代国潮撞色配色（浅色模式）：背景缟羽 #EFEFEF（白），主色银朱 #D12920（中国红），对比色霁蓝 #3C4654（深蓝），点缀色黄丹 #EA5514（亮橙），亮色黄白游 #FFF799（浅黄）。高饱和高对比的撞色设计，风格年轻有冲击力，适合国潮品牌、电商主视觉。","prompt_title":"浅色·红青撞色"},"dark":{"colors":[{"role":"bg","name":"驖骊","hex":"#46433B","label":"背景"},{"role":"surface","name":"嫩鹅黄","hex":"#F2C867","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"黄丹","hex":"#EA5514","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用现代国潮撞色配色（深色模式）：背景驖骊 #46433B（暗黑），主色银朱 #D12920（中国红），对比色黄丹 #EA5514（亮橙），点缀色嫩鹅黄 #F2C867（亮黄），文字月魄 #B2B6B6（浅灰）。深色背景上的高对比撞色，风格年轻潮酷，适合国潮品牌深色主题、潮流电商夜间模式。","prompt_title":"深色·暗夜国潮"}},"电商促销":{"desc":"高饱和红金 + 明快节奏 · 适合电商大促、秒杀、购物节","season":"夏","font":"站酷高端黑","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"嫩鹅黄","hex":"#F2C867","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"黄丹","hex":"#EA5514","label":"辅助色"},{"role":"ink","name":"霁蓝","hex":"#3C4654","label":"文字"}],"prompt":"使用中国电商促销配色（浅色模式）：背景缟羽 #EFEFEF（白），主色银朱 #D12920（促销红），辅助色黄丹 #EA5514（亮橙），点缀色嫩鹅黄 #F2C867（亮黄），文字霁蓝 #3C4654（深蓝黑）。高饱和度、明快有节奏感，适合电商大促、秒杀页面、购物节主视觉。红色用于价格和按钮，黄色用于优惠券和标签。","prompt_title":"浅色·节庆红金"},"dark":{"colors":[{"role":"bg","name":"玄天","hex":"#6B5458","label":"背景"},{"role":"surface","name":"库金","hex":"#E18A3B","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"黄丹","hex":"#EA5514","label":"辅助色"},{"role":"ink","name":"缟羽","hex":"#EFEFEF","label":"文字"}],"prompt":"使用中国电商促销配色（深色模式）：背景玄天 #6B5458（暗紫灰），主色银朱 #D12920（促销红），辅助色黄丹 #EA5514（亮橙），点缀色库金 #E18A3B（暗金），文字缟羽 #EFEFEF（白）。深色背景上红金高亮，有夜场促销氛围，适合电商深色模式、夜间大促活动页。","prompt_title":"深色·夜场促销"}},"餐饮美食":{"desc":"食材本色 + 茶褐 + 暖橙 · 适合餐厅、食品品牌、菜单设计","season":"夏","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缣缃","hex":"#D5C8A0","label":"背景"},{"role":"surface","name":"栀子","hex":"#FAC03D","label":"表面"},{"role":"accent","name":"柘黄","hex":"#C67915","label":"主色"},{"role":"accent2","name":"露褐","hex":"#BD8253","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国餐饮美食配色（浅色模式）：背景缣缃 #D5C8A0（暖米），主色柘黄 #C67915（食材橙棕），辅助色露褐 #BD8253（浅棕），点缀色栀子 #FAC03D（亮黄），文字玄天 #6B5458（暗灰）。风格温暖有食欲感，适合餐厅品牌、食品包装、菜单设计。暖色调为主，传递食物的温度感。","prompt_title":"浅色·茶膳暖食"},"dark":{"colors":[{"role":"bg","name":"栗壳","hex":"#775039","label":"背景"},{"role":"surface","name":"库金","hex":"#E18A3B","label":"表面"},{"role":"accent","name":"檀褐","hex":"#945635","label":"主色"},{"role":"accent2","name":"柘黄","hex":"#C67915","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国餐饮美食配色（深色模式）：背景栗壳 #775039（深棕），主色檀褐 #945635（红棕），辅助色柘黄 #C67915（食材橙），点缀色库金 #E18A3B（暗金），文字月魄 #B2B6B6（浅灰）。整体深色温暖、有夜膳酒馆氛围，适合餐厅深色主题、夜间美食APP、酒馆品牌。","prompt_title":"深色·夜膳酒馆"}},"科技产品":{"desc":"青冥 + 青雘 + 冷调矿物色 · 适合科技品牌、SaaS、数码产品","season":"春","font":"站酷高端黑","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"碧落","hex":"#AED0EE","label":"表面"},{"role":"accent","name":"青冥","hex":"#3271AE","label":"主色"},{"role":"accent2","name":"青雘","hex":"#007175","label":"辅助色"},{"role":"ink","name":"霁蓝","hex":"#3C4654","label":"文字"}],"prompt":"使用中国科技产品配色（浅色模式）：背景缟羽 #EFEFEF（白），主色青冥 #3271AE（矿物蓝），辅助色青雘 #007175（青绿），亮色碧落 #AED0EE（天蓝），文字霁蓝 #3C4654（深蓝黑）。灵感取自矿物颜料色，冷调科技感，适合科技品牌、SaaS产品、数码产品官网。","prompt_title":"浅色·青冥矿物"},"dark":{"colors":[{"role":"bg","name":"骐驎","hex":"#12264F","label":"背景"},{"role":"surface","name":"青雘","hex":"#007175","label":"表面"},{"role":"accent","name":"青冥","hex":"#3271AE","label":"主色"},{"role":"accent2","name":"青緺","hex":"#284852","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国科技产品配色（深色模式）：背景骐驎 #12264F（深蓝黑），主色青冥 #3271AE（矿物蓝），辅助色青緺 #284852（暗青），点缀色青雘 #007175（青绿），文字月魄 #B2B6B6（浅灰）。深色冷调、有暗夜青冥的科技感，适合科技品牌深色主题、SaaS暗色模式。","prompt_title":"深色·暗夜青冥"}},"金融商务":{"desc":"吉金 + 群青 + 稳重深调 · 适合银行、金融、企业官网","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"吉金","hex":"#896D47","label":"表面"},{"role":"accent","name":"群青","hex":"#2E59A7","label":"主色"},{"role":"accent2","name":"监德","hex":"#6F94CD","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国金融商务配色（浅色模式）：背景缟羽 #EFEFEF（白），主色群青 #2E59A7（深蓝），辅助色监德 #6F94CD（中蓝），点缀色吉金 #896D47（青铜金），文字玄天 #6B5458（暗灰）。风格稳重专业、有信赖感，适合银行、金融机构、企业官网。蓝色传递专业，金色传递价值。","prompt_title":"浅色·吉金群青"},"dark":{"colors":[{"role":"bg","name":"骐驎","hex":"#12264F","label":"背景"},{"role":"surface","name":"库金","hex":"#E18A3B","label":"表面"},{"role":"accent","name":"群青","hex":"#2E59A7","label":"主色"},{"role":"accent2","name":"吉金","hex":"#896D47","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国金融商务配色（深色模式）：背景骐驎 #12264F（深蓝黑），主色群青 #2E59A7（深蓝），点缀色吉金 #896D47（青铜金），亮色库金 #E18A3B（暗金），文字月魄 #B2B6B6（浅灰）。深色稳重、有暗夜金融的专业感，适合银行深色主题、金融APP夜间模式。","prompt_title":"深色·暗夜金融"}},"儿童教育":{"desc":"嫩绿 + 鹅黄 + 明快活泼 · 适合儿童教育、亲子、幼儿园","season":"春","font":"站酷快乐体","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"嫩鹅黄","hex":"#F2C867","label":"表面"},{"role":"accent","name":"黄栗留","hex":"#FEDC5E","label":"主色"},{"role":"accent2","name":"青粲","hex":"#C3D94E","label":"辅助色"},{"role":"ink","name":"桃夭","hex":"#F6BEC8","label":"文字"}],"prompt":"使用中国儿童教育配色（浅色模式）：背景缟羽 #EFEFEF（白），主色黄栗留 #FEDC5E（亮黄），辅助色青粲 #C3D94E（嫩绿），点缀色嫩鹅黄 #F2C867（暖黄），装饰色桃夭 #F6BEC8（粉红）。整体明快活泼、有春日童趣感，适合儿童教育品牌、亲子APP、幼儿园设计。色彩饱和度适中，保护儿童视力。","prompt_title":"浅色·春日童趣"},"dark":{"colors":[{"role":"bg","name":"骐驎","hex":"#12264F","label":"背景"},{"role":"surface","name":"桃夭","hex":"#F6BEC8","label":"表面"},{"role":"accent","name":"黄栗留","hex":"#FEDC5E","label":"主色"},{"role":"accent2","name":"青粲","hex":"#C3D94E","label":"辅助色"},{"role":"ink","name":"缟羽","hex":"#EFEFEF","label":"文字"}],"prompt":"使用中国儿童教育配色（深色模式）：背景骐驎 #12264F（星空蓝黑），主色黄栗留 #FEDC5E（星黄），辅助色青粲 #C3D94E（嫩绿），点缀色桃夭 #F6BEC8（粉红），文字缟羽 #EFEFEF（白）。深色背景上明亮的色彩、有星空童梦感，适合儿童教育APP深色模式、睡前故事界面。","prompt_title":"深色·星空童梦"}},"医疗健康":{"desc":"缥碧 + 碧落 + 清新疗愈 · 适合医疗、健康、养生","season":"冬","font":"思源宋体","light":{"colors":[{"role":"bg","name":"凝脂","hex":"#F5F2E9","label":"背景"},{"role":"surface","name":"天缥","hex":"#D5EBE1","label":"表面"},{"role":"accent","name":"缥碧","hex":"#80A492","label":"主色"},{"role":"accent2","name":"碧落","hex":"#AED0EE","label":"辅助色"},{"role":"ink","name":"霁蓝","hex":"#3C4654","label":"文字"}],"prompt":"使用中国医疗健康配色（浅色模式）：背景凝脂 #F5F2E9（温润白），主色缥碧 #80A492（青瓷绿），辅助色碧落 #AED0EE（天蓝），浅色天缥 #D5EBE1（淡青），文字霁蓝 #3C4654（深蓝黑）。整体清新疗愈、低饱和、有青瓷质感，适合医疗品牌、健康APP、养生类产品。绿色传递健康，蓝色传递专业。","prompt_title":"浅色·青瓷疗愈"},"dark":{"colors":[{"role":"bg","name":"青青","hex":"#4F6F46","label":"背景"},{"role":"surface","name":"碧落","hex":"#AED0EE","label":"表面"},{"role":"accent","name":"缥碧","hex":"#80A492","label":"主色"},{"role":"accent2","name":"青緺","hex":"#284852","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国医疗健康配色（深色模式）：背景青青 #4F6F46（深绿），主色缥碧 #80A492（青瓷绿），辅助色青緺 #284852（暗青），点缀色碧落 #AED0EE（天蓝），文字月魄 #B2B6B6（浅灰）。深色清新、有暗夜疗愈的安静感，适合医疗APP深色模式、健康类产品夜间主题。","prompt_title":"深色·暗夜疗愈"}},"个人博客":{"desc":"檀褐 + 暮山紫 + 文艺质感 · 适合个人博客、作品集、独立开发者","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"缣缃","hex":"#D5C8A0","label":"表面"},{"role":"accent","name":"檀褐","hex":"#945635","label":"主色"},{"role":"accent2","name":"暮山紫","hex":"#A4ABD6","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国个人博客配色（浅色模式）：背景缟羽 #EFEFEF（白），主色檀褐 #945635（棕褐），辅助色暮山紫 #A4ABD6（淡紫），浅色缣缃 #D5C8A0（暖米），文字玄天 #6B5458（暗灰）。风格文艺有书卷气、适合个人博客、作品集、独立开发者网站。棕褐为主色调，紫色做装饰，暖米做卡片背景。","prompt_title":"浅色·文人书斋"},"dark":{"colors":[{"role":"bg","name":"目童子","hex":"#5B3222","label":"背景"},{"role":"surface","name":"延维","hex":"#4A4B9D","label":"表面"},{"role":"accent","name":"檀褐","hex":"#945635","label":"主色"},{"role":"accent2","name":"凝夜紫","hex":"#422256","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国个人博客配色（深色模式）：背景目童子 #5B3222（深褐），主色檀褐 #945635（棕褐），辅助色凝夜紫 #422256（暗紫），点缀色延维 #4A4B9D（暮紫），文字月魄 #B2B6B6（浅灰）。深色文艺、有夜读随笔的意境，适合个人博客深色主题、作品集夜间模式。","prompt_title":"深色·夜读随笔"}},"节日主题":{"desc":"春节红 + 中秋金 + 节庆喜庆 · 适合节日活动、贺卡、主题皮肤","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"黄白游","hex":"#FFF799","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"黄栗留","hex":"#FEDC5E","label":"辅助色"},{"role":"ink","name":"桃夭","hex":"#F6BEC8","label":"文字"}],"prompt":"使用中国节日主题配色（春节浅色模式）：背景缟羽 #EFEFEF（白），主色银朱 #D12920（中国红），辅助色黄栗留 #FEDC5E（亮黄），点缀色黄白游 #FFF799（浅黄），装饰色桃夭 #F6BEC8（粉红）。整体喜庆热闹、有春节氛围，适合节日活动页、贺卡设计、春节主题皮肤。红色为主，金黄为辅。","prompt_title":"浅色·春节喜庆"},"dark":{"colors":[{"role":"bg","name":"玄天","hex":"#6B5458","label":"背景"},{"role":"surface","name":"嫩鹅黄","hex":"#F2C867","label":"表面"},{"role":"accent","name":"银朱","hex":"#D12920","label":"主色"},{"role":"accent2","name":"库金","hex":"#E18A3B","label":"辅助色"},{"role":"ink","name":"缟羽","hex":"#EFEFEF","label":"文字"}],"prompt":"使用中国节日主题配色（春节深色模式）：背景玄天 #6B5458（暗紫灰），主色银朱 #D12920（中国红），辅助色库金 #E18A3B（暗金），点缀色嫩鹅黄 #F2C867（亮黄），文字缟羽 #EFEFEF（白）。深色喜庆、有除夕夜宴的氛围，适合节日深色主题、春节活动夜间模式。","prompt_title":"深色·除夕夜宴"}}};
+var SOLAR_16_COLORS = {
+  "立春": [
+    {name: "黄白游", hex: "#FFF799"},
+    {name: "松花", hex: "#FFEE6F"},
+    {name: "缃叶", hex: "#ECD452"},
+    {name: "苍黄", hex: "#B6A014"},
+    {name: "天缥", hex: "#D5EBE1"},
+    {name: "沧浪", hex: "#B1D5C8"},
+    {name: "苍筤", hex: "#99BCAC"},
+    {name: "缥碧", hex: "#80A492"},
+    {name: "流黄", hex: "#8B7042"},
+    {name: "栗壳", hex: "#775039"},
+    {name: "龙战", hex: "#5F4321"},
+    {name: "青骊", hex: "#422517"},
+    {name: "海天霞", hex: "#F3A694"},
+    {name: "缙云", hex: "#EE7959"},
+    {name: "纁黄", hex: "#BA5140"},
+    {name: "珊瑚赫", hex: "#C12C1F"}
+  ],
+  "雨水": [
+    {name: "盈盈", hex: "#F9D3E3"},
+    {name: "水红", hex: "#ECB0C1"},
+    {name: "苏梅", hex: "#DD7694"},
+    {name: "紫茎屏风", hex: "#A76283"},
+    {name: "黄河琉璃", hex: "#E5A84B"},
+    {name: "库金", hex: "#E18A3B"},
+    {name: "缊韨", hex: "#984F31"},
+    {name: "紫瓯", hex: "#7C461E"},
+    {name: "葭灰", hex: "#BEB1AA"},
+    {name: "黄埃", hex: "#B49273"},
+    {name: "老僧衣", hex: "#A46244"},
+    {name: "玄天", hex: "#6B5458"},
+    {name: "欧碧", hex: "#C0D695"},
+    {name: "春辰", hex: "#A9BE7B"},
+    {name: "碧山", hex: "#779649"},
+    {name: "青青", hex: "#4F6F46"}
+  ],
+  "惊蛰": [
+    {name: "赤缇", hex: "#BA5B49"},
+    {name: "朱草", hex: "#A64036"},
+    {name: "綪茷", hex: "#9E2A22"},
+    {name: "顺圣", hex: "#7C191E"},
+    {name: "桃夭", hex: "#F6BEC8"},
+    {name: "杨妃", hex: "#F091A0"},
+    {name: "长春", hex: "#DC6B82"},
+    {name: "牙绯", hex: "#C35C5D"},
+    {name: "黄栗留", hex: "#FEDC5E"},
+    {name: "栀子", hex: "#FAC03D"},
+    {name: "黄不老", hex: "#DB9B34"},
+    {name: "柘黄", hex: "#C67915"},
+    {name: "青鸾", hex: "#9AA7B1"},
+    {name: "菘蓝", hex: "#6B798E"},
+    {name: "青黛", hex: "#45465E"},
+    {name: "绀蝶", hex: "#2C2F3B"}
+  ],
+  "春分": [
+    {name: "皦玉", hex: "#EBEEE8"},
+    {name: "吉量", hex: "#EBEDDF"},
+    {name: "韶粉", hex: "#E0E0D0"},
+    {name: "霜地", hex: "#C7C6B6"},
+    {name: "夏籥", hex: "#D2AF9D"},
+    {name: "紫磨金", hex: "#BC836B"},
+    {name: "檀色", hex: "#B26D5D"},
+    {name: "赭罗", hex: "#9A6655"},
+    {name: "黄丹", hex: "#EA5514"},
+    {name: "洛神珠", hex: "#D23918"},
+    {name: "丹雘", hex: "#C8161D"},
+    {name: "水华朱", hex: "#A72126"},
+    {name: "青冥", hex: "#3271AE"},
+    {name: "青雘", hex: "#007175"},
+    {name: "青緺", hex: "#284852"},
+    {name: "骐驎", hex: "#12264F"}
+  ],
+  "清明": [
+    {name: "紫蒲", hex: "#A6559D"},
+    {name: "赪紫", hex: "#8A1874"},
+    {name: "齐紫", hex: "#6C216D"},
+    {name: "凝夜紫", hex: "#422256"},
+    {name: "冻缥", hex: "#BEC2B3"},
+    {name: "春碧", hex: "#9D9D82"},
+    {name: "执大象", hex: "#919177"},
+    {name: "苔古", hex: "#79836C"},
+    {name: "香炉紫烟", hex: "#D3CCD6"},
+    {name: "紫菂", hex: "#9B8EA9"},
+    {name: "拂紫绵", hex: "#7E527F"},
+    {name: "三公子", hex: "#663D74"},
+    {name: "琅玕紫", hex: "#CB5C83"},
+    {name: "红踯躅", hex: "#B83570"},
+    {name: "魏红", hex: "#A73766"},
+    {name: "魏紫", hex: "#903754"}
+  ],
+  "谷雨": [
+    {name: "昌荣", hex: "#DCC7E1"},
+    {name: "紫薄汗", hex: "#BBA1CB"},
+    {name: "茈藐", hex: "#A67EB7"},
+    {name: "紫紶", hex: "#7D5284"},
+    {name: "苍葭", hex: "#A8BF8F"},
+    {name: "庭芜绿", hex: "#68945C"},
+    {name: "翠微", hex: "#4C8045"},
+    {name: "翠虬", hex: "#446A37"},
+    {name: "碧落", hex: "#AED0EE"},
+    {name: "挼蓝", hex: "#6E9BC5"},
+    {name: "青雀头黛", hex: "#354E6B"},
+    {name: "螺子黛", hex: "#13393E"},
+    {name: "露褐", hex: "#BD8253"},
+    {name: "檀褐", hex: "#945635"},
+    {name: "緅絺", hex: "#804C2E"},
+    {name: "目童子", hex: "#5B3222"}
+  ],
+  "立夏": [
+    {name: "青粲", hex: "#C3D94E"},
+    {name: "翠缥", hex: "#B7D332"},
+    {name: "人籁", hex: "#9EBC19"},
+    {name: "水龙吟", hex: "#84A729"},
+    {name: "地籁", hex: "#84A729"},
+    {name: "大块", hex: "#BFA782"},
+    {name: "养生主", hex: "#B49B7F"},
+    {name: "大云", hex: "#94784F"},
+    {name: "溶溶月", hex: "#BEC2BC"},
+    {name: "绍衣", hex: "#A8A19C"},
+    {name: "石莲褐", hex: "#92897B"},
+    {name: "黑朱", hex: "#70695D"},
+    {name: "朱颜酡", hex: "#F29A76"},
+    {name: "苕荣", hex: "#ED6D3D"},
+    {name: "檎丹", hex: "#E94829"},
+    {name: "丹罽", hex: "#E60012"}
+  ],
+  "小满": [
+    {name: "彤管", hex: "#E2A2AC"},
+    {name: "渥赭", hex: "#DD6B7B"},
+    {name: "唇脂", hex: "#C25160"},
+    {name: "朱孔阳", hex: "#B81A35"},
+    {name: "石发", hex: "#6A8D52"},
+    {name: "漆姑", hex: "#5D8351"},
+    {name: "芰荷", hex: "#4F794A"},
+    {name: "官绿", hex: "#2A6E3F"},
+    {name: "仙米", hex: "#D4C9AA"},
+    {name: "黄螺", hex: "#B4A379"},
+    {name: "降真香", hex: "#9E8358"},
+    {name: "远志", hex: "#81663B"},
+    {name: "嫩鹅黄", hex: "#F2C867"},
+    {name: "鞠衣", hex: "#D3A237"},
+    {name: "郁金裙", hex: "#D08635"},
+    {name: "黄流", hex: "#9F6027"}
+  ],
+  "芒种": [
+    {name: "筠雾", hex: "#D5D1AE"},
+    {name: "瓷秘", hex: "#BFC096"},
+    {name: "琬琰", hex: "#A9A886"},
+    {name: "青圭", hex: "#92905D"},
+    {name: "鸣珂", hex: "#B3B59C"},
+    {name: "青玉案", hex: "#A8B092"},
+    {name: "出岫", hex: "#A9A773"},
+    {name: "风入松", hex: "#868C4E"},
+    {name: "如梦令", hex: "#DDBB99"},
+    {name: "芸黄", hex: "#D2A36C"},
+    {name: "金埒", hex: "#BE9457"},
+    {name: "雌黄", hex: "#B4884D"},
+    {name: "曾青", hex: "#535164"},
+    {name: "䒌靘", hex: "#454659"},
+    {name: "璆琳", hex: "#343041"},
+    {name: "瑾瑜", hex: "#1E2732"}
+  ],
+  "夏至": [
+    {name: "赩炽", hex: "#CB523E"},
+    {name: "石榴裙", hex: "#B13B2E"},
+    {name: "朱湛", hex: "#95302E"},
+    {name: "大繎", hex: "#822327"},
+    {name: "月魄", hex: "#B2B6B6"},
+    {name: "不皂", hex: "#A7AAA1"},
+    {name: "雷雨垂", hex: "#7A7B78"},
+    {name: "石涅", hex: "#686A67"},
+    {name: "扶光", hex: "#F0C2A2"},
+    {name: "椒房", hex: "#DB9C5E"},
+    {name: "红友", hex: "#D9883D"},
+    {name: "光明砂", hex: "#CC5D20"},
+    {name: "山矾", hex: "#CC5D20"},
+    {name: "玉頩", hex: "#CC5D20"},
+    {name: "二目鱼", hex: "#CC5D20"},
+    {name: "明月珰", hex: "#CC5D20"}
+  ],
+  "小暑": [
+    {name: "骍刚", hex: "#F5B087"},
+    {name: "赪霞", hex: "#F18F60"},
+    {name: "赪尾", hex: "#EF845D"},
+    {name: "朱柿", hex: "#ED6D46"},
+    {name: "天球", hex: "#E0DFC6"},
+    {name: "行香子", hex: "#BFB99C"},
+    {name: "王刍", hex: "#A99F70"},
+    {name: "荩箧", hex: "#877D52"},
+    {name: "赤灵", hex: "#954024"},
+    {name: "丹秫", hex: "#873424"},
+    {name: "术兰", hex: "#662B1F"},
+    {name: "麒麟竭", hex: "#4C1E1A"},
+    {name: "柔蓝", hex: "#106898"},
+    {name: "碧城", hex: "#12507B"},
+    {name: "蓝采和", hex: "#06436F"},
+    {name: "帝释青", hex: "#003460"}
+  ],
+  "大暑": [
+    {name: "夕岚", hex: "#E3ADB9"},
+    {name: "雌霓", hex: "#CF929E"},
+    {name: "绛纱", hex: "#B27777"},
+    {name: "茹藘", hex: "#A35F65"},
+    {name: "葱青", hex: "#EDF1BB"},
+    {name: "少艾", hex: "#E3EB98"},
+    {name: "绮钱", hex: "#D8DE8A"},
+    {name: "翠樽", hex: "#CDD171"},
+    {name: "石蜜", hex: "#D4BF89"},
+    {name: "沙饧", hex: "#BFA670"},
+    {name: "巨吕", hex: "#AA8E59"},
+    {name: "吉金", hex: "#896D47"},
+    {name: "山岚", hex: "#BED2BB"},
+    {name: "渌波", hex: "#9BB496"},
+    {name: "青楸", hex: "#81A380"},
+    {name: "菉竹", hex: "#698E6A"}
+  ],
+  "立秋": [
+    {name: "窃蓝", hex: "#88ABDA"},
+    {name: "监德", hex: "#6F94CD"},
+    {name: "苍苍", hex: "#5976BA"},
+    {name: "群青", hex: "#2E59A7"},
+    {name: "白青", hex: "#98B6C2"},
+    {name: "竹月", hex: "#7F9FAF"},
+    {name: "空青", hex: "#66889E"},
+    {name: "太师青", hex: "#547689"},
+    {name: "缟羽", hex: "#EFEFEF"},
+    {name: "香皮", hex: "#D8D1C5"},
+    {name: "云母", hex: "#C6BEB1"},
+    {name: "佩玖", hex: "#AC9F8A"},
+    {name: "麴尘", hex: "#C0D09D"},
+    {name: "绿沈", hex: "#938F4C"},
+    {name: "绞衣", hex: "#7F754C"},
+    {name: "素綦", hex: "#595333"}
+  ],
+  "处暑": [
+    {name: "退红", hex: "#F0CFE3"},
+    {name: "樱花", hex: "#E4B8D5"},
+    {name: "丁香", hex: "#CE93BF"},
+    {name: "木槿", hex: "#BA79B1"},
+    {name: "余白", hex: "#C9CFC1"},
+    {name: "兰苕", hex: "#A8B78C"},
+    {name: "碧滋", hex: "#90A07D"},
+    {name: "葱倩", hex: "#6C8650"},
+    {name: "云门", hex: "#A2D2E2"},
+    {name: "西子", hex: "#87C0CA"},
+    {name: "天水碧", hex: "#5AA4AE"},
+    {name: "法翠", hex: "#108B96"},
+    {name: "桑蕾", hex: "#EAD89A"},
+    {name: "太一余粮", hex: "#D5B45C"},
+    {name: "秋香", hex: "#BF9C46"},
+    {name: "老茯神", hex: "#AA8534"}
+  ],
+  "白露": [
+    {name: "凝脂", hex: "#F5F2E9"},
+    {name: "玉色", hex: "#EAE4D1"},
+    {name: "黄润", hex: "#DFD6B8"},
+    {name: "缣缃", hex: "#D5C8A0"},
+    {name: "蕉月", hex: "#86908A"},
+    {name: "千山翠", hex: "#6B7D73"},
+    {name: "结绿", hex: "#555F4D"},
+    {name: "绿云", hex: "#45493D"},
+    {name: "藕丝秋半", hex: "#D3CBC5"},
+    {name: "苍烟落照", hex: "#C8B5B3"},
+    {name: "红藤杖", hex: "#928187"},
+    {name: "紫鼠", hex: "#594C57"},
+    {name: "黄粱", hex: "#C4B798"},
+    {name: "蒸栗", hex: "#A58A5F"},
+    {name: "射干", hex: "#7C623F"},
+    {name: "油葫芦", hex: "#644D31"}
+  ],
+  "秋分": [
+    {name: "卵色", hex: "#D5E3D4"},
+    {name: "葭菼", hex: "#CAD7C5"},
+    {name: "冰台", hex: "#BECAB7"},
+    {name: "青古", hex: "#B3BDA9"},
+    {name: "栾华", hex: "#C0AD5E"},
+    {name: "大赤", hex: "#AA9649"},
+    {name: "佛赤", hex: "#8F3D2C"},
+    {name: "蜜褐", hex: "#683632"},
+    {name: "孔雀蓝", hex: "#4994C4"},
+    {name: "吐绶蓝", hex: "#4182A4"},
+    {name: "鱼师青", hex: "#32788A"},
+    {name: "软翠", hex: "#006D87"},
+    {name: "浅云", hex: "#EAEEF1"},
+    {name: "素采", hex: "#D4DDE1"},
+    {name: "影青", hex: "#BDCBD2"},
+    {name: "逍遥游", hex: "#B2BFC3"}
+  ],
+  "寒露": [
+    {name: "醽醁", hex: "#A6BAB1"},
+    {name: "翠涛", hex: "#819D8E"},
+    {name: "青梅", hex: "#778A77"},
+    {name: "翕赩", hex: "#5F766A"},
+    {name: "九斤黄", hex: "#DDB078"},
+    {name: "杏子", hex: "#DA9233"},
+    {name: "媚蝶", hex: "#BC6E37"},
+    {name: "韎韐", hex: "#9F5221"},
+    {name: "东方既白", hex: "#8BA3C7"},
+    {name: "绀宇", hex: "#003D74"},
+    {name: "佛头青", hex: "#19325F"},
+    {name: "花青", hex: "#1A2847"},
+    {name: "弗肯红", hex: "#ECD9C7"},
+    {name: "赤璋", hex: "#E1C199"},
+    {name: "茧色", hex: "#C6A268"},
+    {name: "密陀僧", hex: "#B3934B"}
+  ],
+  "霜降": [
+    {name: "银朱", hex: "#D12920"},
+    {name: "胭脂虫", hex: "#AB1D22"},
+    {name: "朱樱", hex: "#8F1D22"},
+    {name: "爵头", hex: "#631216"},
+    {name: "甘石", hex: "#BDB2B2"},
+    {name: "迷楼灰", hex: "#91828F"},
+    {name: "鸦雏", hex: "#6A5B6D"},
+    {name: "烟墨", hex: "#5C4F55"},
+    {name: "十样锦", hex: "#F8C6B5"},
+    {name: "檀唇", hex: "#DA9E8C"},
+    {name: "琼琚", hex: "#D77F66"},
+    {name: "棠梨", hex: "#B15A43"},
+    {name: "蜜合", hex: "#DFD7C2"},
+    {name: "假山南", hex: "#D4C1A6"},
+    {name: "紫花布", hex: "#BEA78B"},
+    {name: "沉香", hex: "#99806C"}
+  ],
+  "立冬": [
+    {name: "半见", hex: "#FFFBC7"},
+    {name: "女贞黄", hex: "#F7EEAD"},
+    {name: "绢纨", hex: "#ECE093"},
+    {name: "姜黄", hex: "#D6C560"},
+    {name: "繱犗", hex: "#88BFB8"},
+    {name: "二绿", hex: "#5DA39D"},
+    {name: "铜青", hex: "#3D8E86"},
+    {name: "石绿", hex: "#206864"},
+    {name: "黄琮", hex: "#9E8C6B"},
+    {name: "茶色", hex: "#887657"},
+    {name: "伽罗", hex: "#6D5C3D"},
+    {name: "苍艾", hex: "#5A4B3B"},
+    {name: "藕丝褐", hex: "#A88787"},
+    {name: "葡萄褐", hex: "#9E696D"},
+    {name: "苏方", hex: "#81474C"},
+    {name: "福色", hex: "#662B2F"}
+  ],
+  "小雪": [
+    {name: "龙膏烛", hex: "#DE82A7"},
+    {name: "黲紫", hex: "#CC73A0"},
+    {name: "胭脂水", hex: "#B95A89"},
+    {name: "胭脂紫", hex: "#B0436F"},
+    {name: "小红", hex: "#E67762"},
+    {name: "岱赭", hex: "#DD6B4F"},
+    {name: "鹤顶红", hex: "#D24735"},
+    {name: "朱殷", hex: "#B93A26"},
+    {name: "月白", hex: "#D4E5EF"},
+    {name: "星郎", hex: "#BCD4E7"},
+    {name: "晴山", hex: "#A3BBDB"},
+    {name: "品月", hex: "#8AABCC"},
+    {name: "明茶褐", hex: "#9E8368"},
+    {name: "荆褐", hex: "#906C4A"},
+    {name: "驼褐", hex: "#7C5B3E"},
+    {name: "椒褐", hex: "#72453A"}
+  ],
+  "大雪": [
+    {name: "粉米", hex: "#EFC4CE"},
+    {name: "縓缘", hex: "#CE8892"},
+    {name: "美人祭", hex: "#C35C6A"},
+    {name: "鞓红", hex: "#B04552"},
+    {name: "米汤娇", hex: "#EEEAD9"},
+    {name: "草白", hex: "#BFC1A9"},
+    {name: "玄校", hex: "#A9A082"},
+    {name: "綟绶", hex: "#756C4B"},
+    {name: "雀梅", hex: "#788A6F"},
+    {name: "油绿", hex: "#5D7259"},
+    {name: "莓莓", hex: "#4E6548"},
+    {name: "螺青", hex: "#3F503B"},
+    {name: "暮山紫", hex: "#A4ABD6"},
+    {name: "紫苑", hex: "#757CBB"},
+    {name: "优昙瑞", hex: "#615EA8"},
+    {name: "延维", hex: "#4A4B9D"}
+  ],
+  "冬至": [
+    {name: "银红", hex: "#E7CAD3"},
+    {name: "莲红", hex: "#D9A0B3"},
+    {name: "紫梅", hex: "#BB7A8C"},
+    {name: "紫矿", hex: "#9E4E56"},
+    {name: "咸池", hex: "#DAA9A9"},
+    {name: "红麵", hex: "#CD7372"},
+    {name: "蚩尤旗", hex: "#A85858"},
+    {name: "霁红", hex: "#7C4449"},
+    {name: "莺儿", hex: "#EBE1A9"},
+    {name: "禹余粮", hex: "#E1D279"},
+    {name: "姚黄", hex: "#D6BC46"},
+    {name: "蛾黄", hex: "#BE8A2F"},
+    {name: "濯绛", hex: "#796860"},
+    {name: "墨黪", hex: "#585248"},
+    {name: "驖骊", hex: "#46433B"},
+    {name: "京元", hex: "#31322C"}
+  ],
+  "小寒": [
+    {name: "酂白", hex: "#F6F9E4"},
+    {name: "断肠", hex: "#ECEBC2"},
+    {name: "田赤", hex: "#E1D384"},
+    {name: "黄封", hex: "#CAB272"},
+    {name: "丁香褐", hex: "#BD9683"},
+    {name: "棠梨褐", hex: "#955A42"},
+    {name: "朱石栗", hex: "#81492C"},
+    {name: "枣褐", hex: "#68361A"},
+    {name: "秋蓝", hex: "#7D929F"},
+    {name: "育阳染", hex: "#576470"},
+    {name: "霁蓝", hex: "#3C4654"},
+    {name: "獭见", hex: "#151D29"},
+    {name: "井天", hex: "#A4C9CC"},
+    {name: "正青", hex: "#6CA8AF"},
+    {name: "扁青", hex: "#509296"},
+    {name: "䌦色", hex: "#226B68"}
+  ],
+  "大寒": [
+    {name: "紫府", hex: "#995D7F"},
+    {name: "地血", hex: "#814662"},
+    {name: "芥拾紫", hex: "#602641"},
+    {name: "油紫", hex: "#420B2F"},
+    {name: "骨缥", hex: "#EBE3C7"},
+    {name: "青白玉", hex: "#CAC5A0"},
+    {name: "绿豆褐", hex: "#92896B"},
+    {name: "冥色", hex: "#665F4D"},
+    {name: "肉红", hex: "#DDC5B8"},
+    {name: "珠子褐", hex: "#BEA89D"},
+    {name: "鹰背褐", hex: "#8F6D5F"},
+    {name: "麝香褐", hex: "#694B3C"},
+    {name: "石英", hex: "#C8B6BB"},
+    {name: "银褐", hex: "#9C8D9B"},
+    {name: "烟红", hex: "#9D858F"},
+    {name: "紫诰", hex: "#76555D"}
+  ]
+};
+
 var SOLAR_SCENES = {"立春":{"desc":"春芽初绿，万物复苏","season":"春","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"黄白游","hex":"#FFF799","label":"背景"},{"role":"surface","name":"缃叶","hex":"#ECD452","label":"表面"},{"role":"accent","name":"纁黄","hex":"#BA5140","label":"主色"},{"role":"accent2","name":"苍黄","hex":"#B6A014","label":"辅助色"},{"role":"ink","name":"青骊","hex":"#422517","label":"文字"}],"prompt":"使用中国传统立春节气配色（浅色模式）：背景黄白游 #FFF799（柔和温润的底色），主色纁黄 #BA5140（沉稳雅致的主色），辅助色苍黄 #B6A014（鲜明灵动的辅助色），表面缃叶 #ECD452（柔和的中间色），文字青骊 #422517（深邃浓重的文字色）。灵感源自初春薄雾中嫩芽破土的清新与生机，适合节气海报、茶叶包装、春日品牌设计。","prompt_title":"浅色·春芽初绿"},"dark":{"colors":[{"role":"bg","name":"龙战","hex":"#5F4321","label":"背景"},{"role":"surface","name":"栗壳","hex":"#775039","label":"表面"},{"role":"accent","name":"缙云","hex":"#EE7959","label":"主色"},{"role":"accent2","name":"松花","hex":"#FFEE6F","label":"辅助色"},{"role":"ink","name":"黄白游","hex":"#FFF799","label":"文字"}],"prompt":"使用中国传统立春节气配色（深色模式）：背景龙战 #5F4321（深沉静谧的底色），主色缙云 #EE7959（鲜明高亮的主色），辅助色松花 #FFEE6F（鲜明灵动的辅助色），表面栗壳 #775039（沉稳的过渡色），文字黄白游 #FFF799（清晰可辨的文字色）。灵感源自初春薄雾中嫩芽破土的清新与生机，适合节气海报、茶叶包装、春日品牌设计。","prompt_title":"深色·立春夜雨"}},"雨水":{"desc":"杏花微雨，润物无声","season":"春","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"盈盈","hex":"#F9D3E3","label":"背景"},{"role":"surface","name":"水红","hex":"#ECB0C1","label":"表面"},{"role":"accent","name":"苏梅","hex":"#DD7694","label":"主色"},{"role":"accent2","name":"春辰","hex":"#A9BE7B","label":"辅助色"},{"role":"ink","name":"玄天","hex":"#6B5458","label":"文字"}],"prompt":"使用中国传统雨水节气配色（浅色模式）：背景盈盈 #F9D3E3（明亮清透的底色），主色苏梅 #DD7694（鲜明高亮的主色），辅助色春辰 #A9BE7B（柔和点缀的辅助色），表面水红 #ECB0C1（温润的表面色），文字玄天 #6B5458（沉稳可读的文字色）。灵感源自春雨绵绵润泽万物的温润柔美，适合文艺插画、手账设计、柔美品牌。","prompt_title":"浅色·雨水润花"},"dark":{"colors":[{"role":"bg","name":"紫瓯","hex":"#7C461E","label":"背景"},{"role":"surface","name":"缊韨","hex":"#984F31","label":"表面"},{"role":"accent","name":"黄河琉璃","hex":"#E5A84B","label":"主色"},{"role":"accent2","name":"水红","hex":"#ECB0C1","label":"辅助色"},{"role":"ink","name":"盈盈","hex":"#F9D3E3","label":"文字"}],"prompt":"使用中国传统雨水节气配色（深色模式）：背景紫瓯 #7C461E（沉稳内敛的底色），主色黄河琉璃 #E5A84B（鲜明高亮的主色），辅助色水红 #ECB0C1（鲜明灵动的辅助色），表面缊韨 #984F31（沉稳的过渡色），文字盈盈 #F9D3E3（明亮柔和的文字色）。灵感源自春雨绵绵润泽万物的温润柔美，适合文艺插画、手账设计、柔美品牌。","prompt_title":"深色·春雨潇潇"}},"惊蛰":{"desc":"春雷乍动，桃花初绽","season":"春","font":"站酷文艺体","light":{"colors":[{"role":"bg","name":"黄栗留","hex":"#FEDC5E","label":"背景"},{"role":"surface","name":"杨妃","hex":"#F091A0","label":"表面"},{"role":"accent","name":"朱草","hex":"#A64036","label":"主色"},{"role":"accent2","name":"栀子","hex":"#FAC03D","label":"辅助色"},{"role":"ink","name":"绀蝶","hex":"#2C2F3B","label":"文字"}],"prompt":"使用中国传统惊蛰节气配色（浅色模式）：背景黄栗留 #FEDC5E（沉稳内敛的底色），主色朱草 #A64036（沉稳雅致的主色），辅助色栀子 #FAC03D（鲜明灵动的辅助色），表面杨妃 #F091A0（温润的表面色），文字绀蝶 #2C2F3B（沉稳可读的文字色）。灵感源自雷声惊醒蛰虫、桃花盛开的明媚，适合节日活动页、时尚品牌、春日营销。","prompt_title":"浅色·桃花惊雷"},"dark":{"colors":[{"role":"bg","name":"綪茷","hex":"#9E2A22","label":"背景"},{"role":"surface","name":"朱草","hex":"#A64036","label":"表面"},{"role":"accent","name":"黄栗留","hex":"#FEDC5E","label":"主色"},{"role":"accent2","name":"杨妃","hex":"#F091A0","label":"辅助色"},{"role":"ink","name":"桃夭","hex":"#F6BEC8","label":"文字"}],"prompt":"使用中国传统惊蛰节气配色（深色模式）：背景綪茷 #9E2A22（沉稳内敛的底色），主色黄栗留 #FEDC5E（鲜明高亮的主色），辅助色杨妃 #F091A0（鲜明灵动的辅助色），表面朱草 #A64036（沉稳的过渡色），文字桃夭 #F6BEC8（明亮柔和的文字色）。灵感源自雷声惊醒蛰虫、桃花盛开的明媚，适合节日活动页、时尚品牌、春日营销。","prompt_title":"深色·惊蛰夜雷"}},"春分":{"desc":"昼夜均分，春和景明","season":"春","font":"思源宋体","light":{"colors":[{"role":"bg","name":"皦玉","hex":"#EBEEE8","label":"背景"},{"role":"surface","name":"霜地","hex":"#C7C6B6","label":"表面"},{"role":"accent","name":"檀色","hex":"#B26D5D","label":"主色"},{"role":"accent2","name":"青冥","hex":"#3271AE","label":"辅助色"},{"role":"ink","name":"骐驎","hex":"#12264F","label":"文字"}],"prompt":"使用中国传统春分节气配色（浅色模式）：背景皦玉 #EBEEE8（明亮清透的底色），主色檀色 #B26D5D（含蓄内敛的主色），辅助色青冥 #3271AE（鲜明灵动的辅助色），表面霜地 #C7C6B6（温润的表面色），文字骐驎 #12264F（深邃浓重的文字色）。灵感源自昼夜平分、天高云淡的宁静和谐，适合科技产品、品牌官网、商务设计。","prompt_title":"浅色·春和景明"},"dark":{"colors":[{"role":"bg","name":"青雘","hex":"#007175","label":"背景"},{"role":"surface","name":"洛神珠","hex":"#D23918","label":"表面"},{"role":"accent","name":"黄丹","hex":"#EA5514","label":"主色"},{"role":"accent2","name":"吉量","hex":"#EBEDDF","label":"辅助色"},{"role":"ink","name":"皦玉","hex":"#EBEEE8","label":"文字"}],"prompt":"使用中国传统春分节气配色（深色模式）：背景青雘 #007175（深沉静谧的底色），主色黄丹 #EA5514（鲜明高亮的主色），辅助色吉量 #EBEDDF（含蓄沉稳的辅助色），表面洛神珠 #D23918（沉稳的过渡色），文字皦玉 #EBEEE8（明亮柔和的文字色）。灵感源自昼夜平分、天高云淡的宁静和谐，适合科技产品、品牌官网、商务设计。","prompt_title":"深色·春分月夜"}},"清明":{"desc":"烟雨清明，紫气东来","season":"春","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"香炉紫烟","hex":"#D3CCD6","label":"背景"},{"role":"surface","name":"春碧","hex":"#9D9D82","label":"表面"},{"role":"accent","name":"魏紫","hex":"#903754","label":"主色"},{"role":"accent2","name":"紫蒲","hex":"#A6559D","label":"辅助色"},{"role":"ink","name":"凝夜紫","hex":"#422256","label":"文字"}],"prompt":"使用中国传统清明节气配色（浅色模式）：背景香炉紫烟 #D3CCD6（柔和温润的底色），主色魏紫 #903754（沉稳雅致的主色），辅助色紫蒲 #A6559D（柔和点缀的辅助色），表面春碧 #9D9D82（柔和的中间色），文字凝夜紫 #422256（沉稳可读的文字色）。灵感源自清明时节烟雨朦胧的肃穆与诗意，适合文化活动、文学刊物、中式品牌。","prompt_title":"浅色·清明烟雨"},"dark":{"colors":[{"role":"bg","name":"三公子","hex":"#663D74","label":"背景"},{"role":"surface","name":"红踯躅","hex":"#B83570","label":"表面"},{"role":"accent","name":"琅玕紫","hex":"#CB5C83","label":"主色"},{"role":"accent2","name":"紫蒲","hex":"#A6559D","label":"辅助色"},{"role":"ink","name":"香炉紫烟","hex":"#D3CCD6","label":"文字"}],"prompt":"使用中国传统清明节气配色（深色模式）：背景三公子 #663D74（沉稳内敛的底色），主色琅玕紫 #CB5C83（沉稳雅致的主色），辅助色紫蒲 #A6559D（柔和点缀的辅助色），表面红踯躅 #B83570（沉稳的过渡色），文字香炉紫烟 #D3CCD6（明亮柔和的文字色）。灵感源自清明时节烟雨朦胧的肃穆与诗意，适合文化活动、文学刊物、中式品牌。","prompt_title":"深色·清明夜思"}},"谷雨":{"desc":"春末夏初，碧落苍翠","season":"春","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"昌荣","hex":"#DCC7E1","label":"背景"},{"role":"surface","name":"紫薄汗","hex":"#BBA1CB","label":"表面"},{"role":"accent","name":"緅絺","hex":"#804C2E","label":"主色"},{"role":"accent2","name":"茈藐","hex":"#A67EB7","label":"辅助色"},{"role":"ink","name":"螺子黛","hex":"#13393E","label":"文字"}],"prompt":"使用中国传统谷雨节气配色（浅色模式）：背景昌荣 #DCC7E1（柔和温润的底色），主色緅絺 #804C2E（沉稳雅致的主色），辅助色茈藐 #A67EB7（含蓄沉稳的辅助色），表面紫薄汗 #BBA1CB（温润的表面色），文字螺子黛 #13393E（深邃浓重的文字色）。灵感源自谷雨时节天光水色、百谷生长的清新，适合农产品牌、自然摄影、健康类设计。","prompt_title":"浅色·谷雨碧空"},"dark":{"colors":[{"role":"bg","name":"青雀头黛","hex":"#354E6B","label":"背景"},{"role":"surface","name":"翠虬","hex":"#446A37","label":"表面"},{"role":"accent","name":"碧落","hex":"#AED0EE","label":"主色"},{"role":"accent2","name":"露褐","hex":"#BD8253","label":"辅助色"},{"role":"ink","name":"昌荣","hex":"#DCC7E1","label":"文字"}],"prompt":"使用中国传统谷雨节气配色（深色模式）：背景青雀头黛 #354E6B（沉稳内敛的底色），主色碧落 #AED0EE（鲜明高亮的主色），辅助色露褐 #BD8253（柔和点缀的辅助色），表面翠虬 #446A37（沉稳的过渡色），文字昌荣 #DCC7E1（明亮柔和的文字色）。灵感源自谷雨时节天光水色、百谷生长的清新，适合农产品牌、自然摄影、健康类设计。","prompt_title":"深色·谷雨夜泊"}},"立夏":{"desc":"绿意初盛，夏日将至","season":"夏","font":"站酷快乐体","light":{"colors":[{"role":"bg","name":"溶溶月","hex":"#BEC2BC","label":"背景"},{"role":"surface","name":"青粲","hex":"#C3D94E","label":"表面"},{"role":"accent","name":"朱颜酡","hex":"#F29A76","label":"主色"},{"role":"accent2","name":"水龙吟","hex":"#84A729","label":"辅助色"},{"role":"ink","name":"黑朱","hex":"#70695D","label":"文字"}],"prompt":"使用中国传统立夏节气配色（浅色模式）：背景溶溶月 #BEC2BC（柔和温润的底色），主色朱颜酡 #F29A76（鲜明高亮的主色），辅助色水龙吟 #84A729（鲜明灵动的辅助色），表面青粲 #C3D94E（柔和的中间色），文字黑朱 #70695D（清晰可辨的文字色）。灵感源自初夏新叶繁茂、阳光明快的生机，适合健康品牌、运动设计、活力营销。","prompt_title":"浅色·立夏新绿"},"dark":{"colors":[{"role":"bg","name":"丹罽","hex":"#E60012","label":"背景"},{"role":"surface","name":"黑朱","hex":"#70695D","label":"表面"},{"role":"accent","name":"苕荣","hex":"#ED6D3D","label":"主色"},{"role":"accent2","name":"人籁","hex":"#9EBC19","label":"辅助色"},{"role":"ink","name":"青粲","hex":"#C3D94E","label":"文字"}],"prompt":"使用中国传统立夏节气配色（深色模式）：背景丹罽 #E60012（沉稳内敛的底色），主色苕荣 #ED6D3D（鲜明高亮的主色），辅助色人籁 #9EBC19（鲜明灵动的辅助色），表面黑朱 #70695D（沉稳的过渡色），文字青粲 #C3D94E（清晰可辨的文字色）。灵感源自初夏新叶繁茂、阳光明快的生机，适合健康品牌、运动设计、活力营销。","prompt_title":"深色·立夏暗涌"}},"小满":{"desc":"麦穗渐黄，丰盈初现","season":"夏","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"仙米","hex":"#D4C9AA","label":"背景"},{"role":"surface","name":"芰荷","hex":"#4F794A","label":"表面"},{"role":"accent","name":"嫩鹅黄","hex":"#F2C867","label":"主色"},{"role":"accent2","name":"彤管","hex":"#E2A2AC","label":"辅助色"},{"role":"ink","name":"远志","hex":"#81663B","label":"文字"}],"prompt":"使用中国传统小满节气配色（浅色模式）：背景仙米 #D4C9AA（柔和温润的底色），主色嫩鹅黄 #F2C867（鲜明高亮的主色），辅助色彤管 #E2A2AC（鲜明灵动的辅助色），表面芰荷 #4F794A（沉稳的过渡色），文字远志 #81663B（沉稳可读的文字色）。灵感源自小满时节麦穗初浆、石榴花开的丰盈，适合食品包装、农产品牌、生活类设计。","prompt_title":"浅色·小满麦黄"},"dark":{"colors":[{"role":"bg","name":"朱孔阳","hex":"#B81A35","label":"背景"},{"role":"surface","name":"官绿","hex":"#2A6E3F","label":"表面"},{"role":"accent","name":"嫩鹅黄","hex":"#F2C867","label":"主色"},{"role":"accent2","name":"渥赭","hex":"#DD6B7B","label":"辅助色"},{"role":"ink","name":"仙米","hex":"#D4C9AA","label":"文字"}],"prompt":"使用中国传统小满节气配色（深色模式）：背景朱孔阳 #B81A35（沉稳内敛的底色），主色嫩鹅黄 #F2C867（鲜明高亮的主色），辅助色渥赭 #DD6B7B（鲜明灵动的辅助色），表面官绿 #2A6E3F（幽深的层次色），文字仙米 #D4C9AA（清晰可辨的文字色）。灵感源自小满时节麦穗初浆、石榴花开的丰盈，适合食品包装、农产品牌、生活类设计。","prompt_title":"深色·小满夜禾"}},"芒种":{"desc":"稻田青黄，梅雨将至","season":"夏","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"筠雾","hex":"#D5D1AE","label":"背景"},{"role":"surface","name":"青玉案","hex":"#A8B092","label":"表面"},{"role":"accent","name":"如梦令","hex":"#DDBB99","label":"主色"},{"role":"accent2","name":"芸黄","hex":"#D2A36C","label":"辅助色"},{"role":"ink","name":"曾青","hex":"#535164","label":"文字"}],"prompt":"使用中国传统芒种节气配色（浅色模式）：背景筠雾 #D5D1AE（柔和温润的底色），主色如梦令 #DDBB99（沉稳雅致的主色），辅助色芸黄 #D2A36C（鲜明灵动的辅助色），表面青玉案 #A8B092（柔和的中间色），文字曾青 #535164（沉稳可读的文字色）。灵感源自芒种时节稻田雾气朦胧、青黄交织，适合文艺品牌、茶饮设计、文化类产品。","prompt_title":"浅色·芒种雾田"},"dark":{"colors":[{"role":"bg","name":"䒌靘","hex":"#454659","label":"背景"},{"role":"surface","name":"曾青","hex":"#535164","label":"表面"},{"role":"accent","name":"芸黄","hex":"#D2A36C","label":"主色"},{"role":"accent2","name":"风入松","hex":"#868C4E","label":"辅助色"},{"role":"ink","name":"筠雾","hex":"#D5D1AE","label":"文字"}],"prompt":"使用中国传统芒种节气配色（深色模式）：背景䒌靘 #454659（沉稳内敛的底色），主色芸黄 #D2A36C（沉稳雅致的主色），辅助色风入松 #868C4E（含蓄沉稳的辅助色），表面曾青 #535164（沉稳的过渡色），文字筠雾 #D5D1AE（清晰可辨的文字色）。灵感源自芒种时节稻田雾气朦胧、青黄交织，适合文艺品牌、茶饮设计、文化类产品。","prompt_title":"深色·芒种夜雨"}},"夏至":{"desc":"阳气盛极，骄阳似火","season":"夏","font":"站酷高端黑","light":{"colors":[{"role":"bg","name":"扶光","hex":"#F0C2A2","label":"背景"},{"role":"surface","name":"椒房","hex":"#DB9C5E","label":"表面"},{"role":"accent","name":"赩炽","hex":"#CB523E","label":"主色"},{"role":"accent2","name":"月魄","hex":"#B2B6B6","label":"辅助色"},{"role":"ink","name":"石涅","hex":"#686A67","label":"文字"}],"prompt":"使用中国传统夏至节气配色（浅色模式）：背景扶光 #F0C2A2（柔和温润的底色），主色赩炽 #CB523E（沉稳雅致的主色），辅助色月魄 #B2B6B6（含蓄沉稳的辅助色），表面椒房 #DB9C5E（柔和的中间色），文字石涅 #686A67（清晰可辨的文字色）。灵感源自夏至盛夏烈日当空的热烈奔放，适合活动营销、夏季品牌、运动设计。","prompt_title":"浅色·夏至骄阳"},"dark":{"colors":[{"role":"bg","name":"朱湛","hex":"#95302E","label":"背景"},{"role":"surface","name":"石榴裙","hex":"#B13B2E","label":"表面"},{"role":"accent","name":"扶光","hex":"#F0C2A2","label":"主色"},{"role":"accent2","name":"不皂","hex":"#A7AAA1","label":"辅助色"},{"role":"ink","name":"月魄","hex":"#B2B6B6","label":"文字"}],"prompt":"使用中国传统夏至节气配色（深色模式）：背景朱湛 #95302E（沉稳内敛的底色），主色扶光 #F0C2A2（鲜明高亮的主色），辅助色不皂 #A7AAA1（含蓄沉稳的辅助色），表面石榴裙 #B13B2E（沉稳的过渡色），文字月魄 #B2B6B6（清晰可辨的文字色）。灵感源自夏至盛夏烈日当空的热烈奔放，适合活动营销、夏季品牌、运动设计。","prompt_title":"深色·夏至星夜"}},"小暑":{"desc":"伏天初临，暴雨欲来","season":"夏","font":"思源宋体","light":{"colors":[{"role":"bg","name":"天球","hex":"#E0DFC6","label":"背景"},{"role":"surface","name":"行香子","hex":"#BFB99C","label":"表面"},{"role":"accent","name":"赤灵","hex":"#954024","label":"主色"},{"role":"accent2","name":"王刍","hex":"#A99F70","label":"辅助色"},{"role":"ink","name":"帝释青","hex":"#003460","label":"文字"}],"prompt":"使用中国传统小暑节气配色（浅色模式）：背景天球 #E0DFC6（柔和温润的底色），主色赤灵 #954024（鲜明高亮的主色），辅助色王刍 #A99F70（含蓄沉稳的辅助色），表面行香子 #BFB99C（柔和的中间色），文字帝释青 #003460（深邃浓重的文字色）。灵感源自小暑时节热浪微熏、暴雨前天空的壮阔，适合夏季品牌、科技产品、户外设计。","prompt_title":"浅色·小暑雷雨"},"dark":{"colors":[{"role":"bg","name":"丹秫","hex":"#873424","label":"背景"},{"role":"surface","name":"赤灵","hex":"#954024","label":"表面"},{"role":"accent","name":"骍刚","hex":"#F5B087","label":"主色"},{"role":"accent2","name":"王刍","hex":"#A99F70","label":"辅助色"},{"role":"ink","name":"天球","hex":"#E0DFC6","label":"文字"}],"prompt":"使用中国传统小暑节气配色（深色模式）：背景丹秫 #873424（沉稳内敛的底色），主色骍刚 #F5B087（鲜明高亮的主色），辅助色王刍 #A99F70（含蓄沉稳的辅助色），表面赤灵 #954024（沉稳的过渡色），文字天球 #E0DFC6（明亮柔和的文字色）。灵感源自小暑时节热浪微熏、暴雨前天空的壮阔，适合夏季品牌、科技产品、户外设计。","prompt_title":"深色·小暑夜风"}},"大暑":{"desc":"盛夏草木，繁茂至极","season":"夏","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"葱青","hex":"#EDF1BB","label":"背景"},{"role":"surface","name":"夕岚","hex":"#E3ADB9","label":"表面"},{"role":"accent","name":"绮钱","hex":"#D8DE8A","label":"主色"},{"role":"accent2","name":"渌波","hex":"#9BB496","label":"辅助色"},{"role":"ink","name":"吉金","hex":"#896D47","label":"文字"}],"prompt":"使用中国传统大暑节气配色（浅色模式）：背景葱青 #EDF1BB（柔和温润的底色），主色绮钱 #D8DE8A（沉稳雅致的主色），辅助色渌波 #9BB496（含蓄沉稳的辅助色），表面夕岚 #E3ADB9（温润的表面色），文字吉金 #896D47（清晰可辨的文字色）。灵感源自大暑时节草木繁茂、傍晚凉风的清新，适合生活方式品牌、文艺设计、摄影后期。","prompt_title":"浅色·大暑草木"},"dark":{"colors":[{"role":"bg","name":"吉金","hex":"#896D47","label":"背景"},{"role":"surface","name":"茹藘","hex":"#A35F65","label":"表面"},{"role":"accent","name":"绮钱","hex":"#D8DE8A","label":"主色"},{"role":"accent2","name":"夕岚","hex":"#E3ADB9","label":"辅助色"},{"role":"ink","name":"葱青","hex":"#EDF1BB","label":"文字"}],"prompt":"使用中国传统大暑节气配色（深色模式）：背景吉金 #896D47（沉稳内敛的底色），主色绮钱 #D8DE8A（沉稳雅致的主色），辅助色夕岚 #E3ADB9（柔和点缀的辅助色），表面茹藘 #A35F65（柔和的中间色），文字葱青 #EDF1BB（明亮柔和的文字色）。灵感源自大暑时节草木繁茂、傍晚凉风的清新，适合生活方式品牌、文艺设计、摄影后期。","prompt_title":"深色·大暑蝉鸣"}},"立秋":{"desc":"秋高气爽，暑气渐消","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"缟羽","hex":"#EFEFEF","label":"背景"},{"role":"surface","name":"竹月","hex":"#7F9FAF","label":"表面"},{"role":"accent","name":"窃蓝","hex":"#88ABDA","label":"主色"},{"role":"accent2","name":"麴尘","hex":"#C0D09D","label":"辅助色"},{"role":"ink","name":"素綦","hex":"#595333","label":"文字"}],"prompt":"使用中国传统立秋节气配色（浅色模式）：背景缟羽 #EFEFEF（明亮清透的底色），主色窃蓝 #88ABDA（沉稳雅致的主色），辅助色麴尘 #C0D09D（柔和点缀的辅助色），表面竹月 #7F9FAF（柔和的中间色），文字素綦 #595333（沉稳可读的文字色）。灵感源自立秋时节天空澄澈、初秋微凉的清爽，适合品牌官网、科技产品、秋季营销。","prompt_title":"浅色·立秋清空"},"dark":{"colors":[{"role":"bg","name":"素綦","hex":"#595333","label":"背景"},{"role":"surface","name":"群青","hex":"#2E59A7","label":"表面"},{"role":"accent","name":"窃蓝","hex":"#88ABDA","label":"主色"},{"role":"accent2","name":"麴尘","hex":"#C0D09D","label":"辅助色"},{"role":"ink","name":"缟羽","hex":"#EFEFEF","label":"文字"}],"prompt":"使用中国传统立秋节气配色（深色模式）：背景素綦 #595333（深沉静谧的底色），主色窃蓝 #88ABDA（沉稳雅致的主色），辅助色麴尘 #C0D09D（柔和点缀的辅助色），表面群青 #2E59A7（沉稳的过渡色），文字缟羽 #EFEFEF（明亮柔和的文字色）。灵感源自立秋时节天空澄澈、初秋微凉的清爽，适合品牌官网、科技产品、秋季营销。","prompt_title":"深色·立秋秋月"}},"处暑":{"desc":"残暑犹存，秋水渐凉","season":"秋","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"退红","hex":"#F0CFE3","label":"背景"},{"role":"surface","name":"余白","hex":"#C9CFC1","label":"表面"},{"role":"accent","name":"云门","hex":"#A2D2E2","label":"主色"},{"role":"accent2","name":"兰苕","hex":"#A8B78C","label":"辅助色"},{"role":"ink","name":"法翠","hex":"#108B96","label":"文字"}],"prompt":"使用中国传统处暑节气配色（浅色模式）：背景退红 #F0CFE3（明亮清透的底色），主色云门 #A2D2E2（沉稳雅致的主色），辅助色兰苕 #A8B78C（含蓄沉稳的辅助色），表面余白 #C9CFC1（温润的表面色），文字法翠 #108B96（沉稳可读的文字色）。灵感源自处暑残暑渐退、秋水初凉的清雅诗意，适合文艺品牌、生活类设计、茶饮包装。","prompt_title":"浅色·处暑初凉"},"dark":{"colors":[{"role":"bg","name":"法翠","hex":"#108B96","label":"背景"},{"role":"surface","name":"葱倩","hex":"#6C8650","label":"表面"},{"role":"accent","name":"桑蕾","hex":"#EAD89A","label":"主色"},{"role":"accent2","name":"云门","hex":"#A2D2E2","label":"辅助色"},{"role":"ink","name":"退红","hex":"#F0CFE3","label":"文字"}],"prompt":"使用中国传统处暑节气配色（深色模式）：背景法翠 #108B96（沉稳内敛的底色），主色桑蕾 #EAD89A（鲜明高亮的主色），辅助色云门 #A2D2E2（鲜明灵动的辅助色），表面葱倩 #6C8650（沉稳的过渡色），文字退红 #F0CFE3（明亮柔和的文字色）。灵感源自处暑残暑渐退、秋水初凉的清雅诗意，适合文艺品牌、生活类设计、茶饮包装。","prompt_title":"深色·处暑秋夜"}},"白露":{"desc":"露凝为霜，秋意渐浓","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"凝脂","hex":"#F5F2E9","label":"背景"},{"role":"surface","name":"藕丝秋半","hex":"#D3CBC5","label":"表面"},{"role":"accent","name":"射干","hex":"#7C623F","label":"主色"},{"role":"accent2","name":"蕉月","hex":"#86908A","label":"辅助色"},{"role":"ink","name":"绿云","hex":"#45493D","label":"文字"}],"prompt":"使用中国传统白露节气配色（浅色模式）：背景凝脂 #F5F2E9（明亮清透的底色），主色射干 #7C623F（含蓄内敛的主色），辅助色蕉月 #86908A（含蓄沉稳的辅助色），表面藕丝秋半 #D3CBC5（温润的表面色），文字绿云 #45493D（沉稳可读的文字色）。灵感源自白露时节晨露凝霜、秋山渐染的清冷，适合高端品牌、文化刊物、茶道设计。","prompt_title":"浅色·白露凝霜"},"dark":{"colors":[{"role":"bg","name":"绿云","hex":"#45493D","label":"背景"},{"role":"surface","name":"结绿","hex":"#555F4D","label":"表面"},{"role":"accent","name":"缣缃","hex":"#D5C8A0","label":"主色"},{"role":"accent2","name":"苍烟落照","hex":"#C8B5B3","label":"辅助色"},{"role":"ink","name":"凝脂","hex":"#F5F2E9","label":"文字"}],"prompt":"使用中国传统白露节气配色（深色模式）：背景绿云 #45493D（深沉静谧的底色），主色缣缃 #D5C8A0（含蓄内敛的主色），辅助色苍烟落照 #C8B5B3（含蓄沉稳的辅助色），表面结绿 #555F4D（沉稳的过渡色），文字凝脂 #F5F2E9（明亮柔和的文字色）。灵感源自白露时节晨露凝霜、秋山渐染的清冷，适合高端品牌、文化刊物、茶道设计。","prompt_title":"深色·白露月色"}},"秋分":{"desc":"天高云淡，桂花飘香","season":"秋","font":"思源宋体","light":{"colors":[{"role":"bg","name":"浅云","hex":"#EAEEF1","label":"背景"},{"role":"surface","name":"影青","hex":"#BDCBD2","label":"表面"},{"role":"accent","name":"鱼师青","hex":"#32788A","label":"主色"},{"role":"accent2","name":"葭菼","hex":"#CAD7C5","label":"辅助色"},{"role":"ink","name":"蜜褐","hex":"#683632","label":"文字"}],"prompt":"使用中国传统秋分节气配色（浅色模式）：背景浅云 #EAEEF1（明亮清透的底色），主色鱼师青 #32788A（沉稳雅致的主色），辅助色葭菼 #CAD7C5（含蓄沉稳的辅助色），表面影青 #BDCBD2（温润的表面色），文字蜜褐 #683632（沉稳可读的文字色）。灵感源自秋分天高云淡、桂花飘香的澄澈明快，适合品牌设计、商务官网、秋季活动。","prompt_title":"浅色·秋分桂香"},"dark":{"colors":[{"role":"bg","name":"软翠","hex":"#006D87","label":"背景"},{"role":"surface","name":"佛赤","hex":"#8F3D2C","label":"表面"},{"role":"accent","name":"孔雀蓝","hex":"#4994C4","label":"主色"},{"role":"accent2","name":"栾华","hex":"#C0AD5E","label":"辅助色"},{"role":"ink","name":"浅云","hex":"#EAEEF1","label":"文字"}],"prompt":"使用中国传统秋分节气配色（深色模式）：背景软翠 #006D87（深沉静谧的底色），主色孔雀蓝 #4994C4（沉稳雅致的主色），辅助色栾华 #C0AD5E（柔和点缀的辅助色），表面佛赤 #8F3D2C（沉稳的过渡色），文字浅云 #EAEEF1（明亮柔和的文字色）。灵感源自秋分天高云淡、桂花飘香的澄澈明快，适合品牌设计、商务官网、秋季活动。","prompt_title":"深色·秋分夜桂"}},"寒露":{"desc":"晨霜染叶，秋深露寒","season":"秋","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"弗肯红","hex":"#ECD9C7","label":"背景"},{"role":"surface","name":"醽醁","hex":"#A6BAB1","label":"表面"},{"role":"accent","name":"九斤黄","hex":"#DDB078","label":"主色"},{"role":"accent2","name":"东方既白","hex":"#8BA3C7","label":"辅助色"},{"role":"ink","name":"花青","hex":"#1A2847","label":"文字"}],"prompt":"使用中国传统寒露节气配色（浅色模式）：背景弗肯红 #ECD9C7（明亮清透的底色），主色九斤黄 #DDB078（沉稳雅致的主色），辅助色东方既白 #8BA3C7（柔和点缀的辅助色），表面醽醁 #A6BAB1（柔和的中间色），文字花青 #1A2847（深邃浓重的文字色）。灵感源自寒露清晨薄霜覆叶、秋实累累的深沉，适合文艺品牌、摄影后期、文化类设计。","prompt_title":"浅色·寒露霜叶"},"dark":{"colors":[{"role":"bg","name":"绀宇","hex":"#003D74","label":"背景"},{"role":"surface","name":"韎韐","hex":"#9F5221","label":"表面"},{"role":"accent","name":"杏子","hex":"#DA9233","label":"主色"},{"role":"accent2","name":"东方既白","hex":"#8BA3C7","label":"辅助色"},{"role":"ink","name":"弗肯红","hex":"#ECD9C7","label":"文字"}],"prompt":"使用中国传统寒露节气配色（深色模式）：背景绀宇 #003D74（深沉静谧的底色），主色杏子 #DA9233（鲜明高亮的主色），辅助色东方既白 #8BA3C7（柔和点缀的辅助色），表面韎韐 #9F5221（沉稳的过渡色），文字弗肯红 #ECD9C7（明亮柔和的文字色）。灵感源自寒露清晨薄霜覆叶、秋实累累的深沉，适合文艺品牌、摄影后期、文化类设计。","prompt_title":"深色·寒露夜枫"}},"霜降":{"desc":"深秋霜染，枫叶如火","season":"秋","font":"站酷文艺体","light":{"colors":[{"role":"bg","name":"蜜合","hex":"#DFD7C2","label":"背景"},{"role":"surface","name":"甘石","hex":"#BDB2B2","label":"表面"},{"role":"accent","name":"棠梨","hex":"#B15A43","label":"主色"},{"role":"accent2","name":"迷楼灰","hex":"#91828F","label":"辅助色"},{"role":"ink","name":"爵头","hex":"#631216","label":"文字"}],"prompt":"使用中国传统霜降节气配色（浅色模式）：背景蜜合 #DFD7C2（柔和温润的底色），主色棠梨 #B15A43（沉稳雅致的主色），辅助色迷楼灰 #91828F（含蓄沉稳的辅助色），表面甘石 #BDB2B2（温润的表面色），文字爵头 #631216（沉稳可读的文字色）。灵感源自霜降深秋枫叶染霜、大地质感的浓烈，适合秋季营销、文化活动、品牌设计。","prompt_title":"浅色·霜降枫红"},"dark":{"colors":[{"role":"bg","name":"胭脂虫","hex":"#AB1D22","label":"背景"},{"role":"surface","name":"鸦雏","hex":"#6A5B6D","label":"表面"},{"role":"accent","name":"十样锦","hex":"#F8C6B5","label":"主色"},{"role":"accent2","name":"迷楼灰","hex":"#91828F","label":"辅助色"},{"role":"ink","name":"蜜合","hex":"#DFD7C2","label":"文字"}],"prompt":"使用中国传统霜降节气配色（深色模式）：背景胭脂虫 #AB1D22（沉稳内敛的底色），主色十样锦 #F8C6B5（鲜明高亮的主色），辅助色迷楼灰 #91828F（含蓄沉稳的辅助色），表面鸦雏 #6A5B6D（沉稳的过渡色），文字蜜合 #DFD7C2（明亮柔和的文字色）。灵感源自霜降深秋枫叶染霜、大地质感的浓烈，适合秋季营销、文化活动、品牌设计。","prompt_title":"深色·霜降夜霜"}},"立冬":{"desc":"初寒乍到，残阳暖冬","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"半见","hex":"#FFFBC7","label":"背景"},{"role":"surface","name":"姜黄","hex":"#D6C560","label":"表面"},{"role":"accent","name":"伽罗","hex":"#6D5C3D","label":"主色"},{"role":"accent2","name":"繱犗","hex":"#88BFB8","label":"辅助色"},{"role":"ink","name":"福色","hex":"#662B2F","label":"文字"}],"prompt":"使用中国传统立冬节气配色（浅色模式）：背景半见 #FFFBC7（明亮清透的底色），主色伽罗 #6D5C3D（含蓄内敛的主色），辅助色繱犗 #88BFB8（柔和点缀的辅助色），表面姜黄 #D6C560（柔和的中间色），文字福色 #662B2F（沉稳可读的文字色）。灵感源自立冬初寒残阳暖光、松柏常青的沉静，适合冬季品牌、文化产品、暖冬营销。","prompt_title":"浅色·立冬暖阳"},"dark":{"colors":[{"role":"bg","name":"苍艾","hex":"#5A4B3B","label":"背景"},{"role":"surface","name":"伽罗","hex":"#6D5C3D","label":"表面"},{"role":"accent","name":"绢纨","hex":"#ECE093","label":"主色"},{"role":"accent2","name":"铜青","hex":"#3D8E86","label":"辅助色"},{"role":"ink","name":"半见","hex":"#FFFBC7","label":"文字"}],"prompt":"使用中国传统立冬节气配色（深色模式）：背景苍艾 #5A4B3B（深沉静谧的底色），主色绢纨 #ECE093（鲜明高亮的主色），辅助色铜青 #3D8E86（柔和点缀的辅助色），表面伽罗 #6D5C3D（沉稳的过渡色），文字半见 #FFFBC7（明亮柔和的文字色）。灵感源自立冬初寒残阳暖光、松柏常青的沉静，适合冬季品牌、文化产品、暖冬营销。","prompt_title":"深色·立冬夜雪"}},"小雪":{"desc":"初雪降临，山峦叠嶂","season":"冬","font":"思源宋体","light":{"colors":[{"role":"bg","name":"月白","hex":"#D4E5EF","label":"背景"},{"role":"surface","name":"品月","hex":"#8AABCC","label":"表面"},{"role":"accent","name":"小红","hex":"#E67762","label":"主色"},{"role":"accent2","name":"晴山","hex":"#A3BBDB","label":"辅助色"},{"role":"ink","name":"椒褐","hex":"#72453A","label":"文字"}],"prompt":"使用中国传统小雪节气配色（浅色模式）：背景月白 #D4E5EF（明亮清透的底色），主色小红 #E67762（鲜明高亮的主色），辅助色晴山 #A3BBDB（柔和点缀的辅助色），表面品月 #8AABCC（柔和的中间色），文字椒褐 #72453A（沉稳可读的文字色）。灵感源自小雪初霁山峦叠嶂、雪映天光的纯净，适合冬季品牌、文艺设计、摄影后期。","prompt_title":"浅色·小雪初霁"},"dark":{"colors":[{"role":"bg","name":"椒褐","hex":"#72453A","label":"背景"},{"role":"surface","name":"驼褐","hex":"#7C5B3E","label":"表面"},{"role":"accent","name":"小红","hex":"#E67762","label":"主色"},{"role":"accent2","name":"龙膏烛","hex":"#DE82A7","label":"辅助色"},{"role":"ink","name":"月白","hex":"#D4E5EF","label":"文字"}],"prompt":"使用中国传统小雪节气配色（深色模式）：背景椒褐 #72453A（沉稳内敛的底色），主色小红 #E67762（鲜明高亮的主色），辅助色龙膏烛 #DE82A7（鲜明灵动的辅助色），表面驼褐 #7C5B3E（沉稳的过渡色），文字月白 #D4E5EF（明亮柔和的文字色）。灵感源自小雪初霁山峦叠嶂、雪映天光的纯净，适合冬季品牌、文艺设计、摄影后期。","prompt_title":"深色·小雪夜炉"}},"大雪":{"desc":"大雪纷飞，暮山苍茫","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"米汤娇","hex":"#EEEAD9","label":"背景"},{"role":"surface","name":"草白","hex":"#BFC1A9","label":"表面"},{"role":"accent","name":"优昙瑞","hex":"#615EA8","label":"主色"},{"role":"accent2","name":"粉米","hex":"#EFC4CE","label":"辅助色"},{"role":"ink","name":"螺青","hex":"#3F503B","label":"文字"}],"prompt":"使用中国传统大雪节气配色（浅色模式）：背景米汤娇 #EEEAD9（明亮清透的底色），主色优昙瑞 #615EA8（含蓄内敛的主色），辅助色粉米 #EFC4CE（鲜明灵动的辅助色），表面草白 #BFC1A9（温润的表面色），文字螺青 #3F503B（沉稳可读的文字色）。灵感源自大雪纷飞覆盖苍茫大地、雪后远山的朦胧，适合冬季品牌、文化活动、节日设计。","prompt_title":"浅色·大雪苍茫"},"dark":{"colors":[{"role":"bg","name":"螺青","hex":"#3F503B","label":"背景"},{"role":"surface","name":"莓莓","hex":"#4E6548","label":"表面"},{"role":"accent","name":"粉米","hex":"#EFC4CE","label":"主色"},{"role":"accent2","name":"暮山紫","hex":"#A4ABD6","label":"辅助色"},{"role":"ink","name":"米汤娇","hex":"#EEEAD9","label":"文字"}],"prompt":"使用中国传统大雪节气配色（深色模式）：背景螺青 #3F503B（深沉静谧的底色），主色粉米 #EFC4CE（沉稳雅致的主色），辅助色暮山紫 #A4ABD6（柔和点缀的辅助色），表面莓莓 #4E6548（沉稳的过渡色），文字米汤娇 #EEEAD9（明亮柔和的文字色）。灵感源自大雪纷飞覆盖苍茫大地、雪后远山的朦胧，适合冬季品牌、文化活动、节日设计。","prompt_title":"深色·大雪夜归"}},"冬至":{"desc":"阳生冬至，梅开暗香","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"莺儿","hex":"#EBE1A9","label":"背景"},{"role":"surface","name":"咸池","hex":"#DAA9A9","label":"表面"},{"role":"accent","name":"霁红","hex":"#7C4449","label":"主色"},{"role":"accent2","name":"禹余粮","hex":"#E1D279","label":"辅助色"},{"role":"ink","name":"京元","hex":"#31322C","label":"文字"}],"prompt":"使用中国传统冬至节气配色（浅色模式）：背景莺儿 #EBE1A9（柔和温润的底色），主色霁红 #7C4449（含蓄内敛的主色），辅助色禹余粮 #E1D279（鲜明灵动的辅助色），表面咸池 #DAA9A9（温润的表面色），文字京元 #31322C（深邃浓重的文字色）。灵感源自冬至阳生、梅花初绽的温暖与沉静，适合节日品牌、文化产品、冬季营销。","prompt_title":"浅色·冬至阳生"},"dark":{"colors":[{"role":"bg","name":"驖骊","hex":"#46433B","label":"背景"},{"role":"surface","name":"霁红","hex":"#7C4449","label":"表面"},{"role":"accent","name":"姚黄","hex":"#D6BC46","label":"主色"},{"role":"accent2","name":"红麵","hex":"#CD7372","label":"辅助色"},{"role":"ink","name":"莺儿","hex":"#EBE1A9","label":"文字"}],"prompt":"使用中国传统冬至节气配色（深色模式）：背景驖骊 #46433B（深沉静谧的底色），主色姚黄 #D6BC46（鲜明高亮的主色），辅助色红麵 #CD7372（柔和点缀的辅助色），表面霁红 #7C4449（沉稳的过渡色），文字莺儿 #EBE1A9（清晰可辨的文字色）。灵感源自冬至阳生、梅花初绽的温暖与沉静，适合节日品牌、文化产品、冬季营销。","prompt_title":"深色·冬至夜梅"}},"小寒":{"desc":"极寒冰封，腊梅含苞","season":"冬","font":"思源宋体","light":{"colors":[{"role":"bg","name":"酂白","hex":"#F6F9E4","label":"背景"},{"role":"surface","name":"田赤","hex":"#E1D384","label":"表面"},{"role":"accent","name":"䌦色","hex":"#226B68","label":"主色"},{"role":"accent2","name":"黄封","hex":"#CAB272","label":"辅助色"},{"role":"ink","name":"獭见","hex":"#151D29","label":"文字"}],"prompt":"使用中国传统小寒节气配色（浅色模式）：背景酂白 #F6F9E4（明亮清透的底色），主色䌦色 #226B68（沉稳雅致的主色），辅助色黄封 #CAB272（柔和点缀的辅助色），表面田赤 #E1D384（柔和的中间色），文字獭见 #151D29（深邃浓重的文字色）。灵感源自小寒极寒冷冽天光、寒江冰面的冷中带暖，适合冬季品牌、高端设计、文化刊物。","prompt_title":"浅色·小寒冰面"},"dark":{"colors":[{"role":"bg","name":"霁蓝","hex":"#3C4654","label":"背景"},{"role":"surface","name":"育阳染","hex":"#576470","label":"表面"},{"role":"accent","name":"田赤","hex":"#E1D384","label":"主色"},{"role":"accent2","name":"棠梨褐","hex":"#955A42","label":"辅助色"},{"role":"ink","name":"酂白","hex":"#F6F9E4","label":"文字"}],"prompt":"使用中国传统小寒节气配色（深色模式）：背景霁蓝 #3C4654（深沉静谧的底色），主色田赤 #E1D384（鲜明高亮的主色），辅助色棠梨褐 #955A42（柔和点缀的辅助色），表面育阳染 #576470（沉稳的过渡色），文字酂白 #F6F9E4（明亮柔和的文字色）。灵感源自小寒极寒冷冽天光、寒江冰面的冷中带暖，适合冬季品牌、高端设计、文化刊物。","prompt_title":"深色·小寒夜雪"}},"大寒":{"desc":"岁末沉寂，寒极将春","season":"冬","font":"霞鹜文楷","light":{"colors":[{"role":"bg","name":"骨缥","hex":"#EBE3C7","label":"背景"},{"role":"surface","name":"青白玉","hex":"#CAC5A0","label":"表面"},{"role":"accent","name":"地血","hex":"#814662","label":"主色"},{"role":"accent2","name":"绿豆褐","hex":"#92896B","label":"辅助色"},{"role":"ink","name":"油紫","hex":"#420B2F","label":"文字"}],"prompt":"使用中国传统大寒节气配色（浅色模式）：背景骨缥 #EBE3C7（明亮清透的底色），主色地血 #814662（含蓄内敛的主色），辅助色绿豆褐 #92896B（含蓄沉稳的辅助色），表面青白玉 #CAC5A0（温润的表面色），文字油紫 #420B2F（深邃浓重的文字色）。灵感源自大寒岁末苍茫大地、寒霜覆盖的肃穆沉静，适合年终品牌、文化活动、文艺设计。","prompt_title":"浅色·大寒岁末"},"dark":{"colors":[{"role":"bg","name":"芥拾紫","hex":"#602641","label":"背景"},{"role":"surface","name":"紫诰","hex":"#76555D","label":"表面"},{"role":"accent","name":"肉红","hex":"#DDC5B8","label":"主色"},{"role":"accent2","name":"青白玉","hex":"#CAC5A0","label":"辅助色"},{"role":"ink","name":"骨缥","hex":"#EBE3C7","label":"文字"}],"prompt":"使用中国传统大寒节气配色（深色模式）：背景芥拾紫 #602641（深沉静谧的底色），主色肉红 #DDC5B8（含蓄内敛的主色），辅助色青白玉 #CAC5A0（含蓄沉稳的辅助色），表面紫诰 #76555D（沉稳的过渡色），文字骨缥 #EBE3C7（明亮柔和的文字色）。灵感源自大寒岁末苍茫大地、寒霜覆盖的肃穆沉静，适合年终品牌、文化活动、文艺设计。","prompt_title":"深色·大寒岁夜"}}};
 var solarNames = Object.keys(SOLAR_SCENES);
 var sceneNames = Object.keys(SCENES);
@@ -757,6 +1271,8 @@ function showView(name) {
   document.getElementById(name).classList.add('active');
   currentView = name;
   window.scrollTo(0, 0);
+  // 全部浏览页面背景固定不随滚动
+  document.body.style.backgroundAttachment = (name === 'gallery') ? 'fixed' : '';
   if (name !== 'immersive') {
     document.body.style.background = defaultSolarBg;
     document.body.style.backgroundSize = 'cover';
@@ -793,23 +1309,67 @@ function previewSolarInImmersive(idx) {
 
 function backFromImmersive() {
   isTourMode = false;
+  if (isAutoPlaying) stopAutoPlay();
+  selectedPaletteColors = [];
+  immCurrentTab = 'scheme';
+  var layer = document.getElementById('palBgLayer');
+  if (layer) { layer.style.display = 'none'; layer.style.background = ''; }
   showView('home');
 }
 
-function prevScene() {
-  if (immersiveMode === 'scene') {
-    if (currentScene > 0) { currentScene--; renderImmersive(); }
-  } else {
-    if (currentSolarIdx > 0) { currentSolarIdx--; renderImmersive(); }
+// 跨模式循环顺序：场景浅(0~15) → 节气浅(0~23) → 场景深(0~15) → 节气深(0~23) → 循环
+var CYCLE_ORDER = [
+  { mode: 'scene', m: 'light' },
+  { mode: 'solar', m: 'light' },
+  { mode: 'scene', m: 'dark' },
+  { mode: 'solar', m: 'dark' }
+];
+
+function getCyclePosition() {
+  for (var i = 0; i < CYCLE_ORDER.length; i++) {
+    var c = CYCLE_ORDER[i];
+    if (c.mode === immersiveMode && c.m === currentMode) {
+      var idx = c.mode === 'scene' ? currentScene : currentSolarIdx;
+      return { group: i, index: idx };
+    }
   }
+  return { group: 0, index: 0 };
+}
+
+function setCyclePosition(group, index) {
+  var c = CYCLE_ORDER[group];
+  immersiveMode = c.mode;
+  currentMode = c.m;
+  if (c.mode === 'scene') { currentScene = index; }
+  else { currentSolarIdx = index; }
 }
 
 function nextScene() {
-  if (immersiveMode === 'scene') {
-    if (currentScene < sceneNames.length - 1) { currentScene++; renderImmersive(); }
+  if (isAutoPlaying) stopAutoPlay();
+  var pos = getCyclePosition();
+  var c = CYCLE_ORDER[pos.group];
+  var maxIdx = c.mode === 'scene' ? sceneNames.length - 1 : solarNames.length - 1;
+  if (pos.index < maxIdx) {
+    setCyclePosition(pos.group, pos.index + 1);
   } else {
-    if (currentSolarIdx < solarNames.length - 1) { currentSolarIdx++; renderImmersive(); }
+    var nextGroup = (pos.group + 1) % CYCLE_ORDER.length;
+    setCyclePosition(nextGroup, 0);
   }
+  renderImmersive();
+}
+
+function prevScene() {
+  if (isAutoPlaying) stopAutoPlay();
+  var pos = getCyclePosition();
+  if (pos.index > 0) {
+    setCyclePosition(pos.group, pos.index - 1);
+  } else {
+    var prevGroup = (pos.group - 1 + CYCLE_ORDER.length) % CYCLE_ORDER.length;
+    var c = CYCLE_ORDER[prevGroup];
+    var maxIdx = c.mode === 'scene' ? sceneNames.length - 1 : solarNames.length - 1;
+    setCyclePosition(prevGroup, maxIdx);
+  }
+  renderImmersive();
 }
 
 function setBg(value) {
@@ -833,7 +1393,7 @@ function updateImmersiveTextColors(bgHex) {
   document.getElementById('immNavTitle').style.color = tc;
   document.querySelectorAll('.imm-btn').forEach(function(b) { b.style.color = tc; });
   var panel = document.getElementById('immPanel');
-  panel.className = 'imm-panel' + (isDark ? '' : ' neu-light');
+  panel.className = 'imm-panel' + (isDark ? '' : ' light');
   panel.style.color = tc;
   document.getElementById('immName').style.color = tc;
   document.getElementById('immDesc').style.color = mc;
@@ -955,7 +1515,7 @@ function renderImmersive() {
 
   // Panel
   var panel = document.getElementById('immPanel');
-  panel.className = 'imm-panel' + (isDark ? '' : ' neu-light');
+  panel.className = 'imm-panel' + (isDark ? '' : ' light');
   panel.style.color = tc;
   document.getElementById('immName').textContent = name;
   document.getElementById('immName').style.color = tc;
@@ -989,7 +1549,7 @@ function renderImmersive() {
   blendBar.onmouseenter = function() { this.style.transform = 'scale(1.03)'; this.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)'; };
   blendBar.onmouseleave = function() { this.style.transform = ''; this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'; };
   // 混色色卡标签
-  var blsl = (getLuma(colors[1].hex) + getLuma(colors[2].hex)) / 2 > 160 ? '#1a1a1a' : '#ffffff';
+  var blsl = (getLuma(colors[0].hex) + getLuma(colors[4].hex)) / 2 > 160 ? '#1a1a1a' : '#ffffff';
   blendBar.innerHTML = '<div style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:0.78rem;font-weight:600;color:' + blsl + ';text-shadow:0 1px 4px rgba(0,0,0,0.3);z-index:1;">混色</div>';
 
   // Left strip - clicking changes background
@@ -1014,18 +1574,164 @@ function renderImmersive() {
     prog.innerHTML += '<div class="imm-dot' + (isActive ? ' active' : '') + '" onclick="' + clickFn + '"></div>';
   }
 
-  // Nav arrows
-  document.getElementById('prevSceneBtn').disabled = currentIdx === 0;
-  document.getElementById('nextSceneBtn').disabled = currentIdx === totalCount - 1;
+  // Nav arrows - 循环模式下始终可用
+  document.getElementById('prevSceneBtn').disabled = false;
+  document.getElementById('nextSceneBtn').disabled = false;
 
   // 背景更新放在最后，确保所有DOM就绪后再统一变色
-  setBg(blendGrad);
+  if (!window.skipBgUpdate) setBg(blendGrad);
 }
 
 function toggleMode() {
   currentMode = currentMode === 'light' ? 'dark' : 'light';
   renderImmersive();
 }
+
+// === Auto-play 轮播 ===
+var autoPlayTimer = null;
+var isAutoPlaying = false;
+var AUTO_PLAY_MIN = 3000;
+var AUTO_PLAY_MAX = 5000;
+
+// 可用切换特效
+var TRANSITION_FX = ['wipeFromLeft','wipeFromRight','wipeFromTop','wipeFromBottom','circleTopRight','circleCenter','circleBottomLeft','scaleIn','slideRight','slideLeft','slideUp','slideDown'];
+
+function toggleAutoPlay() {
+  if (isAutoPlaying) { stopAutoPlay(); }
+  else { startAutoPlay(); }
+}
+
+function getRandomInterval() {
+  return AUTO_PLAY_MIN + Math.random() * (AUTO_PLAY_MAX - AUTO_PLAY_MIN);
+}
+
+// 重置过渡层为初始隐藏状态
+function resetTransitionLayer(el) {
+  el.style.display = 'block';
+  el.style.clipPath = '';
+  el.style.transform = '';
+  el.style.opacity = '1';
+}
+
+// 设置过渡层为隐藏状态（动画开始前）
+function setTransitionHidden(fx, el) {
+  switch (fx) {
+    case 'wipeFromLeft': el.style.clipPath = 'inset(0 0 0 100%)'; break;
+    case 'wipeFromRight': el.style.clipPath = 'inset(0 100% 0 0)'; break;
+    case 'wipeFromTop': el.style.clipPath = 'inset(100% 0 0 0)'; break;
+    case 'wipeFromBottom': el.style.clipPath = 'inset(0 0 100% 0)'; break;
+    case 'circleTopRight': el.style.clipPath = 'circle(0% at 100% 0)'; break;
+    case 'circleCenter': el.style.clipPath = 'circle(0% at 50% 50%)'; break;
+    case 'circleBottomLeft': el.style.clipPath = 'circle(0% at 0 100%)'; break;
+    case 'scaleIn': el.style.transform = 'scale(0)'; break;
+    case 'slideRight': el.style.transform = 'translateX(100%)'; break;
+    case 'slideLeft': el.style.transform = 'translateX(-100%)'; break;
+    case 'slideUp': el.style.transform = 'translateY(100%)'; break;
+    case 'slideDown': el.style.transform = 'translateY(-100%)'; break;
+  }
+}
+
+// 触发过渡层展开动画
+function setTransitionVisible(el) {
+  el.style.clipPath = 'inset(0)';
+  el.style.transform = 'translate(0,0) scale(1)';
+  el.style.opacity = '1';
+}
+
+function scheduleNext() {
+  if (!isAutoPlaying) return;
+  var interval = getRandomInterval();
+  autoPlayTimer = setTimeout(function() {
+    if (!isAutoPlaying) return;
+    var fx = TRANSITION_FX[Math.floor(Math.random() * TRANSITION_FX.length)];
+    var overlay = document.getElementById('immBgTransition');
+
+    // 推进到下一个
+    var pos = getCyclePosition();
+    var c = CYCLE_ORDER[pos.group];
+    var maxIdx = c.mode === 'scene' ? sceneNames.length - 1 : solarNames.length - 1;
+    if (pos.index < maxIdx) {
+      setCyclePosition(pos.group, pos.index + 1);
+    } else {
+      var nextGroup = (pos.group + 1) % CYCLE_ORDER.length;
+      setCyclePosition(nextGroup, 0);
+    }
+
+    // 计算新背景渐变
+    var name, data, scheme;
+    if (immersiveMode === 'scene') {
+      name = sceneNames[currentScene];
+      data = SCENES[name];
+    } else {
+      name = solarNames[currentSolarIdx];
+      data = SOLAR_SCENES[name];
+    }
+    scheme = data[currentMode] || data.light;
+    var newBg = 'linear-gradient(135deg, ' + scheme.colors[1].hex + ', ' + scheme.colors[2].hex + ')';
+
+    // 过渡层承载新背景，初始隐藏
+    overlay.style.background = newBg;
+    overlay.style.backgroundSize = 'cover';
+    resetTransitionLayer(overlay);
+    setTransitionHidden(fx, overlay);
+    void overlay.offsetWidth;
+
+    // 更新UI但不更新body背景
+    window.skipBgUpdate = true;
+    renderImmersive();
+    window.skipBgUpdate = false;
+    updateAutoLabel();
+
+    // 触发展开动画（新背景推入覆盖旧背景）
+    setTimeout(function() { setTransitionVisible(overlay); }, 30);
+
+    // 动画完成后同步body背景并隐藏过渡层
+    setTimeout(function() {
+      setBg(newBg);
+      overlay.style.display = 'none';
+    }, 720);
+
+    // 安排下一次
+    setTimeout(function() { scheduleNext(); }, 800);
+  }, interval);
+}
+
+function startAutoPlay() {
+  isAutoPlaying = true;
+  document.getElementById('immersive').classList.add('auto-playing');
+  document.getElementById('autoPlayBtn').textContent = '停止轮播';
+  document.getElementById('immAutoLabel').style.display = 'flex';
+  updateAutoLabel();
+  scheduleNext();
+}
+
+function stopAutoPlay() {
+  isAutoPlaying = false;
+  if (autoPlayTimer) { clearTimeout(autoPlayTimer); autoPlayTimer = null; }
+  document.getElementById('immersive').classList.remove('auto-playing');
+  document.getElementById('autoPlayBtn').textContent = '自动轮播';
+  document.getElementById('immAutoLabel').style.display = 'none';
+  var overlay = document.getElementById('immBgTransition');
+  overlay.style.display = 'none';
+  overlay.style.clipPath = '';
+  overlay.style.transform = '';
+}
+
+function updateAutoLabel() {
+  var name = immersiveMode === 'scene' ? sceneNames[currentScene] : solarNames[currentSolarIdx];
+  var modeLabel = currentMode === 'light' ? '浅色' : '深色';
+  var typeLabel = immersiveMode === 'scene' ? '场景' : '节气';
+  document.getElementById('immAutoName').textContent = name;
+  document.getElementById('immAutoMeta').textContent = typeLabel + ' · ' + modeLabel;
+}
+
+// 点击页面停止轮播
+document.addEventListener('click', function(e) {
+  if (isAutoPlaying && !e.target.closest('#autoPlayBtn')) { stopAutoPlay(); }
+});
+document.addEventListener('touchstart', function(e) {
+  if (isAutoPlaying && !e.target.closest('#autoPlayBtn')) { stopAutoPlay(); }
+});
 
 // === SOLAR DATA ===
 var solarCardModes = new Array(24).fill('light');
@@ -1055,11 +1761,12 @@ function renderSolarSectionsInGallery() {
       var gradient = 'linear-gradient(135deg,' + colors[1].hex + ',' + colors[2].hex + ')';
       var colorSq = '';
       for (var c = 0; c < colors.length; c++) {
-        colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" onclick="event.stopPropagation();document.body.style.background=\'' + colors[c].hex + '\'"></div>';
+        colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();document.body.style.background=\'' + colors[c].hex + '\'"></div>';
       }
       html += '<div class="solar-gallery-card" onclick="document.body.style.background=\'' + gradient + '\';document.body.style.backgroundSize=\'cover\'">' +
         '<div class="solar-card-top" style="background:' + gradient + '">' +
           '<button class="solar-card-mode" onclick="event.stopPropagation();toggleSolarCardMode(' + idx + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
+          '<button class="solar-card-mode" style="top:auto;bottom:5px;" onclick="event.stopPropagation();copySolarCardPrompt(' + idx + ')">复制</button>' +
           '<div class="solar-card-name">' + name + '</div>' +
         '</div>' +
         '<div class="solar-card-colors">' + colorSq + '</div>' +
@@ -1119,8 +1826,16 @@ function copyCurrentCSS() {
 function saveBackgroundAsImage() {
   try {
     var canvas = document.createElement('canvas');
-    canvas.width = 1920;
-    canvas.height = 1080;
+    var ww = window.innerWidth, wh = window.innerHeight;
+    // 竖屏时用高度作长边，横屏时用宽度作长边，长边固定1080
+    var isPortrait = wh > ww;
+    if (isPortrait) {
+      canvas.height = Math.max(1080, Math.round(wh * (1080 / ww)));
+      canvas.width = 1080;
+    } else {
+      canvas.width = Math.max(1920, Math.round(ww * (1080 / wh)));
+      canvas.height = 1080;
+    }
     var ctx = canvas.getContext('2d');
     // 收集所有可能的背景源
     var cs = window.getComputedStyle(document.body);
@@ -1159,6 +1874,186 @@ function saveBackgroundAsImage() {
     }, 'image/png');
   } catch (e) {
     alert('保存失败: ' + e.message);
+  }
+}
+
+var selectedPaletteColors = [];
+var paletteBgBeforeEnter = '';
+var immCurrentTab = 'scheme';
+var palFoldState = 0; // 0=列表, 1=收纳
+
+function saveHomeBg() { saveBackgroundAsImage(); }
+
+function togglePalFold() {
+  palFoldState = 1 - palFoldState;
+  var btn = document.getElementById('palFoldBtn');
+  btn.textContent = palFoldState ? '展开' : '收纳';
+  var allC = document.getElementById('palAllColors');
+  var selC = document.getElementById('palSelectedColors');
+  var toolbar = document.getElementById('palToolbar');
+  if (palFoldState) {
+    allC.style.display = 'none';
+    selC.style.display = 'none';
+    toolbar.querySelector('span').style.display = 'none';
+    toolbar.querySelectorAll('.imm-btn')[0].style.display = 'none';
+  } else {
+    allC.style.display = '';
+    selC.style.display = '';
+    toolbar.querySelector('span').style.display = '';
+    toolbar.querySelectorAll('.imm-btn')[0].style.display = '';
+  }
+}
+
+function switchImmTab(tab) {
+  immCurrentTab = tab;
+  var tabScheme = document.getElementById('tabScheme');
+  var tabPalette = document.getElementById('tabPalette');
+  var immLeft = document.getElementById('immLeft');
+  var immPalette = document.getElementById('immPalette');
+  var immRight = document.getElementById('immRight');
+  var immCenter = document.getElementById('immCenter');
+  if (tabScheme) tabScheme.className = 'imm-btn imm-tab' + (tab === 'scheme' ? ' imm-tab-active' : '');
+  if (tabPalette) tabPalette.className = 'imm-btn imm-tab' + (tab === 'palette' ? ' imm-tab-active' : '');
+  if (immLeft) immLeft.style.display = tab === 'scheme' ? '' : 'none';
+  if (immPalette) immPalette.style.display = tab === 'palette' ? '' : 'none';
+  if (immRight) immRight.style.display = tab === 'scheme' ? '' : 'none';
+  if (immCenter) immCenter.style.display = tab === 'scheme' ? '' : 'none';
+  if (tab === 'palette') {
+    paletteBgBeforeEnter = document.body.style.background || '';
+    var layer = document.getElementById('palBgLayer');
+    if (layer) {
+      layer.style.display = 'block';
+      layer.style.background = paletteBgBeforeEnter;
+      layer.style.zIndex = '0';
+    }
+    document.body.style.background = '';
+    document.body.style.backgroundSize = '';
+    renderPalAllColors();
+  } else {
+    var layer = document.getElementById('palBgLayer');
+    if (layer) { layer.style.display = 'none'; layer.style.background = ''; }
+    document.body.style.background = paletteBgBeforeEnter;
+    resetPalette();
+  }
+}
+
+function renderPalAllColors() {
+  var el = document.getElementById('palAllColors');
+  var html = '';
+  for (var i = 0; i < solarNames.length; i++) {
+    var name = solarNames[i];
+    var colors = SOLAR_16_COLORS[name];
+    if (!colors) continue;
+    html += '<div class="pal-grid">';
+    // 每行2个卡片，所以每2个节气一组
+    // 当前节气卡片
+    html += '<div class="pal-card"><div class="pal-card-name">' + name + '</div><div class="pal-card-grid">';
+    for (var j = 0; j < colors.length; j++) {
+      var c = colors[j];
+      var isSel = false;
+      for (var k = 0; k < selectedPaletteColors.length; k++) {
+        if (selectedPaletteColors[k].hex === c.hex) { isSel = true; break; }
+      }
+      html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
+    }
+    html += '</div></div>';
+    // 下一个节气（如果存在）
+    i++;
+    if (i < solarNames.length) {
+      var name2 = solarNames[i];
+      var colors2 = SOLAR_16_COLORS[name2];
+      if (colors2) {
+        html += '<div class="pal-card"><div class="pal-card-name">' + name2 + '</div><div class="pal-card-grid">';
+        for (var j = 0; j < colors2.length; j++) {
+          var c = colors2[j];
+          var isSel = false;
+          for (var k = 0; k < selectedPaletteColors.length; k++) {
+            if (selectedPaletteColors[k].hex === c.hex) { isSel = true; break; }
+          }
+          html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
+        }
+        html += '</div></div>';
+      }
+    }
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function togglePalColor(hex, name) {
+  var idx = -1;
+  for (var i = 0; i < selectedPaletteColors.length; i++) {
+    if (selectedPaletteColors[i].hex === hex) { idx = i; break; }
+  }
+  if (idx >= 0) {
+    selectedPaletteColors.splice(idx, 1);
+  } else {
+    selectedPaletteColors.push({name: name, hex: hex});
+  }
+  renderPalAllColors();
+  renderPalSelected();
+  applyPalBg();
+}
+
+function renderPalSelected() {
+  var el = document.getElementById('palSelectedColors');
+  var html = '';
+  for (var i = 0; i < selectedPaletteColors.length; i++) {
+    var c = selectedPaletteColors[i];
+    html += '<div class="pal-sel-chip" style="background:' + c.hex + '" title="' + c.name + '"><span class="pal-x" onclick="event.stopPropagation();removePalColor(' + i + ')">×</span></div>';
+  }
+  el.innerHTML = html;
+  document.getElementById('palCount').textContent = selectedPaletteColors.length;
+}
+
+function removePalColor(idx) {
+  selectedPaletteColors.splice(idx, 1);
+  renderPalAllColors();
+  renderPalSelected();
+  applyPalBg();
+}
+
+function applyPalBg() {
+  var layer = document.getElementById('palBgLayer');
+  if (selectedPaletteColors.length === 0) {
+    layer.style.display = 'block';
+    layer.style.background = paletteBgBeforeEnter;
+    return;
+  }
+  if (selectedPaletteColors.length === 1) {
+    layer.style.display = 'block';
+    layer.style.background = selectedPaletteColors[0].hex;
+    return;
+  }
+  var grad = 'linear-gradient(135deg';
+  for (var i = 0; i < selectedPaletteColors.length; i++) {
+    grad += ', ' + selectedPaletteColors[i].hex;
+  }
+  grad += ')';
+  layer.style.display = 'block';
+  layer.style.background = grad;
+}
+
+function resetPalette() {
+  selectedPaletteColors = [];
+  palFoldState = 0;
+  var foldBtn = document.getElementById('palFoldBtn');
+  if (foldBtn) foldBtn.textContent = '收纳';
+  var allC = document.getElementById('palAllColors');
+  var selC = document.getElementById('palSelectedColors');
+  if (allC) allC.style.display = '';
+  if (selC) selC.style.display = '';
+  var toolbar = document.getElementById('palToolbar');
+  if (toolbar) {
+    toolbar.querySelector('span').style.display = '';
+    var resetBtn = toolbar.querySelectorAll('.imm-btn')[0];
+    if (resetBtn) resetBtn.style.display = '';
+  }
+  var layer = document.getElementById('palBgLayer');
+  if (layer) { layer.style.display = 'block'; layer.style.background = paletteBgBeforeEnter; }
+  renderPalSelected();
+  if (immCurrentTab === 'palette') {
+    renderPalAllColors();
   }
 }
 
@@ -1201,7 +2096,7 @@ function renderGallery() {
     var gradient = 'linear-gradient(135deg,' + colors[1].hex + ',' + colors[2].hex + ')';
     var colorSq = '';
     for (var c = 0; c < colors.length; c++) {
-      colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" onclick="event.stopPropagation();previewColor(\'' + colors[c].hex + '\')"></div>';
+      colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();previewColor(\'' + colors[c].hex + '\')"></div>';
     }
     var card = document.createElement('div');
     card.className = 'solar-gallery-card';
@@ -1209,6 +2104,7 @@ function renderGallery() {
     card.innerHTML =
       '<div class="solar-card-top" style="background:' + gradient + '">' +
         '<button class="solar-card-mode" onclick="event.stopPropagation();toggleCardMode(' + i + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
+        '<button class="solar-card-mode" style="top:auto;bottom:5px;" onclick="event.stopPropagation();copyCardPrompt(' + i + ')">复制</button>' +
         '<div class="solar-card-name">' + name + '</div>' +
       '</div>' +
       '<div class="solar-card-colors">' + colorSq + '</div>';
@@ -1284,6 +2180,8 @@ function updateHomeTextColors(bgHex) {
     var cur = hero.querySelector('.st-current');
     if (cur) cur.style.color = isDark ? '#e8a87c' : '#b06a3b';
   }
+  var footer = document.getElementById('homeFooter');
+  if (footer) footer.style.color = accentC;
 }
 
 // === 节气信息渲染 ===
@@ -1318,11 +2216,11 @@ function renderSolarHome() {
     html += '<div class="solar-section"><div class="solar-section-label">' + sd.label + '</div><div class="solar-grid">';
     for (var j = 0; j < sd.names.length; j++) {
       var name = sd.names[j];
-      var colors = SOLAR_SCENES[name].light.colors;
-      var blendBg = 'linear-gradient(135deg,' + colors[1].hex + ',' + colors[2].hex + ')';
-      var labelLuma = (getLuma(colors[1].hex) + getLuma(colors[2].hex)) / 2;
+      var colors = SOLAR_16_COLORS[name]; if (!colors) continue;
+      var blendBg = 'linear-gradient(135deg,' + colors[0].hex + ',' + colors[4].hex + ')';
+      var labelLuma = (getLuma(colors[0].hex) + getLuma(colors[4].hex)) / 2;
       var labelColor = labelLuma > 160 ? '#333' : '#fff';
-      html += '<div class="solar-group" style="background:' + blendBg + ';border:none;cursor:pointer;" onclick="var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + blendBg + '\';hb.style.backgroundSize=\'cover\';document.body.style.background=\'' + blendBg + '\';document.body.style.backgroundSize=\'cover\';updateHomeTextColors(\'' + colors[1].hex + '\')"><div class="solar-label" style="color:' + labelColor + '">' + name + '</div><div class="solar-dots">';
+      html += '<div class="solar-group" style="background:' + blendBg + ';border:none;cursor:pointer;" onclick="var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + blendBg + '\';hb.style.backgroundSize=\'cover\';document.body.style.background=\'' + blendBg + '\';document.body.style.backgroundSize=\'cover\';updateHomeTextColors(\'' + colors[0].hex + '\')"><div class="solar-label" style="color:' + labelColor + '">' + name + '</div><div class="solar-dots">';
       for (var c = 0; c < colors.length; c++) {
         html += '<div class="solar-dot" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + colors[c].hex + '\';hb.style.backgroundSize=\'\';document.body.style.background=\'' + colors[c].hex + '\';document.body.style.backgroundSize=\'\';updateHomeTextColors(\'' + colors[c].hex + '\')"></div>';
       }
