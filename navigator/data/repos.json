@@ -38,7 +38,22 @@
     "forks_count": 0,
     "open_issues_count": 0,
     "has_pages": true,
-    "pushed_at": "2026-07-20T05:26:03Z",
+    "pushed_at": "2026-07-20T05:26:12Z",
+    "topics": [],
+    "owner": {
+      "login": "kidwords"
+    }
+  },
+  {
+    "name": "chuanxiaobei-ai",
+    "full_name": "kidwords/chuanxiaobei-ai",
+    "html_url": "https://github.com/kidwords/chuanxiaobei-ai",
+    "description": "川小北AI的个人开源项目展示站",
+    "stargazers_count": 0,
+    "forks_count": 0,
+    "open_issues_count": 0,
+    "has_pages": true,
+    "pushed_at": "2026-07-20T05:37:41Z",
     "topics": [],
     "owner": {
       "login": "kidwords"
