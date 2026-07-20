@@ -1596,6 +1596,7 @@ function toggleMode() {
 
 // === Auto-play 轮播 ===
 var autoPlayTimer = null;
+var nextScheduleTimer = null;
 var isAutoPlaying = false;
 var AUTO_PLAY_MIN = 3000;
 var AUTO_PLAY_MAX = 5000;
@@ -1699,7 +1700,7 @@ function scheduleNext() {
     }, 720);
 
     // 安排下一次
-    setTimeout(function() { scheduleNext(); }, 800);
+    nextScheduleTimer = setTimeout(function() { scheduleNext(); }, 800);
   }, interval);
 }
 
@@ -1715,6 +1716,7 @@ function startAutoPlay() {
 function stopAutoPlay() {
   isAutoPlaying = false;
   if (autoPlayTimer) { clearTimeout(autoPlayTimer); autoPlayTimer = null; }
+  if (nextScheduleTimer) { clearTimeout(nextScheduleTimer); nextScheduleTimer = null; }
   document.getElementById('immersive').classList.remove('auto-playing');
   document.getElementById('autoPlayBtn').textContent = '自动轮播';
   document.getElementById('immAutoLabel').style.display = 'none';
