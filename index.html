@@ -1336,7 +1336,7 @@ function showView(name) {
   }
 }
 
-function goHome() { renderSolarHome(); renderSolarTermInfo(); showView('home'); isTourMode = false; var hb = document.getElementById('homeBg'); if (hb) { hb.style.background = defaultSolarBg; hb.style.backgroundSize = 'cover'; } var ic = getCurrentSolarTerm(); var cc = SOLAR_16_COLORS[ic.current]; updateHomeTextColors(cc[0].hex); }
+function goHome() { if (isAutoPlaying) stopAutoPlay(); renderSolarHome(); renderSolarTermInfo(); showView('home'); isTourMode = false; var hb = document.getElementById('homeBg'); if (hb) { hb.style.background = defaultSolarBg; hb.style.backgroundSize = 'cover'; } var ic = getCurrentSolarTerm(); var cc = SOLAR_16_COLORS[ic.current]; updateHomeTextColors(cc[0].hex); }
 function showGallery() { showView('gallery'); renderGallery(); renderSolarSectionsInGallery(); renderSolarTermInfo(); }
 
 // === Tour ===
@@ -1706,7 +1706,7 @@ function setTransitionVisible(el) {
 }
 
 function scheduleNext() {
-  if (!isAutoPlaying) return;
+  if (!isAutoPlaying || isPaletteAutoPlay) return;
   var interval = getRandomInterval();
   autoPlayTimer = setTimeout(function() {
     if (!isAutoPlaying) return;
@@ -1763,12 +1763,38 @@ function scheduleNext() {
   }, interval);
 }
 
-function startAutoPlay() {
-  // 如果在配色板标签页，先切回方案浏览并重置
-  if (immCurrentTab === 'palette') {
-    switchImmTab('scheme');
+function buildPaletteAutoColors() {
+  var arr = [];
+  var terms = Object.keys(SOLAR_16_COLORS || {});
+  for (var t = 0; t < terms.length; t++) {
+    var colors = SOLAR_16_COLORS[terms[t]];
+    for (var c = 0; c < colors.length; c++) {
+      arr.push({name: colors[c].name, hex: colors[c].hex, solarTerm: terms[t]});
+    }
   }
-  // 重置到场景浅色第一个
+  return arr;
+}
+var paletteAutoColors = [];
+var paletteAutoIndex = 0;
+var isPaletteAutoPlay = false;
+
+function startAutoPlay() {
+  if (immCurrentTab === 'palette') {
+    // 配色板轮播：遍历384色
+    paletteAutoColors = buildPaletteAutoColors();
+    paletteAutoIndex = 0;
+    isPaletteAutoPlay = true;
+    var layer = document.getElementById('palBgLayer');
+    if (layer) layer.style.display = 'none';
+    document.getElementById('autoPlayBtn').textContent = '停止轮播';
+    document.getElementById('immAutoLabel').style.display = 'flex';
+    isAutoPlaying = true;
+    document.getElementById('immersive').classList.add('auto-playing');
+    updateAutoLabel();
+    schedulePaletteNext();
+    return;
+  }
+  // 方案浏览轮播：重置到场景浅色第一个
   immersiveMode = 'scene';
   currentMode = 'light';
   currentScene = 0;
@@ -1784,6 +1810,7 @@ function startAutoPlay() {
 
 function stopAutoPlay() {
   isAutoPlaying = false;
+  isPaletteAutoPlay = false;
   if (autoPlayTimer) { clearTimeout(autoPlayTimer); autoPlayTimer = null; }
   if (nextScheduleTimer) { clearTimeout(nextScheduleTimer); nextScheduleTimer = null; }
   window.skipBgUpdate = false;
@@ -1794,6 +1821,23 @@ function stopAutoPlay() {
   overlay.style.display = 'none';
   overlay.style.clipPath = '';
   overlay.style.transform = '';
+  // 如果在配色板轮播，恢复palBgLayer和UI
+  if (immCurrentTab === 'palette') {
+    var palAll = document.getElementById('palAllColors');
+    var palSel = document.getElementById('palSelectedColors');
+    var palToolbar = document.getElementById('palToolbar');
+    if (palAll) palAll.style.display = '';
+    if (palSel) palSel.style.display = 'flex';
+    if (palToolbar) palToolbar.style.display = 'flex';
+    var layer = document.getElementById('palBgLayer');
+    if (layer && selectedPaletteColors.length > 0) {
+      layer.style.display = 'block';
+      applyPalBg();
+    } else if (layer) {
+      layer.style.display = 'block';
+      layer.style.background = paletteBgBeforeEnter || '#f5f5f5';
+    }
+  }
 }
 
 function getFontFamily(fontName) {
@@ -1803,6 +1847,24 @@ function getFontFamily(fontName) {
   return 'sans-serif';
 }
 function updateAutoLabel() {
+  if (isPaletteAutoPlay) {
+    var co = paletteAutoColors[paletteAutoIndex] || {name:'',hex:'#f5f5f5',solarTerm:''};
+    document.getElementById('immAutoName').textContent = co.name;
+    document.getElementById('immAutoMeta').textContent = co.solarTerm + ' · ' + co.hex;
+    var fontEl = document.getElementById('immAutoFont');
+    if (fontEl) {
+      fontEl.textContent = '『' + co.name + '』' + co.hex;
+      fontEl.style.fontFamily = 'serif';
+    }
+    var label = document.getElementById('immAutoLabel');
+    var topPct = 15 + Math.random() * 55;
+    var leftPct = 10 + Math.random() * 80;
+    label.style.top = topPct + '%';
+    label.style.left = leftPct + '%';
+    var nameEl = document.getElementById('immAutoName');
+    if (nameEl) nameEl.style.fontFamily = 'serif';
+    return;
+  }
   var name = immersiveMode === 'scene' ? sceneNames[currentScene] : solarNames[currentSolarIdx];
   var data = immersiveMode === 'scene' ? SCENES[name] : SOLAR_SCENES[name];
   var modeLabel = currentMode === 'light' ? '浅色' : '深色';
@@ -1822,6 +1884,43 @@ function updateAutoLabel() {
   var leftPct = 10 + Math.random() * 80;
   label.style.top = topPct + '%';
   label.style.left = leftPct + '%';
+}
+
+function schedulePaletteNext() {
+  if (!isAutoPlaying || !isPaletteAutoPlay) return;
+  var interval = 2500 + Math.random() * 1500;
+  autoPlayTimer = setTimeout(function() {
+    if (!isAutoPlaying || !isPaletteAutoPlay) return;
+    var fx = TRANSITION_FX[Math.floor(Math.random() * TRANSITION_FX.length)];
+    var overlay = document.getElementById('immBgTransition');
+
+    // 推进到下一个颜色
+    paletteAutoIndex = (paletteAutoIndex + 1) % paletteAutoColors.length;
+    var co = paletteAutoColors[paletteAutoIndex];
+
+    // 过渡层承载新颜色
+    overlay.style.background = co.hex;
+    overlay.style.backgroundSize = 'cover';
+    resetTransitionLayer(overlay);
+    setTransitionHidden(fx, overlay);
+    void overlay.offsetWidth;
+
+    // 更新UI
+    document.body.style.background = co.hex;
+    document.body.style.backgroundSize = 'cover';
+    updateAutoLabel();
+
+    // 触发展开动画
+    setTimeout(function() { setTransitionVisible(overlay); }, 30);
+
+    // 动画完成后隐藏过渡层
+    setTimeout(function() {
+      overlay.style.display = 'none';
+    }, 720);
+
+    // 安排下一次
+    nextScheduleTimer = setTimeout(function() { schedulePaletteNext(); }, 800);
+  }, interval);
 }
 
 // 点击页面停止轮播
@@ -2054,6 +2153,7 @@ function togglePalFold() {
 }
 
 function switchImmTab(tab) {
+  if (isAutoPlaying) stopAutoPlay();
   immCurrentTab = tab;
   var tabScheme = document.getElementById('tabScheme');
   var tabPalette = document.getElementById('tabPalette');
