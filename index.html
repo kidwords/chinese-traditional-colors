@@ -150,8 +150,18 @@ body {
   display: flex;
   height: 32px;
 }
-.solar-card-color { flex: 1; cursor: pointer; transition: transform 0.2s; }
-.solar-card-color:hover { transform: scale(1.08); z-index: 1; }
+.solar-card-color {
+  flex: 1; cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  transition: all 0.25s;
+}
+.solar-card-color:hover {
+  transform: scale(1.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  z-index: 1;
+}
 .solar-card-mode {
   position: absolute;
   top: 5px; right: 5px;
@@ -272,7 +282,16 @@ body {
 }
 .imm-panel h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem; }
 .imm-panel .imm-desc { font-size: 0.9rem; margin-bottom: 1rem; }
-.imm-panel .imm-font { font-size: 0.78rem; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.imm-panel .imm-font { font-size: 0.78rem; margin-bottom: 0.4rem; }
+.imm-font-preview {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  line-height: 1.4;
+  opacity: 0.95;
+}
 
 /* Scene nav arrows */
 .imm-scene-nav {
@@ -286,16 +305,24 @@ body {
   flex: 1;
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 1.2rem;
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 1.6rem;
   color: inherit;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.25s;
   text-align: center;
 }
-.imm-arrow-btn:hover { background: rgba(255,255,255,0.2); }
+.imm-arrow-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.03); }
+.imm-arrow-hint {
+  text-align: center;
+  font-size: 0.65rem;
+  color: inherit;
+  opacity: 0.45;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
 
 /* Scene strip - quick switch */
 .imm-scene-strip {
@@ -359,29 +386,39 @@ body {
 }
 .imm-auto-label {
   position: fixed;
-  bottom: 10%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 210;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   pointer-events: none;
+  transition: top 0.6s ease, left 0.6s ease, opacity 0.4s ease;
 }
 .imm-auto-name {
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 16px rgba(0,0,0,0.4);
-  letter-spacing: 2px;
-  transition: opacity 0.3s;
+  letter-spacing: 4px;
+  transition: opacity 0.3s, font-family 0.4s ease;
 }
 .imm-auto-meta {
   font-size: 0.85rem;
   font-weight: 500;
   color: rgba(255,255,255,0.6);
   text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}
+.imm-auto-font {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  letter-spacing: 2px;
+  opacity: 0.9;
+  transition: font-family 0.4s ease;
 }
 .auto-playing .imm-nav { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
 .auto-playing .imm-left { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
@@ -543,11 +580,20 @@ body {
 .pal-card-name { font-size: 0.55rem; color: rgba(255,255,255,0.85); margin-bottom: 3px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5); }
 .pal-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
 .pal-c {
-  aspect-ratio: 1 / 1; border-radius: 2px; cursor: pointer;
-  border: 1px solid transparent; transition: transform 0.15s, border-color 0.15s;
+  aspect-ratio: 1 / 1; border-radius: 6px; cursor: pointer;
+  border: 1.5px solid transparent;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  transition: all 0.25s;
 }
-.pal-c:hover { transform: scale(1.2); z-index: 2; position: relative; }
-.pal-c.sel { border-color: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.3); }
+.pal-c:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  z-index: 2; position: relative;
+}
+.pal-c.sel {
+  border-width: 2.5px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.35), 0 3px 10px rgba(0,0,0,0.2);
+}
 .pal-sel-chip {
   width: 28px; height: 28px; border-radius: 5px; position: relative; flex-shrink: 0;
   border: 1.5px solid rgba(255,255,255,0.6);
@@ -739,6 +785,7 @@ body {
     <!-- 自动轮播时的居中配色名 -->
     <div class="imm-auto-label" id="immAutoLabel" style="display:none;">
       <div class="imm-auto-name" id="immAutoName"></div>
+      <div class="imm-auto-font" id="immAutoFont">中国传统色</div>
       <div class="imm-auto-meta" id="immAutoMeta"></div>
     </div>
     <!-- 背景切换过渡层 -->
@@ -754,19 +801,20 @@ body {
     </div>
     <!-- 配色板标签页 -->
     <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;flex-direction:column;height:calc(100vh - 60px);overflow:hidden;width:50vw;max-width:720px;min-width:360px;">
-      <div id="palToolbar" style="flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:8px 0 6px;">
-        <span style="font-size:0.65rem;color:rgba(255,255,255,0.5);">已选 <span id="palCount">0</span> 色</span>
-        <div style="display:flex;gap:5px;">
-          <button class="imm-btn" style="font-size:0.72rem;padding:5px 16px;" onclick="randomPalette()">随机</button>
-          <button class="imm-btn" style="font-size:0.72rem;padding:5px 16px;" onclick="resetPalette()">重置</button>
-          <button class="imm-btn" id="palFoldBtn" style="font-size:0.72rem;padding:5px 16px;" onclick="togglePalFold()">收纳</button>
+      <div id="palToolbar" style="flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:10px 0 8px;">
+        <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);">已选 <span id="palCount">0</span> 色</span>
+        <div style="display:flex;gap:8px;">
+          <button class="imm-btn" style="font-size:0.85rem;padding:8px 18px;" onclick="randomPalette()">随机</button>
+          <button class="imm-btn" id="palDirBtn" style="font-size:0.85rem;padding:8px 18px;min-width:100px;" onclick="cyclePalDirection()" title="切换混色方向">↖ 135°</button>
+          <button class="imm-btn" style="font-size:0.85rem;padding:8px 18px;" onclick="resetPalette()">重置</button>
+          <button class="imm-btn" id="palFoldBtn" style="font-size:0.85rem;padding:8px 18px;" onclick="togglePalFold()">收纳</button>
         </div>
       </div>
       <div id="palSelectedColors" style="flex-shrink:0;display:flex;flex-direction:row;flex-wrap:wrap;gap:4px;margin-bottom:8px;min-height:28px;padding:4px 0;width:100%;"></div>
       <div id="palAllColors" style="flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;"></div>
       <!-- 收纳态：只留一个展开箭头 -->
-      <div id="palFoldToggle" style="display:none;position:absolute;top:50%;left:4px;transform:translateY(-50%);">
-        <button class="imm-btn" style="font-size:1.1rem;padding:6px 8px;border-radius:8px 0 0 8px;" onclick="togglePalFold()" title="展开配色板">▸</button>
+      <div id="palFoldToggle" style="display:none;position:absolute;top:50%;left:4px;transform:translateY(-50%);z-index:10;">
+        <button class="imm-btn" style="font-size:1.6rem;padding:10px 14px;border-radius:12px 0 0 12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.25);color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.5);box-shadow:2px 0 8px rgba(0,0,0,0.25);" onclick="togglePalFold()" title="展开配色板">▸</button>
       </div>
     </div>
     <div class="imm-center" id="immCenter"></div>
@@ -778,6 +826,7 @@ body {
         </div>
         <div class="imm-desc" id="immDesc">描述</div>
         <div class="imm-font" id="immFont">推荐字体</div>
+        <div class="imm-font-preview" id="immFontPreview">中国传统色</div>
         <div class="imm-prompt-box" id="immPromptBox">
           <div class="imm-prompt-label" id="immPromptLabel">AI 提示词 · 可直接复制给 AI</div>
           <div class="imm-prompt-text" id="immPromptText"></div>
@@ -787,6 +836,7 @@ body {
           <button class="imm-arrow-btn" id="prevSceneBtn" onclick="prevScene()">&lt;</button>
           <button class="imm-arrow-btn" id="nextSceneBtn" onclick="nextScene()">&gt;</button>
         </div>
+        <div class="imm-arrow-hint">← → 键盘翻页</div>
         <div class="imm-progress" id="immProgress"></div>
       </div>
     </div>
@@ -1258,9 +1308,9 @@ function getCurrentSolarTerm() {
   return {current: cur.name, next: nxt.name, nextDate: nxt.m + '月' + nxt.d + '日'};
 }
 function getSolarTermGradient(name) {
-  if (!SOLAR_SCENES[name]) return 'linear-gradient(135deg, #f5f5f5, #e0e0e0)';
-  var c = SOLAR_SCENES[name].light.colors;
-  return 'linear-gradient(135deg, ' + c[1].hex + ', ' + c[2].hex + ')';
+  if (!SOLAR_16_COLORS[name]) return 'linear-gradient(135deg, #f5f5f5, #e0e0e0)';
+  var c = SOLAR_16_COLORS[name];
+  return 'linear-gradient(135deg, ' + c[0].hex + ', ' + c[4].hex + ')';
 }
 var defaultSolarBg = getSolarTermGradient(getCurrentSolarTerm().current);
 
@@ -1286,7 +1336,7 @@ function showView(name) {
   }
 }
 
-function goHome() { renderSolarHome(); renderSolarTermInfo(); showView('home'); isTourMode = false; var hb = document.getElementById('homeBg'); if (hb) { hb.style.background = defaultSolarBg; hb.style.backgroundSize = 'cover'; } var ic = getCurrentSolarTerm(); var cc = SOLAR_SCENES[ic.current].light.colors; updateHomeTextColors(cc[1].hex); }
+function goHome() { renderSolarHome(); renderSolarTermInfo(); showView('home'); isTourMode = false; var hb = document.getElementById('homeBg'); if (hb) { hb.style.background = defaultSolarBg; hb.style.backgroundSize = 'cover'; } var ic = getCurrentSolarTerm(); var cc = SOLAR_16_COLORS[ic.current]; updateHomeTextColors(cc[0].hex); }
 function showGallery() { showView('gallery'); renderGallery(); renderSolarSectionsInGallery(); renderSolarTermInfo(); }
 
 // === Tour ===
@@ -1532,6 +1582,15 @@ function renderImmersive() {
   document.getElementById('immDesc').style.color = mc;
   document.getElementById('immFont').textContent = '推荐字体: ' + data.font;
   document.getElementById('immFont').style.color = mc;
+  var fpEl = document.getElementById('immFontPreview');
+  if (fpEl) {
+    fpEl.style.color = tc;
+    var ff = data.font;
+    if (ff.indexOf('宋体') !== -1) fpEl.style.fontFamily = '"Source Han Serif SC","Noto Serif SC","SimSun","STSong",serif';
+    else if (ff.indexOf('楷') !== -1) fpEl.style.fontFamily = '"LXGW WenKai","KaiTi","STKaiti",serif';
+    else if (ff.indexOf('黑') !== -1 || ff.indexOf('站酷') !== -1) fpEl.style.fontFamily = '"zcoolqingkehuangyou","YouSheBiaoTiHei",sans-serif';
+    else fpEl.style.fontFamily = 'sans-serif';
+  }
 
   // Prompt
   var pbox = document.getElementById('immPromptBox');
@@ -1705,6 +1764,16 @@ function scheduleNext() {
 }
 
 function startAutoPlay() {
+  // 如果在配色板标签页，先切回方案浏览并重置
+  if (immCurrentTab === 'palette') {
+    switchImmTab('scheme');
+  }
+  // 重置到场景浅色第一个
+  immersiveMode = 'scene';
+  currentMode = 'light';
+  currentScene = 0;
+  currentSolarIdx = 0;
+  renderImmersive();
   isAutoPlaying = true;
   document.getElementById('immersive').classList.add('auto-playing');
   document.getElementById('autoPlayBtn').textContent = '停止轮播';
@@ -1717,6 +1786,7 @@ function stopAutoPlay() {
   isAutoPlaying = false;
   if (autoPlayTimer) { clearTimeout(autoPlayTimer); autoPlayTimer = null; }
   if (nextScheduleTimer) { clearTimeout(nextScheduleTimer); nextScheduleTimer = null; }
+  window.skipBgUpdate = false;
   document.getElementById('immersive').classList.remove('auto-playing');
   document.getElementById('autoPlayBtn').textContent = '自动轮播';
   document.getElementById('immAutoLabel').style.display = 'none';
@@ -1726,12 +1796,32 @@ function stopAutoPlay() {
   overlay.style.transform = '';
 }
 
+function getFontFamily(fontName) {
+  if (fontName.indexOf('宋体') !== -1) return '"Source Han Serif SC","Noto Serif SC","SimSun","STSong",serif';
+  if (fontName.indexOf('楷') !== -1) return '"LXGW WenKai","KaiTi","STKaiti",serif';
+  if (fontName.indexOf('黑') !== -1 || fontName.indexOf('站酷') !== -1) return '"zcoolqingkehuangyou","YouSheBiaoTiHei",sans-serif';
+  return 'sans-serif';
+}
 function updateAutoLabel() {
   var name = immersiveMode === 'scene' ? sceneNames[currentScene] : solarNames[currentSolarIdx];
+  var data = immersiveMode === 'scene' ? SCENES[name] : SOLAR_SCENES[name];
   var modeLabel = currentMode === 'light' ? '浅色' : '深色';
   var typeLabel = immersiveMode === 'scene' ? '场景' : '节气';
   document.getElementById('immAutoName').textContent = name;
-  document.getElementById('immAutoMeta').textContent = typeLabel + ' · ' + modeLabel;
+  document.getElementById('immAutoMeta').textContent = typeLabel + ' · ' + modeLabel + ' · ' + (data.font || '');
+  var ff = getFontFamily(data.font || '');
+  var nameEl = document.getElementById('immAutoName');
+  var fontEl = document.getElementById('immAutoFont');
+  if (nameEl) nameEl.style.fontFamily = ff;
+  if (fontEl) {
+    fontEl.style.fontFamily = ff;
+    fontEl.textContent = '中国传统色';
+  }
+  var label = document.getElementById('immAutoLabel');
+  var topPct = 15 + Math.random() * 55;
+  var leftPct = 10 + Math.random() * 80;
+  label.style.top = topPct + '%';
+  label.style.left = leftPct + '%';
 }
 
 // 点击页面停止轮播
@@ -1890,6 +1980,53 @@ var selectedPaletteColors = [];
 var paletteBgBeforeEnter = '';
 var immCurrentTab = 'scheme';
 var palFoldState = 0; // 0=列表, 1=收纳
+var palDirectionIdx = 3;
+var PAL_GRADIENTS = [
+  { label: '→ 0°', type: 'linear', value: 'to right' },
+  { label: '↗ 45°', type: 'linear', value: 'to top right' },
+  { label: '↑ 90°', type: 'linear', value: 'to top' },
+  { label: '↖ 135°', type: 'linear', value: 'to top left' },
+  { label: '← 180°', type: 'linear', value: 'to left' },
+  { label: '↙ 225°', type: 'linear', value: 'to bottom left' },
+  { label: '↓ 270°', type: 'linear', value: 'to bottom' },
+  { label: '↘ 315°', type: 'linear', value: 'to bottom right' },
+  { label: '◉ 中心辐射', type: 'radial', value: 'circle at center' },
+  { label: '◐ 左上辐射', type: 'radial', value: 'circle at top left' },
+  { label: '◑ 右上辐射', type: 'radial', value: 'circle at top right' },
+  { label: '◒ 右下辐射', type: 'radial', value: 'circle at bottom right' },
+  { label: '◓ 左下辐射', type: 'radial', value: 'circle at bottom left' },
+  { label: '⚡ 对角交叉', type: 'diagonal' },
+  { label: '🌀 四角辐射', type: 'quad' }
+];
+
+function cyclePalDirection() {
+  palDirectionIdx = (palDirectionIdx + 1) % PAL_GRADIENTS.length;
+  var dirBtn = document.getElementById('palDirBtn');
+  if (dirBtn) dirBtn.textContent = PAL_GRADIENTS[palDirectionIdx].label;
+  applyPalBg();
+}
+
+function buildPalGradient(colors) {
+  if (colors.length < 2) return colors.length === 1 ? colors[0].hex : '#f5f5f5';
+  var cfg = PAL_GRADIENTS[palDirectionIdx];
+  var hexes = colors.map(function(c) { return c.hex; });
+  if (cfg.type === 'linear') {
+    return 'linear-gradient(' + cfg.value + ', ' + hexes.join(', ') + ')';
+  }
+  if (cfg.type === 'radial') {
+    return 'radial-gradient(' + cfg.value + ', ' + hexes.join(', ') + ')';
+  }
+  if (cfg.type === 'diagonal') {
+    return 'linear-gradient(to top right, ' + hexes[0] + ' 0%, ' + hexes[0] + ' 45%, ' + hexes[1 % hexes.length] + ' 45%, ' + hexes[1 % hexes.length] + ' 55%, ' + hexes[(hexes.length - 1) % hexes.length] + ' 55%, ' + hexes[(hexes.length - 1) % hexes.length] + ' 100%)';
+  }
+  if (cfg.type === 'quad') {
+    return 'radial-gradient(circle at top left, ' + hexes[0] + ' 0%, transparent 40%),' +
+      'radial-gradient(circle at top right, ' + hexes[1 % hexes.length] + ' 0%, transparent 40%),' +
+      'radial-gradient(circle at bottom left, ' + hexes[(hexes.length - 1) % hexes.length] + ' 0%, transparent 40%),' +
+      'radial-gradient(circle at bottom right, ' + hexes[Math.min(2, hexes.length - 1) % hexes.length] + ' 0%, transparent 40%)';
+  }
+  return 'linear-gradient(135deg, ' + hexes.join(', ') + ')';
+}
 
 function saveHomeBg() { saveBackgroundAsImage(); }
 
@@ -1931,11 +2068,14 @@ function switchImmTab(tab) {
   if (immRight) immRight.style.display = tab === 'scheme' ? '' : 'none';
   if (immCenter) immCenter.style.display = tab === 'scheme' ? '' : 'none';
   if (tab === 'palette') {
-    paletteBgBeforeEnter = document.body.style.background || '';
+    // 只在首次进入配色板时保存背景，防止重复点击覆盖为空
+    if (!paletteBgBeforeEnter) {
+      paletteBgBeforeEnter = document.body.style.background || '';
+    }
     var layer = document.getElementById('palBgLayer');
     if (layer) {
       layer.style.display = 'block';
-      layer.style.background = paletteBgBeforeEnter;
+      layer.style.background = paletteBgBeforeEnter || '#f5f5f5';
       layer.style.zIndex = '0';
     }
     document.body.style.background = '';
@@ -1944,8 +2084,16 @@ function switchImmTab(tab) {
   } else {
     var layer = document.getElementById('palBgLayer');
     if (layer) { layer.style.display = 'none'; layer.style.background = ''; }
-    document.body.style.background = paletteBgBeforeEnter;
     resetPalette();
+    selectedPaletteColors = [];
+    palDirectionIdx = 3;
+    var dirBtn = document.getElementById('palDirBtn');
+    if (dirBtn) dirBtn.textContent = PAL_GRADIENTS[3].label;
+    immersiveMode = 'scene';
+    currentScene = 0;
+    currentSolarIdx = 0;
+    window.skipBgUpdate = false;
+    renderImmersive();
   }
 }
 
@@ -1967,7 +2115,9 @@ function renderPalAllColors() {
       for (var k = 0; k < selectedPaletteColors.length; k++) {
         if (selectedPaletteColors[k].hex === c.hex) { isSel = true; break; }
       }
-      html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
+      var luma = getLuma(c.hex);
+      var borderColor = luma > 180 ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.18)';
+      html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + ';border-color:' + borderColor + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
     }
     html += '</div></div>';
   }
@@ -1998,7 +2148,8 @@ function renderPalSelected() {
     html += '<div class="pal-sel-chip" style="background:' + c.hex + '" title="' + c.name + '"><span class="pal-x" onclick="event.stopPropagation();removePalColor(' + i + ')">×</span></div>';
   }
   el.innerHTML = html;
-  document.getElementById('palCount').textContent = selectedPaletteColors.length;
+  var pc = document.getElementById('palCount');
+  if (pc) pc.textContent = selectedPaletteColors.length;
 }
 
 function removePalColor(idx) {
@@ -2020,13 +2171,8 @@ function applyPalBg() {
     layer.style.background = selectedPaletteColors[0].hex;
     return;
   }
-  var grad = 'linear-gradient(135deg';
-  for (var i = 0; i < selectedPaletteColors.length; i++) {
-    grad += ', ' + selectedPaletteColors[i].hex;
-  }
-  grad += ')';
   layer.style.display = 'block';
-  layer.style.background = grad;
+  layer.style.background = buildPalGradient(selectedPaletteColors);
 }
 
 function resetPalette() {
@@ -2039,11 +2185,11 @@ function resetPalette() {
   var toolbar = document.getElementById('palToolbar');
   var foldToggle = document.getElementById('palFoldToggle');
   if (allC) allC.style.display = '';
-  if (selC) selC.style.display = 'flex';
-  if (toolbar) toolbar.style.display = '';
+  if (selC) { selC.style.display = 'flex'; selC.style.flexDirection = 'row'; selC.style.flexWrap = 'wrap'; }
+  if (toolbar) toolbar.style.display = 'flex';
   if (foldToggle) foldToggle.style.display = 'none';
   var layer = document.getElementById('palBgLayer');
-  if (layer) { layer.style.display = 'block'; layer.style.background = paletteBgBeforeEnter; }
+  if (layer && immCurrentTab === 'palette') { layer.style.display = 'block'; layer.style.background = paletteBgBeforeEnter; }
   renderPalSelected();
   if (immCurrentTab === 'palette') {
     renderPalAllColors();
@@ -2103,7 +2249,7 @@ function randomPalette() {
     if (mainBucket.length >= 2 && compBucket.length >= 1) {
       // 主色按亮度排序选2-3个
       mainBucket.sort(function(a,b) { return getLuma(b.hex) - getLuma(a.hex); });
-      var mainCount = 2 + Math.floor(Math.random() * 2); // 2-3
+      var mainCount = 1 + Math.floor(Math.random() * 2); // 1-2
       var mainPicks = mainBucket.slice(0, Math.min(mainCount, mainBucket.length));
       // 互补色随机选1个（优先高饱和）
       compBucket.sort(function(a,b) { return hexToHsl(b.hex).s - hexToHsl(a.hex).s; });
@@ -2146,8 +2292,8 @@ function monoGradient(allColors, hue) {
   if (bucket.length < 3) bucket = allColors.slice(); // fallback
   // 按亮度排序
   bucket.sort(function(a,b) { return getLuma(b.hex) - getLuma(a.hex); });
-  // 等间距取3-4个，形成渐变
-  var count = 3 + Math.floor(Math.random() * 2); // 3-4
+  // 等间距取2-3个，形成渐变
+  var count = 2 + Math.floor(Math.random() * 2); // 2-3
   var step = Math.max(1, Math.floor(bucket.length / count));
   var picks = [];
   for (var i = 0; i < count && i * step < bucket.length; i++) {
@@ -2351,12 +2497,12 @@ document.addEventListener('keydown', function(e) {
 renderSolarHome();
 renderSolarTermInfo();
 var _initSolar = getCurrentSolarTerm();
-var _initColors = SOLAR_SCENES[_initSolar.current].light.colors;
+var _initColors = SOLAR_16_COLORS[_initSolar.current];
 document.body.style.background = defaultSolarBg;
 document.body.style.backgroundSize = 'cover';
 var hb0 = document.getElementById('homeBg');
 if (hb0) { hb0.style.background = defaultSolarBg; hb0.style.backgroundSize = 'cover'; }
-updateHomeTextColors(_initColors[1].hex);
+updateHomeTextColors(_initColors[0].hex);
 </script>
 </body>
 </html>
