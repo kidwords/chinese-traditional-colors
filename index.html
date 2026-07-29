@@ -16,6 +16,34 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
 }
+.project-home-link {
+  position: fixed; top: 16px; left: 16px; z-index: 100;
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 40px; padding: 0 14px;
+  color: #fff; background: rgba(23,23,23,0.78);
+  border: 1px solid rgba(255,255,255,0.22); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  font-size: 0.82rem; font-weight: 600; text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.project-home-link:hover { background: rgba(23,23,23,0.92); border-color: rgba(255,255,255,0.38); box-shadow: 0 10px 28px rgba(0,0,0,0.22); transform: translateY(-1px); }
+.project-home-link:focus-visible { outline: 3px solid rgba(212,175,55,0.85); outline-offset: 3px; }
+.project-home-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.export-dialog { position: fixed; inset: 0; z-index: 220; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(17,17,17,0.36); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.export-dialog.open { display: flex; }
+.export-dialog-card { width: min(100%, 440px); border: 1px solid rgba(255,255,255,0.65); border-radius: 16px; background: rgba(255,255,255,0.94); padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+.export-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.export-dialog-title { font-size: 1.15rem; font-weight: 700; color: #1a1a1a; }
+.export-dialog-copy { margin-top: 8px; color: #666; font-size: 0.82rem; line-height: 1.65; }
+.export-dialog-close { width: 32px; height: 32px; border: 1px solid #e0e0e0; border-radius: 10px; background: #fff; color: #444; font-size: 1.1rem; cursor: pointer; transition: all 0.2s ease; }
+.export-dialog-close:hover { background: #f5f5f5; border-color: #bbb; }
+.export-options { display: grid; gap: 10px; margin-top: 20px; }
+.export-option { width: 100%; border: 1px solid #dedede; border-radius: 14px; background: #fff; padding: 16px; text-align: left; color: #1a1a1a; cursor: pointer; transition: all 0.25s ease; }
+.export-option:hover { transform: translateY(-1px); border-color: #8f6b55; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+.export-option-title { display: block; font-size: 0.92rem; font-weight: 700; }
+.export-option-meta { display: block; margin-top: 5px; color: #666; font-size: 0.78rem; line-height: 1.5; }
+.export-dialog-note { margin-top: 14px; color: #888; font-size: 0.72rem; line-height: 1.55; }
 
 /* === View System === */
 .view { display: none; min-height: 100vh; }
@@ -104,6 +132,7 @@ body {
 .solar-dot {
   width: 100%;
   aspect-ratio: 1 / 1;
+  padding: 0;
   border-radius: 3px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -118,25 +147,26 @@ body {
 .solar-term-hero .st-next { opacity: 0.65; }
 
 /* Solar gallery cards */
-.solar-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
-@media (min-width: 1440px) { .solar-gallery-grid { grid-template-columns: repeat(8, 1fr); } }
+.solar-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); gap: 16px; }
+@media (min-width: 1440px) { .solar-gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .solar-gallery-card {
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border: 1px solid rgba(24,24,27,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   cursor: pointer;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: all 0.25s ease;
 }
-.solar-gallery-card:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
+.solar-gallery-card:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
 .solar-card-top {
-  height: 56px;
+  height: 88px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 10px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 12px;
 }
 .solar-card-name {
   font-size: 0.82rem;
@@ -147,24 +177,57 @@ body {
   letter-spacing: 0.5px;
 }
 .solar-card-colors {
-  display: flex;
-  height: 32px;
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  background: rgba(250,250,250,0.92);
 }
-.solar-card-color {
-  flex: 1; cursor: pointer;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-  transition: all 0.25s;
+.palette-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #27272a;
+  font: inherit;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
-.solar-card-color:hover {
-  transform: scale(1.08);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-  z-index: 1;
+.palette-row:hover,
+.palette-row:focus-visible {
+  transform: translateX(2px);
+  border-color: rgba(24,24,27,0.12);
+  background: rgba(255,255,255,0.9);
+  outline: none;
+}
+.palette-row-color {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(24,24,27,0.1);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28);
+}
+.palette-row-name {
+  overflow: hidden;
+  color: #3f3f46;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.palette-row-hex {
+  color: #71717a;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 0.67rem;
 }
 .solar-card-mode {
-  position: absolute;
-  top: 5px; right: 5px;
+  position: static;
   background: rgba(255,255,255,0.2);
   border: 1px solid rgba(255,255,255,0.25);
   border-radius: 6px;
@@ -176,6 +239,18 @@ body {
   -webkit-backdrop-filter: blur(4px);
 }
 .solar-card-mode:hover { background: rgba(255,255,255,0.35); }
+.solar-card-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+  opacity: 0.78;
+  transition: opacity 0.25s ease;
+}
+.solar-gallery-card:hover .solar-card-actions,
+.solar-gallery-card:focus-within .solar-card-actions { opacity: 1; }
 
 /* ============================== */
 /* VIEW 2: GALLERY (重构)          */
@@ -642,6 +717,7 @@ body {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
+  .project-home-link { top: 12px; left: 12px; min-height: 36px; padding: 0 12px; font-size: 0.75rem; }
   /* === 首页节气色块 === */
   .solar-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .solar-group { padding: 6px; aspect-ratio: 1 / 1; }
@@ -652,10 +728,12 @@ body {
   /* === 全部浏览卡片 === */
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .solar-gallery-card { border-radius: 12px; }
-  .solar-card-top { height: 60px; padding: 6px 8px; }
-  .solar-card-name { font-size: 0.7rem; }
-  .solar-card-colors { height: 32px; }
+  .solar-card-top { height: 76px; padding: 10px; }
+  .solar-card-name { font-size: 0.82rem; }
+  .solar-card-colors { padding: 8px; }
   .solar-card-mode { font-size: 0.6rem; padding: 2px 6px; }
+  .palette-row { grid-template-columns: 26px minmax(0, 1fr) auto; }
+  .palette-row-color { width: 26px; height: 26px; border-radius: 10px; }
 
   /* === 逐步览色：底部色卡横滑条 === */
   .imm-layout { flex-direction: column; }
@@ -714,6 +792,7 @@ body {
 
 @media (max-width: 480px) {
   .gallery-grid { grid-template-columns: 1fr; }
+  .solar-gallery-grid { grid-template-columns: 1fr; }
   .solar-grid { grid-template-columns: repeat(2, 1fr); }
   .imm-swatch { width: 64px !important; height: 48px !important; }
   .cover h1 { font-size: 1.7rem; }
@@ -722,6 +801,32 @@ body {
 </style>
 </head>
 <body>
+<a class="project-home-link" href="../../" aria-label="返回项目页">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M9 12h11"></path></svg>
+  <span>返回项目页</span>
+</a>
+<div class="export-dialog" id="exportDialog" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle" aria-hidden="true">
+  <div class="export-dialog-card">
+    <div class="export-dialog-head">
+      <div>
+        <h2 class="export-dialog-title" id="exportDialogTitle">保存背景</h2>
+        <p class="export-dialog-copy">选择保存尺寸，图片会保留当前背景的配色与比例。</p>
+      </div>
+      <button class="export-dialog-close" type="button" onclick="closeExportDialog()" aria-label="关闭">×</button>
+    </div>
+    <div class="export-options">
+      <button class="export-option" type="button" onclick="saveBackgroundAsImage('device')">
+        <span class="export-option-title">按设备分辨率保存</span>
+        <span class="export-option-meta" id="deviceExportSize"></span>
+      </button>
+      <button class="export-option" type="button" onclick="saveBackgroundAsImage('viewport')">
+        <span class="export-option-title">按浏览器窗口保存</span>
+        <span class="export-option-meta" id="viewportExportSize"></span>
+      </button>
+    </div>
+    <p class="export-dialog-note" id="exportDialogNote"></p>
+  </div>
+</div>
 <div id="home" class="view active">
   <div class="home-bg" id="homeBg"></div>
   <div class="home-inner">
@@ -1934,6 +2039,14 @@ document.addEventListener('touchstart', function(e) {
 // === SOLAR DATA ===
 var solarCardModes = new Array(24).fill('light');
 
+function paletteRowMarkup(color, action) {
+  return '<button type="button" class="palette-row" title="应用 ' + color.name + ' ' + color.hex + '" onclick="event.stopPropagation();' + action + '">' +
+    '<span class="palette-row-color" style="background:' + color.hex + '"></span>' +
+    '<span class="palette-row-name">' + color.name + '</span>' +
+    '<span class="palette-row-hex">' + color.hex + '</span>' +
+  '</button>';
+}
+
 // === Solar sections in gallery ===
 function renderSolarSectionsInGallery() {
   var container = document.getElementById('solarSectionsInGallery');
@@ -1959,12 +2072,14 @@ function renderSolarSectionsInGallery() {
       var gradient = 'linear-gradient(135deg,' + colors[1].hex + ',' + colors[2].hex + ')';
       var colorSq = '';
       for (var c = 0; c < colors.length; c++) {
-        colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();document.body.style.background=\'' + colors[c].hex + '\'"></div>';
+        colorSq += paletteRowMarkup(colors[c], 'document.body.style.background=\'' + colors[c].hex + '\'');
       }
       html += '<div class="solar-gallery-card" onclick="document.body.style.background=\'' + gradient + '\';document.body.style.backgroundSize=\'cover\'">' +
         '<div class="solar-card-top" style="background:' + gradient + '">' +
-          '<button class="solar-card-mode" onclick="event.stopPropagation();toggleSolarCardMode(' + idx + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
-          '<button class="solar-card-mode" style="top:auto;bottom:5px;" onclick="event.stopPropagation();copySolarCardPrompt(' + idx + ')">复制</button>' +
+          '<div class="solar-card-actions">' +
+            '<button class="solar-card-mode" type="button" onclick="event.stopPropagation();toggleSolarCardMode(' + idx + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
+            '<button class="solar-card-mode" type="button" onclick="event.stopPropagation();copySolarCardPrompt(' + idx + ')">复制</button>' +
+          '</div>' +
           '<div class="solar-card-name">' + name + '</div>' +
         '</div>' +
         '<div class="solar-card-colors">' + colorSq + '</div>' +
@@ -2021,19 +2136,63 @@ function copyCurrentCSS() {
   copyText(css);
 }
 
-function saveBackgroundAsImage() {
+function getExportDimensions(mode) {
+  var dpr = Math.max(1, window.devicePixelRatio || 1);
+  var sourceWidth = mode === 'device' ? (window.screen.width || window.innerWidth) : window.innerWidth;
+  var sourceHeight = mode === 'device' ? (window.screen.height || window.innerHeight) : window.innerHeight;
+  var width = Math.max(1, Math.round(sourceWidth * dpr));
+  var height = Math.max(1, Math.round(sourceHeight * dpr));
+  var maxPixels = 24000000;
+  var pixels = width * height;
+  var limited = pixels > maxPixels;
+  if (limited) {
+    var scale = Math.sqrt(maxPixels / pixels);
+    width = Math.max(1, Math.floor(width * scale));
+    height = Math.max(1, Math.floor(height * scale));
+  }
+  return { width: width, height: height, limited: limited };
+}
+
+function describeExportDimensions(dimensions) {
+  return dimensions.width + ' × ' + dimensions.height + ' 像素' + (dimensions.limited ? '（为避免浏览器卡顿，已安全缩放）' : '');
+}
+
+function openExportDialog() {
+  var dialog = document.getElementById('exportDialog');
+  var deviceSize = getExportDimensions('device');
+  var viewportSize = getExportDimensions('viewport');
+  document.getElementById('deviceExportSize').textContent = describeExportDimensions(deviceSize) + ' · 适合作为设备壁纸';
+  document.getElementById('viewportExportSize').textContent = describeExportDimensions(viewportSize) + ' · 保存当前浏览大小';
+  document.getElementById('exportDialogNote').textContent = deviceSize.limited || viewportSize.limited ? '超高分辨率已应用 2400 万像素安全上限。' : '设备分辨率会结合屏幕尺寸与像素密度生成图片。';
+  dialog.classList.add('open');
+  dialog.setAttribute('aria-hidden', 'false');
+  dialog.querySelector('.export-dialog-close').focus();
+}
+
+function closeExportDialog() {
+  var dialog = document.getElementById('exportDialog');
+  if (!dialog) return;
+  dialog.classList.remove('open');
+  dialog.setAttribute('aria-hidden', 'true');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeExportDialog();
+});
+document.getElementById('exportDialog').addEventListener('click', function(e) {
+  if (e.target === this) closeExportDialog();
+});
+
+function saveBackgroundAsImage(mode) {
+  if (!mode) {
+    openExportDialog();
+    return;
+  }
   try {
     var canvas = document.createElement('canvas');
-    var ww = window.innerWidth, wh = window.innerHeight;
-    // 竖屏时用高度作长边，横屏时用宽度作长边，长边固定1080
-    var isPortrait = wh > ww;
-    if (isPortrait) {
-      canvas.height = Math.max(1080, Math.round(wh * (1080 / ww)));
-      canvas.width = 1080;
-    } else {
-      canvas.width = Math.max(1920, Math.round(ww * (1080 / wh)));
-      canvas.height = 1080;
-    }
+    var dimensions = getExportDimensions(mode);
+    canvas.width = dimensions.width;
+    canvas.height = dimensions.height;
     var ctx = canvas.getContext('2d');
     // 收集所有可能的背景源
     var cs = window.getComputedStyle(document.body);
@@ -2062,7 +2221,7 @@ function saveBackgroundAsImage() {
       var url = URL.createObjectURL(blob);
       var link = document.createElement('a');
       link.href = url;
-      link.download = 'background_' + Date.now() + '.png';
+      link.download = 'chinese-traditional-colors_' + mode + '_' + canvas.width + 'x' + canvas.height + '.png';
       document.body.appendChild(link);
       link.click();
       setTimeout(function() {
@@ -2070,6 +2229,7 @@ function saveBackgroundAsImage() {
         URL.revokeObjectURL(url);
       }, 100);
     }, 'image/png');
+    closeExportDialog();
   } catch (e) {
     alert('保存失败: ' + e.message);
   }
@@ -2442,15 +2602,17 @@ function renderGallery() {
     var gradient = 'linear-gradient(135deg,' + colors[1].hex + ',' + colors[2].hex + ')';
     var colorSq = '';
     for (var c = 0; c < colors.length; c++) {
-      colorSq += '<div class="solar-card-color" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();previewColor(\'' + colors[c].hex + '\')"></div>';
+      colorSq += paletteRowMarkup(colors[c], 'previewColor(\'' + colors[c].hex + '\')');
     }
     var card = document.createElement('div');
     card.className = 'solar-gallery-card';
     card.onclick = (function(idx, m) { return function() { previewScene(idx, m); }; })(i, mode);
     card.innerHTML =
       '<div class="solar-card-top" style="background:' + gradient + '">' +
-        '<button class="solar-card-mode" onclick="event.stopPropagation();toggleCardMode(' + i + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
-        '<button class="solar-card-mode" style="top:auto;bottom:5px;" onclick="event.stopPropagation();copyCardPrompt(' + i + ')">复制</button>' +
+        '<div class="solar-card-actions">' +
+          '<button class="solar-card-mode" type="button" onclick="event.stopPropagation();toggleCardMode(' + i + ')">' + (mode === 'light' ? '深' : '浅') + '</button>' +
+          '<button class="solar-card-mode" type="button" onclick="event.stopPropagation();copyCardPrompt(' + i + ')">复制</button>' +
+        '</div>' +
         '<div class="solar-card-name">' + name + '</div>' +
       '</div>' +
       '<div class="solar-card-colors">' + colorSq + '</div>';
@@ -2568,7 +2730,7 @@ function renderSolarHome() {
       var labelColor = labelLuma > 160 ? '#333' : '#fff';
       html += '<div class="solar-group" style="background:' + blendBg + ';border:none;cursor:pointer;" onclick="var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + blendBg + '\';hb.style.backgroundSize=\'cover\';document.body.style.background=\'' + blendBg + '\';document.body.style.backgroundSize=\'cover\';updateHomeTextColors(\'' + colors[0].hex + '\')"><div class="solar-label" style="color:' + labelColor + '">' + name + '</div><div class="solar-dots">';
       for (var c = 0; c < colors.length; c++) {
-        html += '<div class="solar-dot" style="background:' + colors[c].hex + '" title="' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + colors[c].hex + '\';hb.style.backgroundSize=\'\';document.body.style.background=\'' + colors[c].hex + '\';document.body.style.backgroundSize=\'\';updateHomeTextColors(\'' + colors[c].hex + '\')"></div>';
+        html += '<button type="button" class="solar-dot" style="background:' + colors[c].hex + '" title="应用 ' + colors[c].name + ' ' + colors[c].hex + '" aria-label="应用 ' + colors[c].name + ' ' + colors[c].hex + '" onclick="event.stopPropagation();var hb=document.getElementById(\'homeBg\');hb.style.background=\'' + colors[c].hex + '\';hb.style.backgroundSize=\'\';document.body.style.background=\'' + colors[c].hex + '\';document.body.style.backgroundSize=\'\';updateHomeTextColors(\'' + colors[c].hex + '\')"></button>';
       }
       html += '</div></div>';
     }
