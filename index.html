@@ -16,6 +16,25 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
 }
+.project-home-link {
+  position: fixed; top: 24px; right: 24px; z-index: 100;
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 40px; padding: 0 16px;
+  color: #1a1a1a; background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.08); border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  font-size: 0.82rem; font-weight: 500; text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.project-home-link:hover { background: rgba(255,255,255,0.92); border-color: rgba(0,0,0,0.16); box-shadow: 0 4px 10px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.project-home-link:focus-visible { outline: 3px solid rgba(212,175,55,0.85); outline-offset: 3px; }
+.project-home-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+body[data-active-view="gallery"] .project-home-link,
+body[data-active-view="immersive"] .project-home-link { display: none; }
+@media (max-width: 640px) {
+  .project-home-link { top: 16px; right: 16px; padding: 0 12px; }
+}
 .export-dialog { position: fixed; inset: 0; z-index: 220; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(17,17,17,0.36); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .export-dialog.open { display: flex; }
 .export-dialog-card { width: min(100%, 440px); border: 1px solid rgba(255,255,255,0.65); border-radius: 16px; background: rgba(255,255,255,0.94); padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
@@ -56,7 +75,23 @@ body {
   font-size: 2.6rem; font-weight: 200; letter-spacing: 0.12em;
   margin-bottom: 0.5rem; color: #1a1a1a;
 }
-.cover h1 strong { font-weight: 700; }
+.cover h1 strong {
+  font-weight: 700;
+  background: linear-gradient(115deg, #fff799 0%, #f3a694 8%, #d12920 16%, #e18a3b 24%, #f7d154 32%, #c67915 40%, #4c8045 48%, #3d8e86 56%, #00a6a6 64%, #3271ae 72%, #9b8ea9 80%, #903754 88%, #a14fb5 100%);
+  background-size: 220% 220%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 18px rgba(84,82,120,0.12);
+  animation: title-fluid 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: background-position;
+  backface-visibility: hidden;
+}
+@keyframes title-fluid {
+  0% { background-position: 0% 50%; }
+  35% { background-position: 46% 18%; }
+  70% { background-position: 82% 82%; }
+  100% { background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .cover h1 strong { animation: none; } }
 .cover .sub { font-size: 0.95rem; color: #888; letter-spacing: 0.06em; margin-bottom: 1.5rem; }
 
 /* Project intro */
@@ -91,7 +126,8 @@ body {
 /* Solar terms */
 .solar-title { font-size: 0.8rem; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
 .solar-section { margin-bottom: 2rem; }
-.solar-section-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: #333; }
+.solar-section-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.15rem; color: #333; }
+.solar-section-hint { margin-bottom: 0.6rem; color: #777; font-size: 0.72rem; letter-spacing: 0.02em; }
 .solar-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
 .solar-group {
   background: rgba(255,255,255,0.6);
@@ -127,40 +163,37 @@ body {
 .solar-dot:hover { transform: scale(1.2); box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 2; position: relative; }
 
 .home-footer { text-align: center; padding: 2rem 0; color: #bbb; font-size: 0.78rem; }
-.all-colors-section { margin: 2rem 0 3rem; }
-.all-colors-title { font-size: 0.8rem; font-weight: 600; color: #777; letter-spacing: .08em; margin-bottom: .8rem; }
-.all-colors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18px, 1fr)); gap: 4px; }
-.all-color-cell { aspect-ratio: 1; border: 0; border-radius: 4px; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
-.all-color-cell:hover, .all-color-cell:focus-visible { transform: scale(1.12); box-shadow: 0 4px 12px rgba(0,0,0,.18); outline: 2px solid #fff; outline-offset: 1px; z-index: 1; position: relative; }
-.solar-term-hero { text-align: center; padding: 0.6rem 0 0.3rem; font-size: 1rem; color: #555; letter-spacing: 0.5px; margin-top: 0.3rem; }
+.solar-term-hero { text-align: center; padding: 0.6rem 0 0.3rem; font-size: 1.25rem; color: #555; letter-spacing: 0.5px; margin-top: 0.3rem; line-height: 1.6; }
 .solar-term-hero .st-date { font-weight: 500; opacity: 0.7; }
-.solar-term-hero .st-current { font-weight: 700; font-size: 1.15rem; color: #b06a3b; }
+.solar-term-hero .st-current { font-weight: 700; font-size: 1.4rem; color: #b06a3b; }
 .solar-term-hero .st-next { opacity: 0.65; }
 
 /* Solar gallery cards */
-.solar-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; }
-@media (min-width: 1440px) { .solar-gallery-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+.solar-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 24px; }
+@media (min-width: 1280px) { .solar-gallery-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; } }
 .solar-gallery-card {
   border-radius: 20px;
   overflow: hidden;
   background: #fff;
-  border: 1px solid rgba(24,24,27,0.08);
+  border: none;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   cursor: pointer;
   transition: all 0.25s ease;
 }
 .solar-gallery-card:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
 .solar-card-top {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: auto;
+  height: 140px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
   padding: 12px;
+  border: none;
 }
 .solar-card-name {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
@@ -179,7 +212,7 @@ body {
   align-items: center;
   gap: 8px;
   min-width: 0;
-  padding: 6px 10px;
+  padding: 8px 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -207,7 +240,7 @@ body {
 .palette-row-name {
   overflow: hidden;
   color: #3f3f46;
-  font-size: 0.78rem;
+  font-size: 0.84rem;
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -215,16 +248,16 @@ body {
 .palette-row-hex {
   color: #71717a;
   font-family: 'SF Mono', 'Consolas', monospace;
-  font-size: 0.67rem;
+  font-size: 0.72rem;
 }
 .solar-card-mode {
   position: static;
   background: rgba(255,255,255,0.2);
   border: 1px solid rgba(255,255,255,0.25);
   border-radius: 6px;
-  padding: 2px 8px; font-size: 0.65rem;
+  min-height: 30px; padding: 4px 11px; font-size: 0.78rem;
   color: #fff; cursor: pointer; font-family: inherit;
-  font-weight: 500; transition: all 0.2s;
+  font-weight: 600; transition: all 0.2s;
   z-index: 2;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -246,7 +279,12 @@ body {
 /* ============================== */
 /* VIEW 2: GALLERY (重构)          */
 /* ============================== */
-#gallery { background: transparent; }
+#gallery { background: transparent; min-height: 100vh; }
+.gallery-fixed-background {
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
 .gallery-inner { max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem 3rem; }
 @media (min-width: 1440px) {
   .gallery-inner { max-width: none; padding: 1.5rem 3rem 3rem; }
@@ -254,6 +292,7 @@ body {
 .gallery-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 1.5rem; padding: 0.8rem 1.2rem;
+  position: relative;
   border-radius: 16px;
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(12px);
@@ -261,6 +300,8 @@ body {
   border: 1px solid rgba(0,0,0,0.06);
 }
 .gallery-header h2 { font-size: 1.3rem; font-weight: 600; }
+.gallery-heading { display: flex; flex-direction: column; gap: 2px; min-width: 220px; }
+.gallery-heading span { color: #777; font-size: 0.74rem; letter-spacing: 0.03em; }
 .back-btn {
   background: #fff; border: 1px solid #ddd; border-radius: 10px;
   padding: 8px 18px; font-size: 0.82rem; cursor: pointer;
@@ -308,7 +349,7 @@ body {
 .imm-left {
   width: 340px; flex-shrink: 0;
   display: flex; flex-direction: column;
-  justify-content: flex-start; padding: 1.5rem 1.2rem;
+  justify-content: flex-start; padding: 5.5rem 1.2rem 1.5rem;
   position: relative; overflow-y: auto;
   transition: background 0.5s ease;
 }
@@ -464,7 +505,7 @@ body {
   transition: top 0.6s ease, left 0.6s ease, opacity 0.4s ease;
 }
 .imm-auto-name {
-  font-size: 3.2rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 16px rgba(0,0,0,0.4);
@@ -472,13 +513,13 @@ body {
   transition: opacity 0.3s, font-family 0.4s ease;
 }
 .imm-auto-meta {
-  font-size: 0.85rem;
+  font-size: clamp(0.72rem, 1.4vw, 0.85rem);
   font-weight: 500;
   color: rgba(255,255,255,0.6);
   text-shadow: 0 1px 8px rgba(0,0,0,0.3);
 }
 .imm-auto-font {
-  font-size: 1.6rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
   font-weight: 600;
   color: rgba(255,255,255,0.85);
   text-shadow: 0 2px 12px rgba(0,0,0,0.35);
@@ -628,6 +669,9 @@ body {
 .imm-nav > * { position: relative; z-index: 1; }
 .imm-nav-left { display: flex; align-items: center; gap: 10px; }
 .imm-nav-title { font-size: 0.95rem; font-weight: 600; }
+.imm-nav-context { display: flex; flex-direction: column; gap: 1px; margin-left: 4px; }
+.imm-nav-context strong { font-size: 0.95rem; font-weight: 600; }
+.imm-nav-context span { font-size: 0.7rem; opacity: 0.62; letter-spacing: 0.03em; }
 .imm-nav-right { display: flex; gap: 8px; }
 .imm-btn {
   background: rgba(255,255,255,0.12); backdrop-filter: blur(8px);
@@ -637,18 +681,42 @@ body {
   transition: all 0.25s;
 }
 .imm-btn:hover { background: rgba(255,255,255,0.22); }
+.nav-project-link {
+  display: inline-flex; align-items: center; min-height: 34px; padding: 0 13px;
+  border: 1px solid rgba(255,255,255,0.22); border-radius: 10px;
+  background: rgba(255,255,255,0.14); color: inherit; text-decoration: none;
+  font-size: 0.78rem; font-weight: 500; white-space: nowrap;
+  transition: all 0.25s ease;
+}
+.nav-project-link:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); }
+.gallery-header .nav-project-link {
+  position: static; transform: none;
+  background: rgba(255,255,255,0.46); border-color: rgba(0,0,0,0.08); color: #555;
+  box-shadow: none;
+}
+.gallery-header .nav-project-link:hover { background: rgba(255,255,255,0.78); transform: translateY(-1px); }
+.gallery-header > div:last-child { margin-left: auto; padding-right: 0; }
+.gallery-home-btn { position: static; transform: none; }
+.gallery-home-btn:hover { transform: translateY(-1px); }
+.imm-nav > .imm-nav-right { position: static; }
+.imm-nav-project-link { position: static; transform: none; }
+.imm-nav-project-link:hover { transform: translateY(-1px); }
+.imm-nav-right { margin-left: auto; padding-right: 0; align-items: center; }
+.imm-top-back { position: static; transform: none; }
+.imm-top-back:hover { transform: translateY(-1px); }
 .imm-tab-active { background: rgba(255,255,255,0.18); border-bottom: 2px solid rgba(255,255,255,0.6); }
 /* 配色板内部 */
-#palAllColors.pal-grid-mode { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; align-content: start; }
+#palAllColors.pal-grid-mode { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; align-content: start; }
 .pal-season-label { font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.5); margin: 6px 0 2px; grid-column: 1 / -1; }
 #palAllColors::-webkit-scrollbar { display: none; }
-.pal-card { background: rgba(255,255,255,0.06); border-radius: 6px; padding: 5px 5px 4px; border: 1px solid rgba(255,255,255,0.08); }
-.pal-card-name { font-size: 0.55rem; color: rgba(255,255,255,0.85); margin-bottom: 3px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5); }
+.pal-card { border-radius: 12px; padding: 9px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; }
+.pal-card:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.2); }
+.pal-card-name { font-size: 0.82rem; color: rgba(255,255,255,0.95); margin-bottom: 7px; font-weight: 700; text-shadow: none; }
 .pal-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
 .pal-c {
   aspect-ratio: 1 / 1; border-radius: 6px; cursor: pointer;
-  border: 1.5px solid transparent;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: none;
   transition: all 0.25s;
 }
 .pal-c:hover {
@@ -657,7 +725,8 @@ body {
   z-index: 2; position: relative;
 }
 .pal-c.sel {
-  border-width: 2.5px;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
   box-shadow: 0 0 0 1px rgba(255,255,255,0.35), 0 3px 10px rgba(0,0,0,0.2);
 }
 .pal-sel-chip {
@@ -670,8 +739,18 @@ body {
   display: flex; align-items: center; justify-content: center; cursor: pointer;
   line-height: 1; border: 1.5px solid rgba(255,255,255,0.8);
 }
+.pal-toolbar-summary { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 0 1 auto; }
+.pal-toolbar { justify-content: flex-start !important; gap: 18px; }
+.pal-toolbar-summary > #palSelectedColors { width: auto !important; flex: 1; }
+.pal-count-label { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.78); white-space: nowrap; }
+.pal-toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-start; }
+.palette-folded .imm-nav-right { display: none; }
 @media (max-width: 768px) {
+  .gallery-header { padding-right: 1rem; }
+  .imm-nav { padding: 10px 12px; }
   #palAllColors.pal-grid-mode { grid-template-columns: repeat(4, 1fr); }
+  .solar-term-hero { font-size: 1.12rem; line-height: 1.7; padding-top: 0.4rem; }
+  .solar-term-hero .st-current { font-size: 1.28rem; }
 }
 @media (max-width: 480px) {
   #palAllColors.pal-grid-mode { grid-template-columns: repeat(3, 1fr); }
@@ -708,6 +787,7 @@ body {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
+  .project-home-link { top: 12px; left: 12px; min-height: 36px; padding: 0 12px; font-size: 0.75rem; }
   /* === 首页节气色块 === */
   .solar-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .solar-group { padding: 6px; aspect-ratio: 1 / 1; }
@@ -721,7 +801,7 @@ body {
   .solar-card-top { height: 76px; padding: 10px; }
   .solar-card-name { font-size: 0.82rem; }
   .solar-card-colors { padding: 8px; }
-  .solar-card-mode { font-size: 0.6rem; padding: 2px 6px; }
+  .solar-card-mode { min-height: 26px; font-size: 0.68rem; padding: 3px 8px; }
   .palette-row { grid-template-columns: 36px minmax(0, 1fr) auto; }
   .palette-row-color { width: 36px; height: 16px; border-radius: 999px; }
 
@@ -764,13 +844,27 @@ body {
   .imm-panel h2 { font-size: 1.1rem; }
   .imm-desc { font-size: 0.78rem; }
   .imm-prompt-text { font-size: 0.7rem; max-height: 100px; overflow-y: auto; }
-  .imm-btn { font-size: 0.7rem; padding: 5px 10px; }
+  .imm-btn { min-height: 36px; font-size: 0.78rem; padding: 6px 11px; white-space: nowrap; }
   .imm-nav { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+  .imm-nav-left { width: 100%; }
+  .imm-nav-right { width: 100%; margin-left: 0; padding-right: 0; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .imm-nav-right::-webkit-scrollbar { display: none; }
+  .imm-nav-context span { display: none; }
+  .nav-project-link { min-height: 30px; padding: 0 9px; font-size: 0.7rem; }
+  .imm-nav-project-link { right: auto; }
+  .imm-top-back { right: auto; }
 
   /* === 顶部导航 === */
   .gallery-header { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+  .gallery-header > div:last-child { margin-left: 0; padding-right: 0; flex-wrap: wrap; }
   .gallery-header h2 { font-size: 1.1rem; }
-  .back-btn, .gallery-index-btn { font-size: 0.7rem; padding: 5px 10px; }
+  .gallery-heading { min-width: 0; }
+  .gallery-heading span { font-size: 0.68rem; }
+  .gallery-header .nav-project-link { right: auto; }
+  .gallery-home-btn { right: auto; }
+  .back-btn, .gallery-index-btn { font-size: 0.7rem; padding: 5px 10px; min-height: 36px; white-space: nowrap; }
+  .gallery-actions { width: 100%; overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 2px; scrollbar-width: none; }
+  .gallery-actions::-webkit-scrollbar { display: none; }
 
   /* === 首页 === */
   .cover h1 { font-size: 2rem; }
@@ -778,19 +872,35 @@ body {
   .entry-row { flex-direction: column; gap: 8px; }
   .entry-btn { width: 100%; }
   .intro-box p { font-size: 0.82rem; line-height: 1.5; }
+  .pal-toolbar { flex-direction: column; align-items: stretch !important; gap: 10px; }
+  .pal-toolbar-summary { width: 100%; }
+  .pal-toolbar-actions { width: 100%; gap: 6px; }
+  .pal-toolbar-actions .imm-btn { min-height: 36px; flex: 1 1 auto; }
+  .pal-count-label { font-size: 1rem; }
+  .imm-auto-name { font-size: clamp(1.8rem, 10vw, 2.6rem); letter-spacing: 2px; }
+  .imm-auto-font { font-size: clamp(1rem, 5vw, 1.35rem); }
+  .imm-auto-meta { font-size: 0.74rem; }
 }
 
 @media (max-width: 480px) {
   .gallery-grid { grid-template-columns: 1fr; }
-  .solar-gallery-grid { grid-template-columns: 1fr; }
+  .solar-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .solar-grid { grid-template-columns: repeat(2, 1fr); }
   .imm-swatch { width: 64px !important; height: 48px !important; }
   .cover h1 { font-size: 1.7rem; }
+  .solar-term-hero { font-size: 1rem; }
+  .solar-term-hero .st-current { font-size: 1.16rem; }
+  .solar-section-label { font-size: 1rem; }
+  .solar-section-hint { font-size: 0.68rem; }
 }
 
 </style>
 </head>
 <body>
+<a class="project-home-link" href="../index.html" aria-label="返回项目总览">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M9 12h11"></path></svg>
+  <span>返回总览</span>
+</a>
 <div class="export-dialog" id="exportDialog" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle" aria-hidden="true">
   <div class="export-dialog-card">
     <div class="export-dialog-head">
@@ -831,23 +941,23 @@ body {
       <button class="entry-btn" onclick="saveHomeBg()">保存背景</button>
     </div>
     <div id="solarHomeContainer"></div>
-    <section class="all-colors-section" aria-labelledby="allColorsTitle">
-      <div class="all-colors-title" id="allColorsTitle">384 色全览 · 点击色块预览背景</div>
-      <div class="all-colors-grid" id="allColorsGrid"></div>
-    </section>
     <div class="home-footer" id="homeFooter">基于《中国传统色：故宫里的色彩美学》郭浩 / 李健明 著</div>
   </div>
 </div>
 <div id="gallery" class="view">
   <div class="gallery-inner">
     <div class="gallery-header">
-      <h2>配色方案</h2>
+      <div class="gallery-heading">
+        <h2>全部浏览</h2>
+        <span>场景与节气配色 · 点击色卡即可切换背景</span>
+      </div>
       <div id="gallerySolarInfo" class="solar-term-info" style="font-size:0.78rem;color:#555;margin-right:12px;"></div>
-      <div style="display:flex;gap:10px;align-items:center;">
+      <div class="gallery-actions" style="display:flex;gap:10px;align-items:center;">
         <button class="gallery-index-btn" onclick="scrollToGallerySection('scenes')">场景配色</button>
         <button class="gallery-index-btn" onclick="scrollToGallerySection('solar')">节气配色</button>
-        <button class="back-btn" onclick="showView('home')">&#8592; 返回首页</button>
         <button class="back-btn" onclick="saveBackgroundAsImage()">保存背景</button>
+        <button class="back-btn gallery-home-btn" onclick="showView('home')">&#8592; 返回首页</button>
+        <a class="nav-project-link" href="../index.html">返回总览</a>
       </div>
     </div>
     <div id="galleryScenesSection">
@@ -864,8 +974,10 @@ body {
   <nav class="imm-nav">
     <div class="imm-nav-bg"></div>
     <div class="imm-nav-left">
-      <button class="imm-btn" onclick="backFromImmersive()">&#8592; 返回</button>
-      <span class="imm-nav-title" id="immNavTitle">主题名</span>
+      <div class="imm-nav-context">
+        <strong id="immNavTitle">主题名</strong>
+        <span>沉浸式选色 · 大面积背景预览</span>
+      </div>
     </div>
     <div class="imm-nav-right">
       <button class="imm-btn imm-tab imm-tab-active" id="tabScheme" onclick="switchImmTab('scheme')">方案浏览</button>
@@ -874,6 +986,8 @@ body {
       <button class="imm-btn" id="modeBtn" onclick="toggleMode()">切换深色</button>
       <button class="imm-btn" id="autoPlayBtn" onclick="toggleAutoPlay()">自动轮播</button>
       <button class="imm-btn" onclick="saveBackgroundAsImage()">保存背景</button>
+      <button class="imm-btn imm-top-back" onclick="backFromImmersive()">&#8592; 返回</button>
+      <a class="nav-project-link imm-nav-project-link" href="../index.html">返回总览</a>
     </div>
   </nav>
   <div class="imm-layout">
@@ -895,17 +1009,19 @@ body {
       <div class="imm-strip" id="immStrip"></div>
     </div>
     <!-- 配色板标签页 -->
-    <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;flex-direction:column;height:calc(100vh - 60px);overflow:hidden;width:50vw;max-width:720px;min-width:360px;">
-      <div id="palToolbar" style="flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:10px 0 8px;">
-        <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);">已选 <span id="palCount">0</span> 色</span>
-        <div style="display:flex;gap:8px;">
+    <div class="imm-left" id="immPalette" style="display:none;padding-top:60px;flex-direction:column;height:calc(100vh - 60px);overflow:hidden;width:66.666vw;max-width:none;min-width:420px;">
+      <div id="palToolbar" class="pal-toolbar" style="flex-shrink:0;display:flex;justify-content:space-between;align-items:center;padding:10px 0 8px;">
+        <div class="pal-toolbar-summary">
+          <span class="pal-count-label">已选 <span id="palCount">0</span> 色</span>
+          <div id="palSelectedColors" style="display:flex;flex-direction:row;flex-wrap:wrap;gap:4px;min-height:28px;padding:4px 0;width:100%;"></div>
+        </div>
+        <div class="pal-toolbar-actions">
           <button class="imm-btn" style="font-size:0.85rem;padding:8px 18px;" onclick="randomPalette()">随机</button>
           <button class="imm-btn" id="palDirBtn" style="font-size:0.85rem;padding:8px 18px;min-width:100px;" onclick="cyclePalDirection()" title="切换混色方向">↖ 135°</button>
           <button class="imm-btn" style="font-size:0.85rem;padding:8px 18px;" onclick="resetPalette()">重置</button>
           <button class="imm-btn" id="palFoldBtn" style="font-size:0.85rem;padding:8px 18px;" onclick="togglePalFold()">收纳</button>
         </div>
       </div>
-      <div id="palSelectedColors" style="flex-shrink:0;display:flex;flex-direction:row;flex-wrap:wrap;gap:4px;margin-bottom:8px;min-height:28px;padding:4px 0;width:100%;"></div>
       <div id="palAllColors" style="flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;"></div>
       <!-- 收纳态：只留一个展开箭头 -->
       <div id="palFoldToggle" style="display:none;position:absolute;top:50%;left:4px;transform:translateY(-50%);z-index:10;">
@@ -1422,9 +1538,12 @@ function showView(name) {
   document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
   document.getElementById(name).classList.add('active');
   currentView = name;
+  document.body.dataset.activeView = name;
   window.scrollTo(0, 0);
   // 全部浏览页面背景固定不随滚动
   document.body.style.backgroundAttachment = (name === 'gallery') ? 'fixed' : '';
+  document.body.style.backgroundRepeat = (name === 'gallery') ? 'no-repeat' : '';
+  document.body.classList.toggle('gallery-fixed-background', name === 'gallery');
   if (name !== 'immersive') {
     document.body.style.background = defaultSolarBg;
     document.body.style.backgroundSize = 'cover';
@@ -1462,6 +1581,8 @@ function previewSolarInImmersive(idx) {
 function backFromImmersive() {
   isTourMode = false;
   if (isAutoPlaying) stopAutoPlay();
+  var immersiveRoot = document.getElementById('immersive');
+  if (immersiveRoot) immersiveRoot.classList.remove('palette-folded');
   selectedPaletteColors = [];
   immCurrentTab = 'scheme';
   var layer = document.getElementById('palBgLayer');
@@ -2281,6 +2402,8 @@ function saveHomeBg() { saveBackgroundAsImage(); }
 
 function togglePalFold() {
   palFoldState = 1 - palFoldState;
+  var immersiveRoot = document.getElementById('immersive');
+  if (immersiveRoot) immersiveRoot.classList.toggle('palette-folded', !!palFoldState);
   var btn = document.getElementById('palFoldBtn');
   btn.textContent = palFoldState ? '' : '收纳';
   var allC = document.getElementById('palAllColors');
@@ -2358,16 +2481,17 @@ function renderPalAllColors() {
     var name = solarNames[i];
     var colors = SOLAR_16_COLORS[name];
     if (!colors) continue;
-    html += '<div class="pal-card"><div class="pal-card-name">' + name + '</div><div class="pal-card-grid">';
+    var blendBg = 'linear-gradient(135deg,' + colors[0].hex + ',' + colors[4].hex + ')';
+    var labelLuma = (getLuma(colors[0].hex) + getLuma(colors[4].hex)) / 2;
+    var labelColor = labelLuma > 160 ? '#333' : '#fff';
+    html += '<div class="pal-card" style="background:' + blendBg + '" title="应用 ' + name + ' 混色" onclick="previewPalBlend(\'' + colors[0].hex + '\',\'' + colors[4].hex + '\')"><div class="pal-card-name" style="color:' + labelColor + '">' + name + '</div><div class="pal-card-grid">';
     for (var j = 0; j < colors.length; j++) {
       var c = colors[j];
       var isSel = false;
       for (var k = 0; k < selectedPaletteColors.length; k++) {
         if (selectedPaletteColors[k].hex === c.hex) { isSel = true; break; }
       }
-      var luma = getLuma(c.hex);
-      var borderColor = luma > 180 ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.18)';
-      html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + ';border-color:' + borderColor + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
+      html += '<div class="pal-c' + (isSel ? ' sel' : '') + '" style="background:' + c.hex + '" title="' + c.name + ' ' + c.hex + '" onclick="togglePalColor(\'' + c.hex + '\',\'' + c.name.replace(/'/g, "\\'") + '\')"></div>';
     }
     html += '</div></div>';
   }
@@ -2388,6 +2512,13 @@ function togglePalColor(hex, name) {
   renderPalAllColors();
   renderPalSelected();
   applyPalBg();
+}
+
+function previewPalBlend(hexA, hexB) {
+  var layer = document.getElementById('palBgLayer');
+  if (!layer) return;
+  layer.style.display = 'block';
+  layer.style.background = 'linear-gradient(135deg,' + hexA + ',' + hexB + ')';
 }
 
 function renderPalSelected() {
@@ -2428,6 +2559,8 @@ function applyPalBg() {
 function resetPalette() {
   selectedPaletteColors = [];
   palFoldState = 0;
+  var immersiveRoot = document.getElementById('immersive');
+  if (immersiveRoot) immersiveRoot.classList.remove('palette-folded');
   var foldBtn = document.getElementById('palFoldBtn');
   if (foldBtn) foldBtn.textContent = '收纳';
   var allC = document.getElementById('palAllColors');
@@ -2711,7 +2844,8 @@ function renderSolarHome() {
   for (var si = 0; si < seasonKeys.length; si++) {
     var sk = seasonKeys[si];
     var sd = seasons[sk];
-    html += '<div class="solar-section"><div class="solar-section-label">' + sd.label + '</div><div class="solar-grid">';
+    var hint = si === 0 ? '<div class="solar-section-hint">节气配色 · 点击色卡或小色块即可切换背景</div>' : '';
+    html += '<div class="solar-section"><div class="solar-section-label">' + sd.label + '</div>' + hint + '<div class="solar-grid">';
     for (var j = 0; j < sd.names.length; j++) {
       var name = sd.names[j];
       var colors = SOLAR_16_COLORS[name]; if (!colors) continue;
