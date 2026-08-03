@@ -1,8 +1,0 @@
-{
-  "version": 2,
-  "builds": [{ "src": "node-server.js", "use": "@vercel/node" }],
-  "routes": [
-    { "src": "/repos", "dest": "/node-server.js" },
-    { "src": "/admin/health", "dest": "/node-server.js" }
-  ]
-}
